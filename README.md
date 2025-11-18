@@ -93,6 +93,73 @@ This component implements a novel approach to semantic analogies by:
 - ✅ **Production-ready** with comprehensive documentation and error handling
 - ✅ **Flexible metric selection** (Euclidean or cosine similarity)
 - ✅ **Auto-balancing** of loss weights via gradient norm matching
+- ✅ **Persistent memory system** for session continuity and experiment tracking
+
+## Persistent Memory Tool
+
+The project now includes a powerful **Memory Tool** that enables persistent storage and retrieval of information across sessions:
+
+### Features
+- 📦 **CRUD operations**: Create, Read, Update, Delete memories with simple API
+- 🔍 **Semantic search**: Vector-based similarity search to find relevant memories
+- 💾 **Multiple types**: Store facts, summaries, models, embeddings, and experiments
+- 🔄 **Session continuity**: Maintain context across conversations with session summaries
+- 📊 **Experiment tracking**: Save and compare training runs with metadata
+
+### Quick Example
+
+```python
+from memory_tool import MemoryTool
+from memory_integration import AnalogyMemoryManager
+
+# Basic memory operations
+memory = MemoryTool()
+memory.create("user_pref", "User prefers technical explanations", memory_type="fact")
+results = memory.search("user preferences", k=3)
+
+# Save a trained model with full context
+manager = AnalogyMemoryManager()
+manager.save_trained_model(
+    model_state=model.state_dict(),
+    embeddings=Z,
+    relation_axes=axes,
+    model_name="gender_analogy_v1",
+    metadata={"epochs": 300, "accuracy": 0.87}
+)
+
+# Load it later in a new session
+bundle = manager.load_trained_model("gender_analogy_v1")
+```
+
+See **[MEMORY_TOOL_GUIDE.md](MEMORY_TOOL_GUIDE.md)** for complete documentation.
+
+## 🌅 NEW: Agent Pulse - Proactive AI Assistant
+
+This repository now includes **Agent Pulse**, a ChatGPT Pulse-inspired system that transforms reactive AI assistance into proactive support:
+
+- 📊 **Analyzes past conversations** to understand your interests and projects
+- 🔍 **Conducts overnight research** on relevant topics
+- 💡 **Identifies opportunities** for learning and optimization
+- 🔧 **Suggests solutions** to recurring problems
+- ✅ **Tracks action items** and commitments
+- 🎯 **Learns from feedback** to personalize updates
+
+### Quick Start with Agent Pulse
+
+```bash
+# Generate your first pulse update
+python -m agent_pulse.cli.pulse_cli generate
+
+# Configure your interests
+python -m agent_pulse.cli.pulse_cli config --add-interest "machine learning"
+
+# View system status
+python -m agent_pulse.cli.pulse_cli status
+```
+
+**[📖 Full Agent Pulse Documentation →](./AGENT_PULSE.md)**
+
+---
 
 ### Quick Start
 
@@ -503,6 +570,59 @@ find_analogy(
 
 ---
 
+## Data Extraction Module
+
+In addition to the analogy engine, this framework includes a comprehensive **data extraction module** for parsing structured information from various sources.
+
+### Features
+
+- **Text Entity Extraction**: Parse dates, names, amounts, emails, phone numbers, URLs, percentages, and more
+- **Table Extraction**: Extract tables from HTML and CSV files
+- **Web Scraping**: Extract structured data from web pages
+- **PDF Processing**: Extract text and tables from PDF files using pdfplumber
+
+### Quick Start - Data Extraction
+
+```python
+from data_extraction import (
+    extract_text_entities,
+    extract_from_pdf,
+    extract_from_url,
+    extract_from_html
+)
+
+# Extract entities from text
+text = "Contact John Doe at john@example.com or call (555) 123-4567. Meeting on Jan 15, 2024."
+entities = extract_text_entities(text)
+print(entities['emails'])  # ['john@example.com']
+print(entities['phone_numbers'])  # ['5551234567']
+print(entities['dates'])  # [{'raw': 'Jan 15, 2024', ...}]
+
+# Extract from PDF
+pdf_data = extract_from_pdf('invoice.pdf')
+print(f"Pages: {pdf_data['metadata']['num_pages']}")
+print(f"Tables: {len(pdf_data['tables'])}")
+
+# Extract from web page
+web_data = extract_from_url('https://example.com')
+print(web_data['entities'])
+print(web_data['tables'])
+```
+
+### Running Examples
+
+```bash
+# Run all data extraction examples
+python example_data_extraction.py
+
+# Run specific module
+python -c "from data_extraction import TextExtractor; e = TextExtractor(); print(e.extract_all('Email: test@example.com'))"
+```
+
+See `example_data_extraction.py` for comprehensive usage examples.
+
+---
+
 ## Financial Analysis Skill
 
 This repository also includes a comprehensive **Financial Analysis Skill** for Claude Code that analyzes financial statements, computes ratios, and generates insights.
@@ -540,6 +660,7 @@ See [`FINANCIAL_ANALYSIS_SKILL.md`](FINANCIAL_ANALYSIS_SKILL.md) for complete do
 - ✅ Multi-relation alignment
 - ✅ Analogy finding API
 - ✅ Optimization and bug fixes
+- ✅ Data extraction module
 - ✅ Financial Analysis Skill
 
 ### Phase 2: Inverse Projection (Planned)
@@ -553,6 +674,8 @@ See [`FINANCIAL_ANALYSIS_SKILL.md`](FINANCIAL_ANALYSIS_SKILL.md) for complete do
 - [ ] Hierarchical relations
 - [ ] Compositional analogies (multi-hop)
 - [ ] Interactive visualization
+- [ ] Advanced NLP entity recognition
+- [ ] OCR support for image-based PDFs
 
 ---
 
@@ -627,3 +750,9 @@ MIT License (or your preferred license)
 ## Support
 
 For questions or issues, please open a GitHub issue or contact [your email].
+
+---
+
+**Current Version**: 1.0.0
+
+**Last Updated**: 2025-11-18

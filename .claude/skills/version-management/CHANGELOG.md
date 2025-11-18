@@ -5,6 +5,13 @@ All notable changes to this skill will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2025-11-18
+
+### Fixed
+- Fixed path bug in `compare_versions()` method where git diff was looking for `.claude/skills/.claude/skills/<skill>` instead of just `<skill>` relative to the working directory
+- Fixed same path bug in `generate_changelog_entry()` method for consistent path handling
+- Both methods now correctly use skill name as path since git already runs from `.claude/skills/` directory
+
 ## [1.0.0] - 2025-11-18
 
 ### Added

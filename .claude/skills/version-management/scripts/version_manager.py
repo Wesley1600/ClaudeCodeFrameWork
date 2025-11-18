@@ -238,7 +238,8 @@ class VersionManager:
             })
 
         last_version = versions[0]
-        skill_path = f".claude/skills/{skill_name}"
+        # Path relative to skills_dir (which is .claude/skills)
+        skill_path = skill_name
 
         # Get commits since last tag
         try:
@@ -329,11 +330,11 @@ class VersionManager:
         tag2 = f"skill/{skill_name}/v{v2}"
 
         try:
-            # Get file changes
-            diff_stat = self._run_git('diff', '--stat', f'{tag1}..{tag2}', '--', f'.claude/skills/{skill_name}')
+            # Get file changes (path relative to skills_dir)
+            diff_stat = self._run_git('diff', '--stat', f'{tag1}..{tag2}', '--', skill_name)
 
-            # Get detailed diff
-            diff_content = self._run_git('diff', f'{tag1}..{tag2}', '--', f'.claude/skills/{skill_name}')
+            # Get detailed diff (path relative to skills_dir)
+            diff_content = self._run_git('diff', f'{tag1}..{tag2}', '--', skill_name)
 
             return {
                 'from_version': str(v1),

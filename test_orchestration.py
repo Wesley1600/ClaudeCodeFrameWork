@@ -250,6 +250,87 @@ def test_rag_shared_state():
         return False
 
 
+def test_rag_yaml_chain():
+    """Test full RAG→Summarization→Reporting chain from YAML"""
+    print("\nTesting full RAG chain from YAML (rag_summarize_report.yaml)...")
+
+    from skills import SkillOrchestrator, ChainConfig, get_global_registry
+    from pathlib import Path
+
+    registry = get_global_registry()
+    registry.discover_skills("skills.implementations")
+    orchestrator = SkillOrchestrator(registry)
+
+    yaml_path = Path("chains/rag_summarize_report.yaml")
+
+    if not yaml_path.exists():
+        print(f"⚠ YAML file not found: {yaml_path}, skipping test")
+        return True
+
+    try:
+        # Load and execute the chain
+        chain = ChainConfig.from_yaml(yaml_path)
+        context = orchestrator.execute_chain(chain)
+
+        # Verify RAG step
+        rag_result = context.get_result("rag_pipeline")
+        if not rag_result:
+            print("✗ RAG pipeline did not execute")
+            return False
+
+        total_retrieved = rag_result["metadata"]["total_retrieved"]
+        total_indexed = rag_result["metadata"]["total_indexed"]
+
+        print(f"  RAG: Indexed {total_indexed} docs, retrieved {total_retrieved}")
+
+        if total_indexed == 0:
+            print("✗ RAG did not load any documents from initial_data")
+            return False
+
+        if total_retrieved == 0:
+            print("✗ RAG did not retrieve any documents")
+            return False
+
+        # Verify summarization step
+        summary_result = context.get_result("summarization")
+        if not summary_result:
+            print("✗ Summarization did not execute")
+            return False
+
+        summary = summary_result.get("summary", "")
+        if not summary:
+            print("✗ Summarization produced empty summary")
+            return False
+
+        print(f"  Summarization: {len(summary)} chars, {len(summary_result.get('key_points', []))} key points")
+
+        # Verify reporting step
+        report_result = context.get_result("reporting")
+        if not report_result:
+            print("✗ Reporting did not execute")
+            return False
+
+        report = report_result.get("report", "")
+        if not report:
+            print("✗ Reporting produced empty report")
+            return False
+
+        print(f"  Reporting: {report_result.get('format')} format, {len(report)} chars")
+
+        # Verify shared_state contains retrieved documents
+        if "retrieved_documents" not in context.shared_state:
+            print("⚠ Warning: retrieved_documents not in shared_state")
+
+        print("✓ Full RAG→Summarization→Reporting chain executed successfully")
+        return True
+
+    except Exception as e:
+        print(f"✗ YAML chain execution failed: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+
 def main():
     """Run all tests"""
     print("=" * 70)
@@ -263,6 +344,7 @@ def main():
         ("YAML Config", test_yaml_config),
         ("RAG Pipeline", test_rag_pipeline),
         ("RAG Shared State", test_rag_shared_state),
+        ("RAG YAML Chain", test_rag_yaml_chain),
     ]
 
     results = []

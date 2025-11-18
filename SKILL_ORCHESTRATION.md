@@ -165,18 +165,45 @@ Retrieval-Augmented Generation pipeline.
 - `similarity_threshold`: Minimum similarity (default: 0.5)
 
 **Input:**
-- `query`: Search query
-- `documents`: Optional list of documents
+- `query`: Search query (required, from kwargs or shared_state)
+- `documents`: Optional list of documents (from kwargs or shared_state)
+
+**Shared State Keys (Read):**
+- `query`: Search query (fallback if not in kwargs)
+- `documents`: List of documents to index
+- Any keys from `initial_data` in YAML chains (e.g., `query`, `documents`)
+
+**Shared State Keys (Written):**
+- `retrieved_documents`: List of retrieved document contents
+- `retrieved_context`: Assembled context text with scores
 
 **Output:**
 ```python
 {
-    "documents": [...],  # Retrieved documents
+    "documents": [...],  # Retrieved documents with metadata
     "context": "...",    # Assembled context text
     "scores": [...],     # Relevance scores
-    "metadata": {...}    # Retrieval info
+    "metadata": {...}    # Retrieval info (total_retrieved, total_indexed, etc.)
 }
 ```
+
+**YAML Chain Example:**
+```yaml
+initial_data:
+  query: "What are the key features?"
+  documents:
+    - "Document 1 content..."
+    - "Document 2 content..."
+
+steps:
+  - skills: rag_pipeline
+    config:
+      rag_pipeline:
+        top_k: 3
+        similarity_threshold: 0.0
+```
+
+The RAG skill will automatically load documents from `initial_data` and make retrieved documents available to downstream skills via `shared_state`.
 
 ### SummarizationSkill
 

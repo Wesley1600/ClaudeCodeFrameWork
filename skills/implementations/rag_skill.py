@@ -236,6 +236,14 @@ class RAGPipelineSkill(BaseSkill):
                 - context: Assembled context text
                 - scores: Relevance scores
                 - metadata: Retrieval metadata
+
+        Shared State Keys Read:
+            - query: Search query (fallback if not in kwargs)
+            - documents: List of documents to index
+            - initial_data: Dict that may contain 'documents' key (from YAML chains)
+
+        Shared State Keys Written:
+            - retrieved_documents: List of retrieved document contents for downstream skills
         """
         # Get query
         query = kwargs.get("query")
@@ -246,15 +254,36 @@ class RAGPipelineSkill(BaseSkill):
         if not query:
             raise ValueError("No query provided. Pass 'query' parameter or set in context.")
 
-        # Add any new documents
-        new_documents = kwargs.get("documents")
+        # Collect documents from all sources
+        docs_to_load = []
 
-        # If not in kwargs, check shared_state (for YAML chains using initial_data)
-        if not new_documents:
-            new_documents = context.shared_state.get("documents")
+        # 1. Documents from kwargs (direct parameter)
+        kwargs_docs = kwargs.get("documents")
+        if kwargs_docs:
+            if isinstance(kwargs_docs, list):
+                docs_to_load.extend(kwargs_docs)
+            else:
+                logger.warning(f"kwargs['documents'] is not a list, ignoring")
 
-        if new_documents:
-            self._load_documents(new_documents)
+        # 2. Documents from shared_state['documents'] key
+        shared_docs = context.shared_state.get("documents")
+        if shared_docs:
+            if isinstance(shared_docs, list):
+                docs_to_load.extend(shared_docs)
+            else:
+                logger.warning(f"shared_state['documents'] is not a list, ignoring")
+
+        # 3. Documents from shared_state['initial_data'] (YAML chains)
+        initial_data = context.shared_state.get("initial_data")
+        if initial_data and isinstance(initial_data, dict):
+            initial_docs = initial_data.get("documents")
+            if initial_docs and isinstance(initial_docs, list):
+                docs_to_load.extend(initial_docs)
+
+        # Load all collected documents
+        if docs_to_load:
+            logger.info(f"Loading {len(docs_to_load)} documents from all sources")
+            self._load_documents(docs_to_load)
             self.index_built = False  # Rebuild index
 
         # Perform retrieval
@@ -265,6 +294,10 @@ class RAGPipelineSkill(BaseSkill):
             f"[Document {i+1}] (score: {result.scores[i]:.3f})\n{doc.content}"
             for i, doc in enumerate(result.documents)
         ])
+
+        # Save retrieved documents to shared_state for downstream skills
+        context.shared_state["retrieved_documents"] = [doc.content for doc in result.documents]
+        context.shared_state["retrieved_context"] = context_text
 
         # Return structured result
         return {

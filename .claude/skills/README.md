@@ -1,6 +1,6 @@
 # Claude Code Skills
 
-This directory contains skills for Claude Code that use progressive disclosure to optimize context window usage.
+This directory contains custom skills for Claude Code that use progressive disclosure to optimize context window usage.
 
 ## Structure
 
@@ -9,13 +9,16 @@ This directory contains skills for Claude Code that use progressive disclosure t
 ├── README.md                          # This file
 ├── progressive-disclosure/            # Meta-skill for managing progressive disclosure
 │   └── skill.md
+├── umap-optimization/                 # UMAP-specific optimization skill
+│   └── skill.md
+├── error-handling.md                  # Error handling framework skill
 └── [other-skills]/                    # Additional skills
     └── skill.md
 ```
 
 ## Progressive Disclosure
 
-Skills are structured in three levels:
+Skills are structured in three levels to optimize context window usage:
 
 1. **Metadata** (Always loaded) - ~500 tokens
    - Skill name and description
@@ -32,44 +35,6 @@ Skills are structured in three levels:
    - Complex examples
    - Edge cases and troubleshooting
 
-## Creating a New Skill
-
-Use the template from `progressive-disclosure/skill.md` (Appendix A) to create new skills.
-
-Key requirements:
-
-1. **Mark sections clearly:**
-   ```markdown
-   <!-- LEVEL: METADATA -->
-   ## Metadata
-   ...
-
-   <!-- LEVEL: INSTRUCTIONS -->
-   ## Instructions
-   ...
-
-   <!-- LEVEL: RESOURCES -->
-   ## Resources
-   ...
-   ```
-
-2. **Include required metadata fields:**
-   - Skill Name
-   - Type
-   - Version
-   - Purpose
-   - Triggers
-   - Dependencies
-   - Context Cost
-   - Complexity
-
-3. **Self-contained levels:**
-   - Each level should be readable on its own
-   - Higher levels build on lower levels
-   - Don't reference content from higher levels in lower levels
-
-## Usage
-
 The progressive disclosure meta-skill automatically:
 
 1. **Analyzes** user queries for relevance
@@ -82,6 +47,118 @@ The progressive disclosure meta-skill automatically:
 4. **Manages** context window budget
 5. **Upgrades** skill levels dynamically if heavily used
 
+## Available Skills
+
+### Progressive Disclosure Meta-Skill (`progressive-disclosure/skill.md`)
+
+Manages the progressive disclosure of skill content based on task relevance.
+
+**Use this skill when:**
+- Building or managing the skill system itself
+- Optimizing context window usage
+- Understanding how skills are loaded
+
+**Key features:**
+- Relevance scoring algorithm
+- Context window budget management
+- Dynamic level upgrading
+- Skill dependency resolution
+
+### UMAP Optimization Skill (`umap-optimization/skill.md`)
+
+Provides optimization strategies for UMAP-based embedding systems.
+
+**Use this skill when:**
+- Training is too slow (> 5 min for N < 10K)
+- Dataset size > 10,000 samples
+- Memory usage exceeds GPU capacity
+- Deploying UMAP models to production
+
+**Key features:**
+- Cluster caching (10x speedup)
+- FAISS integration (100x+ for large N)
+- Mixed precision training (2x speedup)
+- Numerical stability enhancements
+
+### Error Handling Skill (`error-handling.md`)
+
+A comprehensive framework for wrapping tool calls with robust error handling, retry logic, and fallback behaviors.
+
+**Use this skill when:**
+- Executing operations that may fail due to network issues
+- Working with git operations (push, pull, fetch)
+- Performing file I/O that may encounter locks or permissions
+- Making web requests that may timeout or rate limit
+- Any operation where graceful failure handling is important
+
+**Key features:**
+- Automatic error classification (retryable vs non-retryable)
+- Exponential backoff retry logic
+- Tool-specific fallback strategies
+- Structured error logging
+- Clear escalation paths for human intervention
+
+**How to activate:**
+Claude Code automatically uses skills when relevant. For explicit activation:
+```
+Use the error-handling skill to execute this git push with retry logic
+```
+
+## Creating a New Skill
+
+### Progressive Disclosure Format (Recommended)
+
+Use the template from `progressive-disclosure/skill.md` (Appendix A) to create new skills with three-tier structure:
+
+```markdown
+# Skill Name
+
+<!-- LEVEL: METADATA -->
+## Metadata
+
+**Skill Name:** [Name]
+**Type:** [implementation|debugging|optimization|etc.]
+**Version:** [Semantic version]
+**Purpose:** [One-line description]
+**Triggers:** [Comma-separated keywords]
+**Dependencies:** [List of required skills, if any]
+**Context Cost:** [Low|Medium|High]
+**Complexity:** [0.0-1.0 scale]
+
+**Quick Summary:**
+[2-3 sentence overview]
+
+---
+
+<!-- LEVEL: INSTRUCTIONS -->
+## Instructions
+
+### When to Use This Skill
+[Describe scenarios]
+
+### Basic Workflow
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
+
+---
+
+<!-- LEVEL: RESOURCES -->
+## Resources
+
+### Detailed Implementation
+[Comprehensive guide]
+```
+
+### Simple Format (Alternative)
+
+For simpler skills, create a markdown file directly in `.claude/skills/`:
+
+1. Create a markdown file in `.claude/skills/`
+2. Document the skill's purpose and usage
+3. Provide clear examples and patterns
+4. Include decision trees for when to use the skill
+
 ## Best Practices
 
 ### For Skill Authors
@@ -91,6 +168,11 @@ The progressive disclosure meta-skill automatically:
 - **Put complexity in resources:** Save heavy content for when it's needed
 - **Test at each level:** Ensure each level is useful standalone
 - **Use clear triggers:** Help the relevance scoring find your skill
+- **Specific and actionable:** Provide clear steps
+- **Include examples:** Show real usage scenarios
+- **Define scope:** Be clear about when to use the skill
+- **Error handling:** Always consider what can go wrong
+- **User communication:** Guide how to inform users
 
 ### For Skill Users (Claude Code)
 
@@ -133,56 +215,6 @@ Common skill categories:
 - **Data Processing:** ETL, transformations
 - **Machine Learning:** Training, inference, evaluation
 
-## Example: UMAP Optimization Skill
-
-See how a skill would be structured for this codebase:
-
-```markdown
-# UMAP Optimization
-
-<!-- LEVEL: METADATA -->
-## Metadata
-
-**Skill Name:** UMAP Optimization
-**Type:** optimization
-**Version:** 1.0.0
-**Purpose:** Optimize UMAP implementations for large-scale datasets
-**Triggers:** umap, optimize, performance, scale, large dataset, embedding
-**Dependencies:** None
-**Context Cost:** Medium
-**Complexity:** 0.7
-
-**Quick Summary:**
-Provides optimization strategies for UMAP-based embedding systems, including
-cluster caching, FAISS integration, and batch processing improvements.
-
----
-
-<!-- LEVEL: INSTRUCTIONS -->
-## Instructions
-
-### When to Use
-- Dataset size > 10,000 samples
-- Training time exceeds acceptable threshold
-- Memory usage is too high
-- Need to scale to production workloads
-
-### Key Optimizations
-1. **Cluster Caching:** Reuse k-means clusters across steps
-2. **FAISS Integration:** Replace torch.cdist with FAISS for large N
-3. **Batch Processing:** Optimize edge batch sizes
-4. **Mixed Precision:** Use AMP for GPU acceleration
-
----
-
-<!-- LEVEL: RESOURCES -->
-## Resources
-
-### Detailed Implementation
-
-[Full algorithms, code examples, benchmarks...]
-```
-
 ## Metrics
 
 Track progressive disclosure effectiveness:
@@ -196,11 +228,15 @@ Track progressive disclosure effectiveness:
 
 - **v1.0.0** (2025-11-18): Initial progressive disclosure implementation
 
+## Integration
+
+Skills are automatically available to Claude Code when placed in this directory. Reference them by name or topic in your prompts.
+
 ## Contributing
 
 When adding new skills:
 
-1. Follow the template structure
+1. Follow the template structure (progressive disclosure format recommended)
 2. Test at each disclosure level
 3. Measure token counts (metadata ~500, instructions ~3K, resources ~15K)
 4. Verify triggers match actual use cases

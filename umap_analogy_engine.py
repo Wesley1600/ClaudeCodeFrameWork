@@ -14,6 +14,11 @@ Key improvements over initial draft:
 - Comprehensive documentation
 """
 
+__version__ = "1.0.0"
+__author__ = "ClaudeCodeFrameWork"
+__date__ = "2025-11-13"
+__status__ = "Production"
+
 import math
 from collections import defaultdict
 from typing import List, Tuple, Optional, Dict, Union
@@ -21,6 +26,8 @@ from typing import List, Tuple, Optional, Dict, Union
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
+from operation_cache import cached, get_cache_manager
 
 
 # =========================
@@ -118,6 +125,7 @@ def smooth_knn_dist(
 
 
 @torch.no_grad()
+@cached(cache_type="graph", ttl=3600)  # Cache for 1 hour
 def build_fuzzy_simplicial_set(
     X: torch.Tensor, n_neighbors: int = 15
 ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
@@ -126,6 +134,8 @@ def build_fuzzy_simplicial_set(
 
     Returns directed kNN graph as COO format (edge_i, edge_j, edge_weight), then
     symmetrizes using fuzzy set union: P(A ∪ B) = P(A) + P(B) - P(A)P(B).
+
+    Results are cached to avoid redundant O(N²) distance computations.
 
     NOTE: This implementation uses O(N²) cdist for moderate N. For large datasets
     (N > 100k), replace the cdist+topk block with FAISS-GPU kNN for efficiency.
@@ -983,6 +993,7 @@ def extract_relation_axes(
     return axes
 
 
+@cached(cache_type="query", ttl=1800)  # Cache for 30 minutes
 def find_analogy(
     embeddings: torch.Tensor,
     relation_axes: List[Optional[Dict[str, Union[torch.Tensor, float]]]],
@@ -996,6 +1007,8 @@ def find_analogy(
 
     Computes: target = query + relation_axis * scale
     Then finds k nearest neighbors to target.
+
+    Results are cached to avoid redundant distance computations.
 
     **FIXED**: Now uses Euclidean distance by default (not cosine similarity),
     since we're computing an absolute target position.
@@ -1049,6 +1062,7 @@ def find_analogy(
         raise ValueError(f"Unknown metric: {metric}. Use 'euclidean' or 'cosine'.")
 
 
+@cached(cache_type="query", ttl=1800)  # Cache for 30 minutes
 def analogy_from_pair(
     model: nn.Module,
     X_high: torch.Tensor,
@@ -1062,6 +1076,8 @@ def analogy_from_pair(
 ) -> List[Tuple[int, float]]:
     """
     Perform analogy using a reference pair to determine the relation.
+
+    Results are cached to avoid redundant computations.
 
     Example: Given "boy:girl" and query "king", find "queen" by:
     1. Identify which relation "boy:girl" belongs to

@@ -39,7 +39,24 @@ python test_skill.py
 
 ---
 
-### 2. UMAP-Inspired Universal Analogy Engine
+### 2. Summarization Skill
+
+A comprehensive skill for condensing long documents, conversation logs, or transcripts into concise summaries.
+
+**Location**: `.claude/skills/summarization/`
+
+**Features**:
+- ✅ Multi-source retrieval (files, directories, conversation history)
+- ✅ Format flexibility (bullet points, paragraphs, executive summary)
+- ✅ Detail control (brief, standard, detailed)
+- ✅ Smart extraction of key themes, action items, and decisions
+- ✅ Context awareness for code, technical docs, and conversations
+
+**Documentation**: See [.claude/skills/summarization/SKILL.md](./.claude/skills/summarization/SKILL.md) for detailed usage.
+
+---
+
+### 3. UMAP-Inspired Universal Analogy Engine
 
 A semantic relationship engine that learns universal relationship mappings inspired by UMAP's topological data analysis approach. This engine enables semantic analogies like "boy:girl :: king:?" → "queen" by learning and applying consistent relationship transformations in a low-dimensional embedding space.
 

@@ -1,0 +1,25 @@
+# Code Review Template
+# Required variables: file_path, code_content, focus_areas
+# Optional variables: reviewer_name:Team, style_guide:standard, severity_level:all
+
+Please review the following code from {file_path}:
+
+## Review Criteria
+Focus on: {focus_areas}
+Style Guide: {style_guide:standard coding practices}
+Severity Level: {severity_level:all issues}
+
+## Code to Review
+```
+{code_content}
+```
+
+## Expected Output
+Provide a detailed review covering:
+1. Code quality and best practices
+2. Potential bugs or errors
+3. Performance considerations
+4. Security vulnerabilities
+5. Readability and maintainability
+
+Reviewer: {reviewer_name:Development Team}

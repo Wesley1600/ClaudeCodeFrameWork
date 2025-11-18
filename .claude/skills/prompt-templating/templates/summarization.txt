@@ -1,0 +1,20 @@
+# Document Summarization Template
+# Required variables: content, content_type
+# Optional variables: max_length:500, target_audience:general, focus:key points
+
+Summarize the following {content_type}:
+
+## Content
+{content}
+
+## Summarization Parameters
+- Maximum Length: {max_length:500 words}
+- Target Audience: {target_audience:general readers}
+- Focus: {focus:key points and main takeaways}
+
+## Output Format
+Provide:
+1. Executive summary (2-3 sentences)
+2. Main points (bullet list)
+3. Key takeaways
+4. Recommendations (if applicable)

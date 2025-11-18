@@ -423,4 +423,4 @@ For questions or issues, please open a GitHub issue or contact [your email].
 
 **Status**: Production-ready V1.0
 
-**Last updated**: 2025-11-18
+**Last Updated**: 2025-11-18

@@ -1,0 +1,154 @@
+# Agent Configuration Schema
+# Defines the structure and required fields for agent configurations
+
+schema_version: "1.0.0"
+schema_type: "agent"
+
+# Required fields for all agent configurations
+required_fields:
+  - id
+  - name
+  - version
+  - description
+  - skills
+
+# Field definitions with types and constraints
+fields:
+  id:
+    type: string
+    pattern: "^agent_[a-z0-9_]+$"
+    description: "Unique agent identifier (e.g., 'agent_research_v1')"
+    example: "agent_research_v1"
+
+  name:
+    type: string
+    min_length: 3
+    max_length: 100
+    description: "Human-readable agent name"
+    example: "ResearchAgent"
+
+  version:
+    type: string
+    pattern: "^\\d+\\.\\d+\\.\\d+$"
+    description: "Semantic version number (e.g., '1.0.0')"
+    example: "1.0.0"
+
+  description:
+    type: string
+    min_length: 10
+    max_length: 1000
+    description: "Detailed description of agent capabilities"
+    example: "An agent specialized in conducting research tasks"
+
+  skills:
+    type: array
+    items:
+      type: string
+      pattern: "^skill_[a-z0-9_]+$"
+    min_items: 1
+    description: "List of skill_ids this agent can use"
+    example:
+      - "skill_search_001"
+      - "skill_analyze_001"
+
+  metadata:
+    type: object
+    description: "Additional metadata about the agent"
+    fields:
+      author:
+        type: string
+        description: "Agent creator/author"
+        example: "AI Research Team"
+
+      created_at:
+        type: datetime
+        description: "Creation timestamp (ISO 8601)"
+        example: "2025-01-15T10:30:00Z"
+
+      tags:
+        type: array
+        items:
+          type: string
+        description: "Categorization tags"
+        example:
+          - "research"
+          - "analysis"
+          - "nlp"
+
+      complexity:
+        type: string
+        enum:
+          - "low"
+          - "medium"
+          - "high"
+        description: "Agent complexity level"
+        example: "medium"
+
+      license:
+        type: string
+        description: "License information"
+        example: "MIT"
+
+  prompt_template:
+    type: string
+    description: "Reference to prompt template file"
+    example: "prompts/research_agent.j2"
+
+  parameters:
+    type: object
+    description: "Agent execution parameters"
+    fields:
+      temperature:
+        type: float
+        min: 0.0
+        max: 2.0
+        default: 0.7
+        description: "LLM temperature setting"
+
+      max_tokens:
+        type: integer
+        min: 1
+        max: 100000
+        default: 2000
+        description: "Maximum tokens for responses"
+
+      top_p:
+        type: float
+        min: 0.0
+        max: 1.0
+        default: 0.9
+        description: "Nucleus sampling parameter"
+
+      stop_sequences:
+        type: array
+        items:
+          type: string
+        description: "Stop sequences for generation"
+        example:
+          - "\n\n"
+          - "END"
+
+# Example valid agent configuration
+example:
+  id: "agent_research_v1"
+  name: "ResearchAgent"
+  version: "1.0.0"
+  description: "Conducts comprehensive research tasks using multiple search and analysis skills"
+  skills:
+    - "skill_search_web_001"
+    - "skill_analyze_data_001"
+    - "skill_summarize_text_001"
+  metadata:
+    author: "AI Research Team"
+    created_at: "2025-01-15T10:30:00Z"
+    tags:
+      - "research"
+      - "analysis"
+      - "nlp"
+    complexity: "medium"
+    license: "MIT"
+  prompt_template: "prompts/agent_prompts/research_agent.j2"
+  parameters:
+    temperature: 0.7
+    max_tokens: 4000
+    top_p: 0.9

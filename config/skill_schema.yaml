@@ -1,0 +1,239 @@
+# Skill Configuration Schema
+# Defines the structure and required fields for skill configurations
+
+schema_version: "1.0.0"
+schema_type: "skill"
+
+# Required fields for all skill configurations
+required_fields:
+  - skill_id
+  - name
+  - description
+  - category
+
+# Field definitions with types and constraints
+fields:
+  skill_id:
+    type: string
+    pattern: "^skill_[a-z0-9_]+$"
+    description: "Unique skill identifier"
+    example: "skill_nlp_textanalyzer_001"
+
+  name:
+    type: string
+    min_length: 3
+    max_length: 100
+    description: "Human-readable skill name"
+    example: "TextAnalyzer"
+
+  description:
+    type: string
+    min_length: 10
+    max_length: 1000
+    description: "Detailed description of skill functionality"
+    example: "Analyzes text patterns, sentiment, and key themes"
+
+  category:
+    type: string
+    enum:
+      - "nlp"
+      - "data"
+      - "communication"
+      - "computation"
+      - "visualization"
+      - "search"
+      - "analysis"
+      - "general"
+    description: "Skill category for organization"
+    example: "nlp"
+
+  inputs:
+    type: array
+    description: "List of input specifications"
+    items:
+      type: object
+      required_fields:
+        - name
+        - type
+      fields:
+        name:
+          type: string
+          description: "Input parameter name"
+          example: "text"
+
+        type:
+          type: string
+          enum:
+            - "string"
+            - "integer"
+            - "float"
+            - "boolean"
+            - "array"
+            - "object"
+          description: "Input data type"
+          example: "string"
+
+        required:
+          type: boolean
+          default: false
+          description: "Whether input is required"
+          example: true
+
+        description:
+          type: string
+          description: "Input parameter description"
+          example: "Text content to analyze"
+
+        default:
+          type: any
+          description: "Default value if not provided"
+
+  outputs:
+    type: array
+    description: "List of output specifications"
+    items:
+      type: object
+      required_fields:
+        - name
+        - type
+      fields:
+        name:
+          type: string
+          description: "Output parameter name"
+          example: "sentiment"
+
+        type:
+          type: string
+          enum:
+            - "string"
+            - "integer"
+            - "float"
+            - "boolean"
+            - "array"
+            - "object"
+          description: "Output data type"
+          example: "string"
+
+        description:
+          type: string
+          description: "Output parameter description"
+          example: "Detected sentiment (positive/negative/neutral)"
+
+  prompt_template:
+    type: string
+    description: "Reference to prompt template file"
+    example: "prompts/skill_prompts/text_analyzer.j2"
+
+  metadata:
+    type: object
+    description: "Additional metadata about the skill"
+    fields:
+      complexity:
+        type: string
+        enum:
+          - "low"
+          - "medium"
+          - "high"
+        default: "medium"
+        description: "Skill complexity level"
+        example: "medium"
+
+      dependencies:
+        type: array
+        items:
+          type: string
+        description: "Other skill_ids this skill depends on"
+        example:
+          - "skill_preprocessing_001"
+
+      tags:
+        type: array
+        items:
+          type: string
+        description: "Categorization tags"
+        example:
+          - "nlp"
+          - "sentiment"
+          - "analysis"
+
+      version:
+        type: string
+        pattern: "^\\d+\\.\\d+\\.\\d+$"
+        description: "Skill version"
+        example: "1.0.0"
+
+      author:
+        type: string
+        description: "Skill creator"
+        example: "NLP Team"
+
+      created_at:
+        type: datetime
+        description: "Creation timestamp (ISO 8601)"
+        example: "2025-01-15T10:30:00Z"
+
+      license:
+        type: string
+        description: "License information"
+        example: "Apache-2.0"
+
+      performance:
+        type: object
+        description: "Performance characteristics"
+        fields:
+          avg_execution_time:
+            type: float
+            description: "Average execution time in seconds"
+            example: 0.5
+
+          memory_usage:
+            type: string
+            description: "Typical memory usage"
+            example: "100MB"
+
+# Example valid skill configuration
+example:
+  skill_id: "skill_nlp_textanalyzer_001"
+  name: "TextAnalyzer"
+  description: "Analyzes text content for sentiment, key themes, and linguistic patterns"
+  category: "nlp"
+  inputs:
+    - name: "text"
+      type: "string"
+      required: true
+      description: "Text content to analyze"
+    - name: "language"
+      type: "string"
+      required: false
+      default: "en"
+      description: "Language code (ISO 639-1)"
+    - name: "analyze_sentiment"
+      type: "boolean"
+      required: false
+      default: true
+      description: "Whether to perform sentiment analysis"
+  outputs:
+    - name: "sentiment"
+      type: "string"
+      description: "Detected sentiment (positive/negative/neutral)"
+    - name: "themes"
+      type: "array"
+      description: "Identified key themes"
+    - name: "confidence"
+      type: "float"
+      description: "Confidence score (0.0-1.0)"
+  prompt_template: "prompts/skill_prompts/text_analyzer.j2"
+  metadata:
+    complexity: "medium"
+    dependencies: []
+    tags:
+      - "nlp"
+      - "sentiment"
+      - "analysis"
+    version: "1.0.0"
+    author: "NLP Team"
+    created_at: "2025-01-15T10:30:00Z"
+    license: "Apache-2.0"
+    performance:
+      avg_execution_time: 0.5
+      memory_usage: "100MB"

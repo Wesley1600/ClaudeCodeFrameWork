@@ -1,0 +1,79 @@
+{
+  "task": {
+    "id": "task-YYYY-MM-DD-description",
+    "description": "Brief description of the task",
+    "started_at": "2025-11-18T10:00:00Z",
+    "status": "in_progress"
+  },
+  "observations": [
+    {
+      "id": 1,
+      "timestamp": "2025-11-18T10:05:00Z",
+      "observation_type": "discovery",
+      "content": "What you discovered",
+      "confidence": "high",
+      "implications": "What this means for the task",
+      "next_steps": "What to do with this information",
+      "references": [
+        "src/file.js:42",
+        "docs/api.md"
+      ]
+    },
+    {
+      "id": 2,
+      "timestamp": "2025-11-18T10:10:00Z",
+      "observation_type": "assumption",
+      "content": "Assumption being made",
+      "confidence": "medium",
+      "implications": "Impact if assumption is wrong",
+      "next_steps": "How to validate this assumption",
+      "references": []
+    },
+    {
+      "id": 3,
+      "timestamp": "2025-11-18T10:15:00Z",
+      "observation_type": "uncertainty",
+      "content": "What you're uncertain about",
+      "confidence": "low",
+      "implications": "Why this uncertainty matters",
+      "next_steps": "Questions to ask or tests to run",
+      "references": []
+    },
+    {
+      "id": 4,
+      "timestamp": "2025-11-18T10:20:00Z",
+      "observation_type": "finding",
+      "content": "Specific finding from investigation",
+      "confidence": "high",
+      "implications": "How this affects the solution",
+      "next_steps": "Action items based on this finding",
+      "references": [
+        "src/component.jsx:156"
+      ]
+    },
+    {
+      "id": 5,
+      "timestamp": "2025-11-18T10:25:00Z",
+      "observation_type": "result",
+      "content": "Result of an action or test",
+      "confidence": "high",
+      "implications": "What this result tells us",
+      "next_steps": "Next actions based on result",
+      "references": []
+    }
+  ],
+  "summary": {
+    "key_findings": [
+      "Most important finding 1",
+      "Most important finding 2"
+    ],
+    "remaining_questions": [
+      "Question 1",
+      "Question 2"
+    ],
+    "recommended_actions": [
+      "Action 1",
+      "Action 2"
+    ]
+  }
+}

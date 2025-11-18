@@ -349,6 +349,39 @@ If you use this code in your research, please cite:
 - **UMAP**: McInnes, L., Healy, J., & Melville, J. (2018). UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction. arXiv:1802.03426
 - **Word Analogies**: Mikolov, T., et al. (2013). Linguistic Regularities in Continuous Space Word Representations. NAACL-HLT
 
+## Claude Code Skills
+
+This repository includes custom Claude Code skills in the `skills/` directory:
+
+### Output Validator Skill
+
+A comprehensive skill that validates code, documents, and configurations against quality standards using linters, formatters, type checkers, and test runners.
+
+**Features:**
+- Multi-language support (JavaScript, TypeScript, Python, Go, Rust, Ruby, Shell, etc.)
+- Document validation (Markdown, JSON, YAML)
+- Auto-fix capabilities for formatting and style issues
+- Clear, categorized issue reporting
+- Integration with project-specific configurations
+
+**Installation:**
+```bash
+# Install to your Claude Code environment
+cp -r skills/output-validator ~/.claude/skills/
+```
+
+**Usage:**
+```
+# In Claude Code
+/skill output-validator
+
+# Or simply ask
+"Validate my code"
+"Check this file for errors"
+```
+
+See [skills/README.md](skills/README.md) for full documentation.
+
 ## License
 
 MIT License (or your preferred license)

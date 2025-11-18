@@ -1,0 +1,17 @@
+{
+  "analysis_defaults": {
+    "max_file_size_mb": 500,
+    "default_plot_type": "histogram",
+    "output_format": "json"
+  },
+  "validation_rules": {
+    "max_missing_percentage": 50,
+    "warn_on_large_file_mb": 100,
+    "require_column_names": true
+  },
+  "plotting_options": {
+    "dpi": 300,
+    "figure_size": [10, 6],
+    "color_scheme": "default"
+  }
+}

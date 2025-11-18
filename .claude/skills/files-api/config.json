@@ -1,0 +1,9 @@
+{
+  "api_version": "2023-06-01",
+  "beta_version": "files-api-2025-04-14",
+  "storage_dir": ".claude/skills/files-api/storage",
+  "tracking_db": ".claude/skills/files-api/files_db.json",
+  "max_file_size_mb": 350,
+  "auto_cleanup_days": 30,
+  "retry_attempts": 4
+}

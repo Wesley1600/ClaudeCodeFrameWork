@@ -1,0 +1,57 @@
+{
+  "name": "mcp-api-connector",
+  "version": "1.0.0",
+  "description": "Connect to Model Context Protocol (MCP) servers and external APIs (GitHub, Figma, etc.) to fetch and integrate data",
+  "author": "Claude Code Framework",
+  "entrypoint": "impl.MCPAPIConnector",
+  "capabilities": [
+    "mcp-server-connection",
+    "rest-api-integration",
+    "graphql-support",
+    "authentication",
+    "resource-querying",
+    "response-translation"
+  ],
+  "dependencies": {
+    "python": ">=3.8",
+    "packages": [
+      "requests>=2.31.0",
+      "aiohttp>=3.9.0",
+      "python-dotenv>=1.0.0"
+    ]
+  },
+  "configuration": {
+    "api_connectors": {
+      "type": "object",
+      "description": "Configuration for various API connectors",
+      "properties": {
+        "github": {
+          "enabled": false,
+          "auth_type": "token",
+          "base_url": "https://api.github.com"
+        },
+        "figma": {
+          "enabled": false,
+          "auth_type": "token",
+          "base_url": "https://api.figma.com/v1"
+        }
+      }
+    },
+    "mcp_servers": {
+      "type": "array",
+      "description": "List of MCP servers to connect to",
+      "items": {
+        "name": "string",
+        "command": "string",
+        "args": "array",
+        "env": "object"
+      }
+    }
+  },
+  "secrets": [
+    "GITHUB_TOKEN",
+    "FIGMA_TOKEN",
+    "SLACK_TOKEN",
+    "CUSTOM_API_KEY"
+  ]
+}

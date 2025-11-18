@@ -1,2 +1,12 @@
+# Core dependencies for UMAP analogy engine
 torch>=2.0.0
 numpy>=1.20.0
+
+# API Endpoint Manager dependencies
+pydantic>=2.0.0
+requests>=2.31.0
+
+# Optional dependencies (uncomment if needed)
+# gensim>=4.0.0          # For Word2Vec embeddings in examples
+# faiss-cpu>=1.7.0       # For large-scale similarity search
+# cryptography>=41.0.0   # For production-grade encryption

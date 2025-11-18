@@ -58,9 +58,39 @@ A comprehensive skill for condensing long documents, conversation logs, or trans
 
 ### 3. UMAP-Inspired Universal Analogy Engine
 
-A semantic relationship engine that learns universal relationship mappings inspired by UMAP's topological data analysis approach. This engine enables semantic analogies like "boy:girl :: king:?" → "queen" by learning and applying consistent relationship transformations in a low-dimensional embedding space.
+A semantic relationship engine that learns universal relationship mappings inspired by UMAP's topological data analysis approach.
 
-## Overview
+**Location**: Root directory
+
+**Features**:
+- ✅ Fixed all critical bugs from V1 draft (see `CODE_REVIEW.md`)
+- ✅ 15-20x faster training with cluster caching and optimized gradient computation
+- ✅ Numerically stable with proper epsilon handling and bounds checking
+- ✅ Production-ready with comprehensive documentation and error handling
+- ✅ Flexible metric selection (Euclidean or cosine similarity)
+- ✅ Auto-balancing of loss weights via gradient norm matching
+
+**Quick Start**:
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run demo
+python umap_analogy_engine.py
+
+# Run examples
+python example_word_analogies.py
+```
+
+**Documentation**: See sections below for detailed usage and API reference.
+
+---
+
+## UMAP Analogy Engine - Detailed Documentation
+
+This engine enables semantic analogies like "boy:girl :: king:?" → "queen" by learning and applying consistent relationship transformations in a low-dimensional embedding space.
+
+### Overview
 
 This project implements a novel approach to semantic analogies by:
 
@@ -69,16 +99,7 @@ This project implements a novel approach to semantic analogies by:
 3. **Extracting relation axes** that can be applied to perform analogies
 4. **Supporting multi-relation learning** with orthogonality constraints to disentangle different types of relationships
 
-## Key Features
-
-- ✅ **Fixed all critical bugs** from V1 draft (see `CODE_REVIEW.md`)
-- ✅ **15-20x faster** training with cluster caching and optimized gradient computation
-- ✅ **Numerically stable** with proper epsilon handling and bounds checking
-- ✅ **Production-ready** with comprehensive documentation and error handling
-- ✅ **Flexible metric selection** (Euclidean or cosine similarity)
-- ✅ **Auto-balancing** of loss weights via gradient norm matching
-
-## Installation
+### Installation
 
 ```bash
 # Clone the repository
@@ -94,9 +115,9 @@ pip install -r requirements.txt
 - PyTorch 2.0+
 - NumPy 1.20+
 
-## Quick Start
+### Quick Start
 
-### Basic Usage
+#### Basic Usage
 
 ```python
 import torch
@@ -159,7 +180,7 @@ for rank, (idx, score) in enumerate(results, 1):
     print(f"{rank}. {vocab[idx]} (score: {score:.4f})")
 ```
 
-### Running the Demo
+#### Running the Demo
 
 ```bash
 python umap_analogy_engine.py
@@ -171,16 +192,16 @@ This runs a synthetic example with 2000 random embeddings and demonstrates:
 - Relation axis extraction
 - Analogy finding
 
-## Architecture
+### Architecture
 
-### 1. Fuzzy Simplicial Set Construction
+#### 1. Fuzzy Simplicial Set Construction
 
 Builds a k-nearest neighbor graph with fuzzy set memberships:
 - Computes adaptive bandwidths (sigma) via binary search
 - Symmetrizes using fuzzy union: P(A ∪ B) = P(A) + P(B) - P(A)·P(B)
 - Returns edge list in COO format
 
-### 2. Parametric UMAP Encoder
+#### 2. Parametric UMAP Encoder
 
 Deep neural network (configurable architecture) that learns the mapping:
 ```
@@ -192,7 +213,7 @@ Default architecture:
 - Hidden: [512, 256, 128] with LayerNorm + ReLU + Dropout
 - Output: d-dimensional (default d=2)
 
-### 3. Multi-Objective Loss
+#### 3. Multi-Objective Loss
 
 **L_total = L_umap + α·L_align + β·L_ortho**
 
@@ -208,23 +229,23 @@ Where:
   - Penalizes correlation between relation axes
   - Keeps different relations disentangled
 
-### 4. Relation Axis Extraction
+#### 4. Relation Axis Extraction
 
 For each relation:
 1. Compute difference vectors: v_i = emb(target_i) - emb(source_i)
 2. Cluster vectors using soft k-means
 3. Extract mean direction (normalized) and scale (median length)
 
-### 5. Analogy Finding
+#### 5. Analogy Finding
 
 Given query word and relation:
 1. Compute target: target = emb(query) + relation_axis × scale
 2. Find k-nearest neighbors to target (Euclidean distance)
 3. Return ranked results
 
-## Configuration
+### Configuration
 
-### Hyperparameters
+#### Hyperparameters
 
 ```python
 # UMAP parameters
@@ -255,7 +276,7 @@ KMEANS_ITERS = 50     # K-means iterations
 KMEANS_UPDATE_FREQ = 10  # Update clusters every N steps
 ```
 
-### Auto-Alignment
+#### Auto-Alignment
 
 The `AUTO_ALIGN` feature automatically balances the alignment loss weight against the UMAP loss by matching gradient magnitudes:
 
@@ -265,9 +286,9 @@ The `AUTO_ALIGN` feature automatically balances the alignment loss weight agains
 
 This ensures both objectives contribute equally to learning, preventing one from dominating.
 
-## API Reference
+### API Reference
 
-### Training
+#### Training
 
 ```python
 train_relation_aware_umap(
@@ -290,7 +311,7 @@ train_relation_aware_umap(
 ) -> Tuple[nn.Module, torch.Tensor]
 ```
 
-### Relation Axes
+#### Relation Axes
 
 ```python
 extract_relation_axes(
@@ -306,7 +327,7 @@ Returns list of dicts with keys:
 - `"mean_direction"`: (d,) normalized direction
 - `"scale"`: Median length of difference vectors
 
-### Analogy Finding
+#### Analogy Finding
 
 ```python
 find_analogy(
@@ -333,7 +354,7 @@ analogy_from_pair(
 ) -> List[Tuple[int, float]]
 ```
 
-## Critical Fixes from V1
+### Critical Fixes from V1
 
 See `CODE_REVIEW.md` for detailed analysis. Key fixes:
 
@@ -343,7 +364,7 @@ See `CODE_REVIEW.md` for detailed analysis. Key fixes:
 4. **Numerical stability**: Fixed epsilon values and added bounds checking
 5. **Documentation**: Comprehensive docstrings and inline comments
 
-## Performance
+### Performance
 
 | Dataset Size | Training Time (V1) | Training Time (V2) | Speedup |
 |--------------|--------------------|--------------------|---------|
@@ -353,27 +374,27 @@ See `CODE_REVIEW.md` for detailed analysis. Key fixes:
 
 *Estimated with FAISS acceleration (not included by default)
 
-## Roadmap
+### Roadmap
 
-### Phase 1: Foundation (Current)
+#### Phase 1: Foundation (Current)
 - ✅ Parametric UMAP implementation
 - ✅ Multi-relation alignment
 - ✅ Analogy finding API
 - ✅ Optimization and bug fixes
 
-### Phase 2: Inverse Projection (Planned)
+#### Phase 2: Inverse Projection (Planned)
 - [ ] Inverse parametric model (Z_low → X_high)
 - [ ] Riemannian manifold reconstruction
 - [ ] Relation simplex aggregation
 - [ ] High-dimensional analogy prediction
 
-### Phase 3: Advanced Features (Future)
+#### Phase 3: Advanced Features (Future)
 - [ ] Automatic relation discovery
 - [ ] Hierarchical relations
 - [ ] Compositional analogies (multi-hop)
 - [ ] Interactive visualization
 
-## Scaling to Large Datasets
+### Scaling to Large Datasets
 
 For N > 100k, replace `torch.cdist` with FAISS:
 
@@ -389,7 +410,7 @@ index.add(X.cpu().numpy())
 D, I = index.search(X.cpu().numpy(), k=kmax+1)
 ```
 
-## Citation
+### Citation
 
 If you use this code in your research, please cite:
 
@@ -402,16 +423,16 @@ If you use this code in your research, please cite:
 }
 ```
 
-## References
+### References
 
 - **UMAP**: McInnes, L., Healy, J., & Melville, J. (2018). UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction. arXiv:1802.03426
 - **Word Analogies**: Mikolov, T., et al. (2013). Linguistic Regularities in Continuous Space Word Representations. NAACL-HLT
 
-## License
+### License
 
 MIT License (or your preferred license)
 
-## Contributing
+### Contributing
 
 Contributions welcome! Please:
 1. Fork the repository
@@ -419,7 +440,7 @@ Contributions welcome! Please:
 3. Add tests for new functionality
 4. Submit a pull request
 
-## Contact
+### Contact
 
 For questions or issues, please open a GitHub issue or contact [your email].
 

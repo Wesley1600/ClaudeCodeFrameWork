@@ -1,0 +1,45 @@
+# Multi-format output chain
+# Demonstrates parallel execution (future feature)
+
+name: multi_format_output
+description: |
+  Generates reports in multiple formats from the same summary.
+  This demonstrates how to reuse results and create multiple outputs.
+
+initial_data:
+  query: "Explain the key concepts"
+  documents:
+    - |
+      Neural networks are computational models inspired by biological neural networks.
+      They consist of interconnected nodes (neurons) organized in layers. Each connection
+      has a weight that adjusts during training through backpropagation. Deep neural
+      networks with many layers can learn complex hierarchical features. Convolutional
+      neural networks (CNNs) excel at image processing by learning spatial hierarchies.
+      Recurrent neural networks (RNNs) process sequential data by maintaining hidden state.
+
+steps:
+  - name: "Retrieve"
+    skills: rag_pipeline
+    config:
+      rag_pipeline:
+        top_k: 2
+
+  - name: "Summarize"
+    skills: summarization
+    config:
+      summarization:
+        strategy: extractive
+        num_sentences: 3
+
+  # Generate multiple report formats
+  # Note: Currently executes sequentially, parallel support coming soon
+  - name: "Generate Reports"
+    skills:
+      - reporting
+    config:
+      reporting:
+        format: markdown
+        title: "Neural Networks Overview"
+    mode: sequential
+
+fail_fast: false

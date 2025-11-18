@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Test Results
+test-results/
+playwright-report/
+test-results/
+results.json
+report.json
+
+# Screenshots
+screenshots/
+*.png
+!baseline-screenshots/*.png
+
+# Videos
+videos/
+*.webm
+
+# Traces
+traces/
+*.zip
+
+# Auth state
+auth.json
+storage-state.json
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temporary files
+.temp/
+tmp/

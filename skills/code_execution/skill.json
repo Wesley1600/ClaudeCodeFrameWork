@@ -1,0 +1,247 @@
+{
+  "name": "code_execution",
+  "version": "1.0.0",
+  "description": "A comprehensive code execution skill that runs scripts, analyzes data, and creates files in a secure sandbox environment",
+  "author": "Claude",
+  "category": "development",
+  "tags": ["code", "execution", "python", "bash", "data-analysis", "visualization", "sandbox"],
+  "functions": [
+    {
+      "name": "run_python",
+      "description": "Execute Python code in a secure sandbox. Supports data analysis, calculations, and creating visualizations.",
+      "parameters": {
+        "code": {
+          "type": "string",
+          "description": "Python code to execute",
+          "required": true
+        },
+        "timeout": {
+          "type": "number",
+          "description": "Maximum execution time in milliseconds (default: 120000)",
+          "required": false,
+          "default": 120000
+        },
+        "return_output": {
+          "type": "boolean",
+          "description": "Whether to return stdout/stderr (default: true)",
+          "required": false,
+          "default": true
+        }
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "success": "boolean",
+          "output": "string",
+          "error": "string"
+        }
+      }
+    },
+    {
+      "name": "run_bash",
+      "description": "Execute bash commands in a secure sandbox environment",
+      "parameters": {
+        "command": {
+          "type": "string",
+          "description": "Bash command to execute",
+          "required": true
+        },
+        "timeout": {
+          "type": "number",
+          "description": "Maximum execution time in milliseconds (default: 120000)",
+          "required": false,
+          "default": 120000
+        }
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "success": "boolean",
+          "output": "string",
+          "error": "string"
+        }
+      }
+    },
+    {
+      "name": "write_file",
+      "description": "Write content to a file at the specified path",
+      "parameters": {
+        "file_path": {
+          "type": "string",
+          "description": "Absolute path where the file should be written",
+          "required": true
+        },
+        "content": {
+          "type": "string",
+          "description": "Content to write to the file",
+          "required": true
+        }
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "success": "boolean",
+          "path": "string",
+          "error": "string"
+        }
+      }
+    },
+    {
+      "name": "read_file",
+      "description": "Read content from a file at the specified path",
+      "parameters": {
+        "file_path": {
+          "type": "string",
+          "description": "Absolute path to the file to read",
+          "required": true
+        },
+        "offset": {
+          "type": "number",
+          "description": "Line number to start reading from",
+          "required": false
+        },
+        "limit": {
+          "type": "number",
+          "description": "Number of lines to read",
+          "required": false
+        }
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "success": "boolean",
+          "content": "string",
+          "error": "string"
+        }
+      }
+    },
+    {
+      "name": "analyze_data",
+      "description": "Analyze data from a file (CSV, JSON, etc.) using pandas and numpy",
+      "parameters": {
+        "file_path": {
+          "type": "string",
+          "description": "Path to the data file",
+          "required": true
+        },
+        "analysis_type": {
+          "type": "string",
+          "description": "Type of analysis: 'summary', 'statistics', 'correlations', 'custom'",
+          "required": true,
+          "enum": ["summary", "statistics", "correlations", "custom"]
+        },
+        "custom_code": {
+          "type": "string",
+          "description": "Custom Python code for analysis (only used when analysis_type is 'custom')",
+          "required": false
+        }
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "success": "boolean",
+          "result": "string",
+          "error": "string"
+        }
+      }
+    },
+    {
+      "name": "create_visualization",
+      "description": "Create visualizations (plots, charts) from data using matplotlib/seaborn",
+      "parameters": {
+        "data_source": {
+          "type": "string",
+          "description": "Path to data file or inline data as JSON string",
+          "required": true
+        },
+        "plot_type": {
+          "type": "string",
+          "description": "Type of plot: 'line', 'scatter', 'bar', 'histogram', 'heatmap', 'custom'",
+          "required": true,
+          "enum": ["line", "scatter", "bar", "histogram", "heatmap", "custom"]
+        },
+        "output_path": {
+          "type": "string",
+          "description": "Path where the visualization should be saved (PNG format)",
+          "required": true
+        },
+        "custom_code": {
+          "type": "string",
+          "description": "Custom matplotlib code (only used when plot_type is 'custom')",
+          "required": false
+        },
+        "options": {
+          "type": "object",
+          "description": "Additional options like title, xlabel, ylabel, etc.",
+          "required": false
+        }
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "success": "boolean",
+          "path": "string",
+          "error": "string"
+        }
+      }
+    },
+    {
+      "name": "install_package",
+      "description": "Install a Python package using pip in the sandbox environment",
+      "parameters": {
+        "package": {
+          "type": "string",
+          "description": "Package name (optionally with version, e.g., 'pandas==1.5.0')",
+          "required": true
+        }
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "success": "boolean",
+          "output": "string",
+          "error": "string"
+        }
+      }
+    },
+    {
+      "name": "list_files",
+      "description": "List files in a directory matching a pattern",
+      "parameters": {
+        "pattern": {
+          "type": "string",
+          "description": "Glob pattern to match files (e.g., '*.py', 'data/**/*.csv')",
+          "required": true
+        },
+        "path": {
+          "type": "string",
+          "description": "Directory to search in (default: current directory)",
+          "required": false
+        }
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "success": "boolean",
+          "files": "array",
+          "error": "string"
+        }
+      }
+    }
+  ],
+  "dependencies": {
+    "python": ">=3.8",
+    "pip_packages": [
+      "numpy",
+      "pandas",
+      "matplotlib",
+      "seaborn"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "network_access": false,
+    "max_execution_time": 300000,
+    "max_memory": "512MB"
+  }
+}

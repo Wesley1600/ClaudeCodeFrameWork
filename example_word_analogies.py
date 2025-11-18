@@ -23,15 +23,19 @@ from umap_analogy_engine import (
     find_analogy,
     analogy_from_pair,
 )
+from operation_cache import cached, print_cache_stats
 
 
 # =========================
 # Load Pre-trained Embeddings
 # =========================
 
+@cached(cache_type="embeddings", ttl=86400)  # Cache for 24 hours
 def load_glove_embeddings(path: str, vocab_size: int = 50000) -> Tuple[torch.Tensor, Dict[str, int], List[str]]:
     """
     Load GloVe embeddings from text file.
+
+    Results are cached to disk for faster subsequent loads.
 
     Args:
         path: Path to GloVe file (e.g., glove.6B.300d.txt)
@@ -42,7 +46,7 @@ def load_glove_embeddings(path: str, vocab_size: int = 50000) -> Tuple[torch.Ten
         word_to_idx: Dict mapping words to indices
         idx_to_word: List mapping indices to words
     """
-    print(f"Loading GloVe embeddings from {path}...")
+    print(f"Loading GloVe embeddings from {path}... (not cached)")
 
     embeddings = []
     idx_to_word = []
@@ -70,9 +74,12 @@ def load_glove_embeddings(path: str, vocab_size: int = 50000) -> Tuple[torch.Ten
     return embeddings, word_to_idx, idx_to_word
 
 
+@cached(cache_type="embeddings", ttl=86400)  # Cache for 24 hours
 def load_word2vec_embeddings(path: str, vocab_size: int = 50000) -> Tuple[torch.Tensor, Dict[str, int], List[str]]:
     """
     Load Word2Vec embeddings using gensim.
+
+    Results are cached to disk for faster subsequent loads.
 
     Args:
         path: Path to Word2Vec .bin file
@@ -88,7 +95,7 @@ def load_word2vec_embeddings(path: str, vocab_size: int = 50000) -> Tuple[torch.
     except ImportError:
         raise ImportError("Install gensim: pip install gensim")
 
-    print(f"Loading Word2Vec embeddings from {path}...")
+    print(f"Loading Word2Vec embeddings from {path}... (not cached)")
     wv = KeyedVectors.load_word2vec_format(path, binary=True, limit=vocab_size)
 
     embeddings = torch.tensor(wv.vectors, dtype=torch.float32)
@@ -336,6 +343,9 @@ def main():
     print("\n" + "=" * 60)
     print("Demo complete!")
     print("=" * 60)
+
+    # Print cache statistics
+    print_cache_stats()
 
 
 if __name__ == "__main__":

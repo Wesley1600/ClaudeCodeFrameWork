@@ -1,8 +1,96 @@
-# UMAP-Inspired Universal Analogy Engine
+# Claude Code Framework
 
-A semantic relationship engine that learns universal relationship mappings inspired by UMAP's topological data analysis approach. This engine enables semantic analogies like "boy:girl :: king:?" → "queen" by learning and applying consistent relationship transformations in a low-dimensional embedding space.
+A comprehensive framework containing AI/ML tools and Claude Code skills for advanced development workflows.
 
-## Overview
+## 📦 Contents
+
+### 1. MCP API Connector Skill
+
+A Claude Code skill that enables interaction with the Model Context Protocol (MCP) servers and external API systems like GitHub, Figma, Slack, Linear, and more.
+
+**Location**: `.claude/skills/mcp-api-connector/`
+
+**Features**:
+- ✅ Connect to MCP servers following the Model Context Protocol specification
+- ✅ Query REST APIs (GitHub, Figma, Slack, etc.)
+- ✅ Execute GraphQL queries (Linear, etc.)
+- ✅ Secure authentication (Bearer tokens, API keys, OAuth)
+- ✅ Automatic response translation into agent context
+- ✅ Comprehensive test suite (25 tests, 100% passing)
+
+**Quick Start**:
+```bash
+# Install dependencies
+cd .claude/skills/mcp-api-connector
+pip install -r requirements.txt
+
+# Configure authentication
+cp ../../.env.example ../../.env
+# Edit .env and add your API tokens
+
+# Run examples
+python examples.py
+
+# Run tests
+python test_skill.py
+```
+
+**Documentation**: See [.claude/skills/mcp-api-connector/README.md](./.claude/skills/mcp-api-connector/README.md) for detailed usage and API reference.
+
+---
+
+### 2. Summarization Skill
+
+A comprehensive skill for condensing long documents, conversation logs, or transcripts into concise summaries.
+
+**Location**: `.claude/skills/summarization/`
+
+**Features**:
+- ✅ Multi-source retrieval (files, directories, conversation history)
+- ✅ Format flexibility (bullet points, paragraphs, executive summary)
+- ✅ Detail control (brief, standard, detailed)
+- ✅ Smart extraction of key themes, action items, and decisions
+- ✅ Context awareness for code, technical docs, and conversations
+
+**Documentation**: See [.claude/skills/summarization/SKILL.md](./.claude/skills/summarization/SKILL.md) for detailed usage.
+
+---
+
+### 3. UMAP-Inspired Universal Analogy Engine
+
+A semantic relationship engine that learns universal relationship mappings inspired by UMAP's topological data analysis approach.
+
+**Location**: Root directory
+
+**Features**:
+- ✅ Fixed all critical bugs from V1 draft (see `CODE_REVIEW.md`)
+- ✅ 15-20x faster training with cluster caching and optimized gradient computation
+- ✅ Numerically stable with proper epsilon handling and bounds checking
+- ✅ Production-ready with comprehensive documentation and error handling
+- ✅ Flexible metric selection (Euclidean or cosine similarity)
+- ✅ Auto-balancing of loss weights via gradient norm matching
+
+**Quick Start**:
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run demo
+python umap_analogy_engine.py
+
+# Run examples
+python example_word_analogies.py
+```
+
+**Documentation**: See sections below for detailed usage and API reference.
+
+---
+
+## UMAP Analogy Engine - Detailed Documentation
+
+This engine enables semantic analogies like "boy:girl :: king:?" → "queen" by learning and applying consistent relationship transformations in a low-dimensional embedding space.
+
+### Overview
 
 This project implements a novel approach to semantic analogies by:
 
@@ -11,7 +99,7 @@ This project implements a novel approach to semantic analogies by:
 3. **Extracting relation axes** that can be applied to perform analogies
 4. **Supporting multi-relation learning** with orthogonality constraints to disentangle different types of relationships
 
-## Key Features
+### Key Features
 
 - ✅ **Fixed all critical bugs** from V1 draft (see `CODE_REVIEW.md`)
 - ✅ **15-20x faster** training with cluster caching and optimized gradient computation
@@ -19,8 +107,73 @@ This project implements a novel approach to semantic analogies by:
 - ✅ **Production-ready** with comprehensive documentation and error handling
 - ✅ **Flexible metric selection** (Euclidean or cosine similarity)
 - ✅ **Auto-balancing** of loss weights via gradient norm matching
+- ✅ **Persistent memory system** for session continuity and experiment tracking
 
-## Installation
+### Persistent Memory Tool
+
+The project now includes a powerful **Memory Tool** that enables persistent storage and retrieval of information across sessions:
+
+#### Features
+- 📦 **CRUD operations**: Create, Read, Update, Delete memories with simple API
+- 🔍 **Semantic search**: Vector-based similarity search to find relevant memories
+- 💾 **Multiple types**: Store facts, summaries, models, embeddings, and experiments
+- 🔄 **Session continuity**: Maintain context across conversations with session summaries
+- 📊 **Experiment tracking**: Save and compare training runs with metadata
+
+#### Quick Example
+
+```python
+from memory_tool import MemoryTool
+from memory_integration import AnalogyMemoryManager
+
+# Basic memory operations
+memory = MemoryTool()
+memory.create("user_pref", "User prefers technical explanations", memory_type="fact")
+results = memory.search("user preferences", k=3)
+
+# Save a trained model with full context
+manager = AnalogyMemoryManager()
+manager.save_trained_model(
+    model_state=model.state_dict(),
+    embeddings=Z,
+    relation_axes=axes,
+    model_name="gender_analogy_v1",
+    metadata={"epochs": 300, "accuracy": 0.87}
+)
+
+# Load it later in a new session
+bundle = manager.load_trained_model("gender_analogy_v1")
+```
+
+See **[MEMORY_TOOL_GUIDE.md](MEMORY_TOOL_GUIDE.md)** for complete documentation.
+
+### Agent Pulse - Proactive AI Assistant
+
+This repository now includes **Agent Pulse**, a ChatGPT Pulse-inspired system that transforms reactive AI assistance into proactive support:
+
+- 📊 **Analyzes past conversations** to understand your interests and projects
+- 🔍 **Conducts overnight research** on relevant topics
+- 💡 **Identifies opportunities** for learning and optimization
+- 🔧 **Suggests solutions** to recurring problems
+- ✅ **Tracks action items** and commitments
+- 🎯 **Learns from feedback** to personalize updates
+
+#### Quick Start with Agent Pulse
+
+```bash
+# Generate your first pulse update
+python -m agent_pulse.cli.pulse_cli generate
+
+# Configure your interests
+python -m agent_pulse.cli.pulse_cli config --add-interest "machine learning"
+
+# View system status
+python -m agent_pulse.cli.pulse_cli status
+```
+
+**[📖 Full Agent Pulse Documentation →](./AGENT_PULSE.md)**
+
+### Installation
 
 ```bash
 # Clone the repository
@@ -36,9 +189,9 @@ pip install -r requirements.txt
 - PyTorch 2.0+
 - NumPy 1.20+
 
-## Quick Start
+### Quick Start
 
-### Basic Usage
+#### Basic Usage
 
 ```python
 import torch
@@ -101,7 +254,7 @@ for rank, (idx, score) in enumerate(results, 1):
     print(f"{rank}. {vocab[idx]} (score: {score:.4f})")
 ```
 
-### Running the Demo
+#### Running the Demo
 
 ```bash
 python umap_analogy_engine.py
@@ -113,16 +266,16 @@ This runs a synthetic example with 2000 random embeddings and demonstrates:
 - Relation axis extraction
 - Analogy finding
 
-## Architecture
+### Architecture
 
-### 1. Fuzzy Simplicial Set Construction
+#### 1. Fuzzy Simplicial Set Construction
 
 Builds a k-nearest neighbor graph with fuzzy set memberships:
 - Computes adaptive bandwidths (sigma) via binary search
 - Symmetrizes using fuzzy union: P(A ∪ B) = P(A) + P(B) - P(A)·P(B)
 - Returns edge list in COO format
 
-### 2. Parametric UMAP Encoder
+#### 2. Parametric UMAP Encoder
 
 Deep neural network (configurable architecture) that learns the mapping:
 ```
@@ -134,7 +287,7 @@ Default architecture:
 - Hidden: [512, 256, 128] with LayerNorm + ReLU + Dropout
 - Output: d-dimensional (default d=2)
 
-### 3. Multi-Objective Loss
+#### 3. Multi-Objective Loss
 
 **L_total = L_umap + α·L_align + β·L_ortho**
 
@@ -150,23 +303,23 @@ Where:
   - Penalizes correlation between relation axes
   - Keeps different relations disentangled
 
-### 4. Relation Axis Extraction
+#### 4. Relation Axis Extraction
 
 For each relation:
 1. Compute difference vectors: v_i = emb(target_i) - emb(source_i)
 2. Cluster vectors using soft k-means
 3. Extract mean direction (normalized) and scale (median length)
 
-### 5. Analogy Finding
+#### 5. Analogy Finding
 
 Given query word and relation:
 1. Compute target: target = emb(query) + relation_axis × scale
 2. Find k-nearest neighbors to target (Euclidean distance)
 3. Return ranked results
 
-## Configuration
+### Configuration
 
-### Hyperparameters
+#### Hyperparameters
 
 ```python
 # UMAP parameters
@@ -197,7 +350,7 @@ KMEANS_ITERS = 50     # K-means iterations
 KMEANS_UPDATE_FREQ = 10  # Update clusters every N steps
 ```
 
-### Auto-Alignment
+#### Auto-Alignment
 
 The `AUTO_ALIGN` feature automatically balances the alignment loss weight against the UMAP loss by matching gradient magnitudes:
 
@@ -207,9 +360,9 @@ The `AUTO_ALIGN` feature automatically balances the alignment loss weight agains
 
 This ensures both objectives contribute equally to learning, preventing one from dominating.
 
-## API Reference
+### API Reference
 
-### Training
+#### Training
 
 ```python
 train_relation_aware_umap(
@@ -232,7 +385,7 @@ train_relation_aware_umap(
 ) -> Tuple[nn.Module, torch.Tensor]
 ```
 
-### Relation Axes
+#### Relation Axes
 
 ```python
 extract_relation_axes(
@@ -248,7 +401,7 @@ Returns list of dicts with keys:
 - `"mean_direction"`: (d,) normalized direction
 - `"scale"`: Median length of difference vectors
 
-### Analogy Finding
+#### Analogy Finding
 
 ```python
 find_analogy(
@@ -275,7 +428,7 @@ analogy_from_pair(
 ) -> List[Tuple[int, float]]
 ```
 
-## Critical Fixes from V1
+### Critical Fixes from V1
 
 See `CODE_REVIEW.md` for detailed analysis. Key fixes:
 
@@ -285,7 +438,7 @@ See `CODE_REVIEW.md` for detailed analysis. Key fixes:
 4. **Numerical stability**: Fixed epsilon values and added bounds checking
 5. **Documentation**: Comprehensive docstrings and inline comments
 
-## Performance
+### Performance
 
 | Dataset Size | Training Time (V1) | Training Time (V2) | Speedup |
 |--------------|--------------------|--------------------|---------|
@@ -295,27 +448,27 @@ See `CODE_REVIEW.md` for detailed analysis. Key fixes:
 
 *Estimated with FAISS acceleration (not included by default)
 
-## Roadmap
+### Roadmap
 
-### Phase 1: Foundation (Current)
+#### Phase 1: Foundation (Current)
 - ✅ Parametric UMAP implementation
 - ✅ Multi-relation alignment
 - ✅ Analogy finding API
 - ✅ Optimization and bug fixes
 
-### Phase 2: Inverse Projection (Planned)
+#### Phase 2: Inverse Projection (Planned)
 - [ ] Inverse parametric model (Z_low → X_high)
 - [ ] Riemannian manifold reconstruction
 - [ ] Relation simplex aggregation
 - [ ] High-dimensional analogy prediction
 
-### Phase 3: Advanced Features (Future)
+#### Phase 3: Advanced Features (Future)
 - [ ] Automatic relation discovery
 - [ ] Hierarchical relations
 - [ ] Compositional analogies (multi-hop)
 - [ ] Interactive visualization
 
-## Scaling to Large Datasets
+### Scaling to Large Datasets
 
 For N > 100k, replace `torch.cdist` with FAISS:
 
@@ -331,7 +484,41 @@ index.add(X.cpu().numpy())
 D, I = index.search(X.cpu().numpy(), k=kmax+1)
 ```
 
-## Citation
+### Task Classification and Routing System
+
+This repository also includes an **intelligent task classification and routing system** that automatically classifies input tasks into categories and routes them to appropriate skills or agents.
+
+#### Quick Example
+
+```python
+from task_classification_routing import TaskRouter
+
+router = TaskRouter()
+
+# Route a task to the appropriate skill
+result = router.route("Find semantic analogies: king is to queen as man is to what?")
+print(f"Skill: {result.skill_name}")  # "Analogy Finder (UMAP)"
+print(f"Confidence: {result.confidence:.2f}")
+```
+
+#### Features
+
+- **12 Built-in Categories**: PDF, Spreadsheet, Code Execution, Text Processing, Image Processing, Data Analysis, Web Scraping, File Management, API Interaction, Database Query, Machine Learning, and Analogy Finding
+- **Extensible Skill Registry**: Register custom skills with metadata and capabilities
+- **Multi-Strategy Classification**: Pattern matching, keyword detection, and contextual analysis
+- **Confidence Scoring**: Returns classification confidence for validation
+- **Batch Processing**: Classify and route multiple tasks efficiently
+
+#### Documentation
+
+For detailed documentation, see [TASK_CLASSIFICATION_ROUTING.md](TASK_CLASSIFICATION_ROUTING.md)
+
+For working examples, run:
+```bash
+python example_task_routing.py
+```
+
+### Citation
 
 If you use this code in your research, please cite:
 
@@ -344,16 +531,51 @@ If you use this code in your research, please cite:
 }
 ```
 
-## References
+### References
 
 - **UMAP**: McInnes, L., Healy, J., & Melville, J. (2018). UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction. arXiv:1802.03426
 - **Word Analogies**: Mikolov, T., et al. (2013). Linguistic Regularities in Continuous Space Word Representations. NAACL-HLT
 
-## License
+### License
 
 MIT License (or your preferred license)
 
-## Contributing
+### Claude Code Skills
+
+This repository includes custom Claude Code skills to enhance development workflows:
+
+#### Error Handling Skill
+
+A comprehensive framework for robust error handling with tool calls in Claude Code. Located in `.claude/skills/error-handling.md`, this skill provides:
+
+- **Automatic retry logic** with exponential backoff for transient failures
+- **Error classification** (retryable vs non-retryable vs critical)
+- **Fallback strategies** for common failure scenarios
+- **Structured error logging** and reporting
+- **Human escalation** when appropriate
+
+**Key features:**
+- Git operations with network retry (push/pull/fetch)
+- File I/O with lock and permission handling
+- Web requests with timeout and rate limit handling
+- Build/test operations with transient failure retry
+- Multi-step operations with recovery mechanisms
+
+**Quick usage:**
+```
+Use the error-handling skill to push my changes to git
+```
+
+See `.claude/skills/USAGE_GUIDE.md` for detailed examples and best practices.
+
+**Python implementation example:**
+The `error_handling_example.py` file demonstrates these patterns in Python code with:
+- Retry decorators with exponential backoff
+- Error classification logic
+- Fallback function support
+- Real-world usage examples
+
+### Contributing
 
 Contributions welcome! Please:
 1. Fork the repository
@@ -361,12 +583,99 @@ Contributions welcome! Please:
 3. Add tests for new functionality
 4. Submit a pull request
 
-## Contact
+### Version Management
+
+This project uses a specialized version management system that tracks changes, maintains a changelog, and integrates with Git.
+
+#### Quick Start
+
+```bash
+# Show current version
+python version_manager.py current
+
+# Show version status and unreleased changes
+python version_manager.py status
+
+# Add a change to the unreleased section
+python version_manager.py add-change "Fixed bug in analogy finding" -c Fixed
+
+# Bump version (major.minor.patch)
+python version_manager.py bump patch    # 1.0.0 → 1.0.1
+python version_manager.py bump minor    # 1.0.0 → 1.1.0
+python version_manager.py bump major    # 1.0.0 → 2.0.0
+
+# Create a git tag for the current version
+python version_manager.py tag
+
+# Full release workflow with auto-commit and tag
+python version_manager.py bump minor --tag
+```
+
+#### Version Management Features
+
+- **Semantic Versioning**: Follows [SemVer](https://semver.org/) (MAJOR.MINOR.PATCH)
+- **Changelog Maintenance**: Automatically updates `CHANGELOG.md` using [Keep a Changelog](https://keepachangelog.com/) format
+- **Git Integration**: Creates commits and tags for releases
+- **Multi-file Tracking**: Updates version in all tracked files
+- **Change Categories**: Supports Added, Changed, Fixed, Deprecated, Removed, Security, Performance
+
+#### Workflow Example
+
+```bash
+# 1. Make code changes
+# ... edit files ...
+
+# 2. Record your changes
+python version_manager.py add-change "Added support for FAISS indexing" -c Added
+python version_manager.py add-change "Fixed numerical stability in clustering" -c Fixed
+python version_manager.py add-change "Improved training speed by 2x" -c Performance
+
+# 3. Check status
+python version_manager.py status
+
+# 4. Create a release
+python version_manager.py bump minor --tag
+
+# 5. Push to repository
+git push origin claude/version-management-changelog-012Fdwp6GtUpaaVwdDjpZqvc
+git push origin v1.1.0  # Push the tag
+```
+
+#### Configuration
+
+Edit `.version_config.json` to customize version management:
+
+```json
+{
+  "auto_commit": true,              // Auto-commit version bumps
+  "auto_tag": false,                // Auto-create git tags
+  "commit_template": "chore: bump version to {version}",
+  "tag_prefix": "v",                // Tag prefix (e.g., v1.0.0)
+  "track_files": [                  // Files to update versions in
+    "umap_analogy_engine.py",
+    "version_manager.py"
+  ]
+}
+```
+
+#### Change Categories
+
+Use these categories when adding changes:
+
+- **Added**: New features
+- **Changed**: Changes in existing functionality
+- **Deprecated**: Soon-to-be removed features
+- **Removed**: Removed features
+- **Fixed**: Bug fixes
+- **Security**: Security vulnerability fixes
+- **Performance**: Performance improvements
+
+### Contact
 
 For questions or issues, please open a GitHub issue or contact [your email].
 
 ---
 
-**Status**: Production-ready V1.0
+**Current Version**: 1.0.0
 
-**Last updated**: 2025-11-13
+**Last Updated**: 2025-11-18

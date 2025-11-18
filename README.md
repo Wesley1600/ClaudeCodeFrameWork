@@ -93,6 +93,7 @@ This component implements a novel approach to semantic analogies by:
 - ✅ **Production-ready** with comprehensive documentation and error handling
 - ✅ **Flexible metric selection** (Euclidean or cosine similarity)
 - ✅ **Auto-balancing** of loss weights via gradient norm matching
+- ✅ **Activity logging and reporting** for transparency and auditability (see `ACTIVITY_LOGGING.md`)
 - ✅ **Persistent memory system** for session continuity and experiment tracking
 
 ## Persistent Memory Tool

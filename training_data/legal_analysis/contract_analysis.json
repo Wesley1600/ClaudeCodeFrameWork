@@ -1,0 +1,340 @@
+{
+  "metadata": {
+    "domain": "legal_analysis",
+    "data_type": "contract_analysis_training",
+    "version": "1.0",
+    "description": "Legal document analysis examples for training contract review and legal reasoning skills",
+    "example_count": 15,
+    "document_types": ["NDA", "Employment Agreement", "SaaS Contract", "Lease Agreement"],
+    "disclaimer": "Educational purposes only. Not legal advice. Consult qualified attorney for actual legal matters."
+  },
+  "contract_clauses": [
+    {
+      "id": "CLAUSE_001",
+      "document_type": "Employment Agreement",
+      "clause_type": "Non-Compete",
+      "clause_text": "Employee agrees that during employment and for a period of two (2) years following termination for any reason, Employee shall not directly or indirectly engage in, have any financial interest in, or provide services to any business that competes with the Company's business anywhere in the United States.",
+      "issues": [
+        {
+          "severity": "high",
+          "issue": "Overly broad geographic restriction",
+          "explanation": "US-wide restriction may be unenforceable, especially if company only operates regionally. Courts often require restrictions to be limited to areas where company actually does business.",
+          "risk": "Entire clause may be void in many jurisdictions"
+        },
+        {
+          "severity": "high",
+          "issue": "Excessive time period",
+          "explanation": "2 years is on the longer end and may be deemed unreasonable depending on industry and employee's role. Many courts prefer 6-12 months for non-executive roles.",
+          "risk": "May be reduced or invalidated by court"
+        },
+        {
+          "severity": "medium",
+          "issue": "No consideration for post-employment period",
+          "explanation": "Some jurisdictions require separate consideration (payment) for post-employment restrictions.",
+          "risk": "May be unenforceable without additional compensation"
+        },
+        {
+          "severity": "medium",
+          "issue": "Definition of 'compete' too vague",
+          "explanation": "'Competes with the Company's business' is not clearly defined. What products/services exactly?",
+          "risk": "Ambiguity may lead to unenforceability or disputes"
+        }
+      ],
+      "improved_version": "Employee agrees that during employment and for a period of twelve (12) months following termination, Employee shall not, within a 50-mile radius of any Company office where Employee worked, directly engage as an employee or consultant with any business that provides [specific products/services that directly compete with Company's core offerings]. This restriction shall not prohibit Employee from (a) owning less than 5% passive investment in publicly traded companies, or (b) working in non-competing roles at companies that have some competing divisions.",
+      "improvements": [
+        "Reduced time period to 12 months (more reasonable)",
+        "Limited geography to specific radius of actual work locations",
+        "Narrowed scope to direct competition in employee's area of expertise",
+        "Added carve-outs for passive investments and non-competing roles",
+        "More specific definition of competing business"
+      ],
+      "enforceability_by_jurisdiction": {
+        "California": "Likely unenforceable (CA generally prohibits non-competes)",
+        "New York": "Enforceable if reasonable; original likely too broad",
+        "Texas": "Enforceable with reasonable restrictions; improved version better",
+        "Florida": "Enforceable; original might survive but improved version safer"
+      }
+    },
+    {
+      "id": "CLAUSE_002",
+      "document_type": "SaaS Agreement",
+      "clause_type": "Limitation of Liability",
+      "clause_text": "IN NO EVENT SHALL PROVIDER BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR PUNITIVE DAMAGES, INCLUDING WITHOUT LIMITATION, LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, EVEN IF PROVIDER HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. PROVIDER'S TOTAL LIABILITY SHALL NOT EXCEED THE AMOUNT PAID BY CUSTOMER IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM.",
+      "analysis": {
+        "what_it_means": "Provider limits liability to direct damages only, caps total liability at last 12 months of fees, and excludes indirect damages like lost profits.",
+        "pro_provider": [
+          "Strong protection against consequential damages",
+          "Liability cap limits financial exposure",
+          "Standard in SaaS industry"
+        ],
+        "pro_customer": [
+          "12-month cap is relatively generous (some use 3-6 months or single month's fees)",
+          "Direct damages are still recoverable"
+        ],
+        "red_flags": [
+          "If customer relies on service for critical operations, indirect damages could be substantial",
+          "Data loss exclusion is concerning if provider stores critical data",
+          "No exceptions for gross negligence or willful misconduct"
+        ]
+      },
+      "negotiation_points": [
+        {
+          "point": "Add carve-outs for certain types of claims",
+          "suggested_language": "Notwithstanding the foregoing, this limitation shall not apply to: (a) Provider's indemnification obligations, (b) breaches of confidentiality, (c) Provider's gross negligence or willful misconduct, or (d) infringement of third-party intellectual property rights."
+        },
+        {
+          "point": "Increase liability cap for critical services",
+          "suggested_language": "For Enterprise tier customers, total liability cap shall be the greater of (a) amounts paid in preceding 12 months, or (b) $500,000."
+        },
+        {
+          "point": "Add service credit remedy for SLA breaches",
+          "suggested_language": "In addition to the above limitations, Customer shall be entitled to service credits as specified in the SLA for availability failures, calculated separately from and not subject to the liability cap."
+        }
+      ],
+      "customer_perspective": "For a small SaaS tool, this is acceptable. For mission-critical services (payment processing, healthcare, financial), negotiate stronger protections.",
+      "provider_perspective": "Standard and necessary protection. Without this, one customer lawsuit could bankrupt the company."
+    },
+    {
+      "id": "CLAUSE_003",
+      "document_type": "NDA",
+      "clause_type": "Definition of Confidential Information",
+      "clause_text": "Confidential Information means any and all information disclosed by either party to the other party, whether orally, in writing, or in any other form.",
+      "issues": [
+        {
+          "severity": "critical",
+          "issue": "Overly broad - captures everything",
+          "explanation": "This definition makes literally ALL information confidential with no exceptions. Even publicly available information could technically fall under this.",
+          "risk": "Unenforceable due to breadth; also creates practical compliance impossibility"
+        },
+        {
+          "severity": "high",
+          "issue": "No marking requirement",
+          "explanation": "No requirement that confidential info be marked or identified. Recipient has no way to know what's confidential.",
+          "risk": "Disputes over what was intended to be confidential"
+        },
+        {
+          "severity": "medium",
+          "issue": "Missing standard exclusions",
+          "explanation": "No exclusions for publicly available information, independently developed information, or information received from third parties.",
+          "risk": "Recipient could be liable for information they developed independently"
+        }
+      ],
+      "improved_version": "'Confidential Information' means information disclosed by one party ('Disclosing Party') to the other party ('Receiving Party') that is:\n\n(a) marked as 'Confidential,' 'Proprietary,' or with similar designation; or\n(b) if disclosed orally, identified as confidential at the time of disclosure and summarized in writing within thirty (30) days.\n\nConfidential Information does NOT include information that:\n(i) is or becomes publicly available through no breach of this Agreement;\n(ii) was rightfully in Receiving Party's possession prior to disclosure;\n(iii) is rightfully received by Receiving Party from a third party without confidentiality obligations;\n(iv) is independently developed by Receiving Party without use of or reference to Confidential Information; or\n(v) is required to be disclosed by law or court order (with notice to Disclosing Party).",
+      "improvements": [
+        "Requires marking for written materials",
+        "Requires identification + written summary for oral disclosures",
+        "Includes standard exclusions (public domain, prior knowledge, independent development)",
+        "Adds legal disclosure exception with notice requirement",
+        "Creates clear boundaries and practical process"
+      ]
+    },
+    {
+      "id": "CLAUSE_004",
+      "document_type": "Commercial Lease",
+      "clause_type": "Rent Escalation",
+      "clause_text": "Base Rent shall increase by 5% annually on each anniversary of the Lease Commencement Date.",
+      "analysis": {
+        "tenant_concerns": [
+          "Fixed 5% increase regardless of market conditions or inflation",
+          "No cap on total increases over long lease term",
+          "Could significantly exceed inflation in low-inflation periods",
+          "Example: $100k/year becomes $162k/year after 10 years (62% increase)"
+        ],
+        "landlord_perspective": [
+          "Predictable revenue growth",
+          "Protects against inflation",
+          "Simple to administer",
+          "Fair if 5% is below market growth rate"
+        ],
+        "market_comparison": {
+          "standard_range": "2-4% annually or CPI-based",
+          "5_percent_assessment": "Above market for most commercial leases",
+          "better_for_tenant": "CPI + 1% or 3% fixed, whichever is lower"
+        }
+      },
+      "alternative_structures": [
+        {
+          "name": "CPI-Based",
+          "formula": "Base Rent increases annually by the percentage increase in Consumer Price Index (CPI-U), with a minimum increase of 2% and maximum increase of 4%",
+          "pros": "Tied to actual inflation; more fair to both parties",
+          "cons": "More complex to calculate; variable increases"
+        },
+        {
+          "name": "Stepped Increases",
+          "formula": "Years 1-3: 3% annual increase; Years 4-6: 4% annual increase; Years 7-10: 5% annual increase",
+          "pros": "Lower increases early in lease; predictable schedule",
+          "cons": "Still not tied to market; can exceed inflation"
+        },
+        {
+          "name": "Market Rate Reset",
+          "formula": "Every 3 years, Base Rent resets to fair market value as determined by appraisal, not to decrease from previous rate",
+          "pros": "Reflects actual market conditions",
+          "cons": "Unpredictable; potential for disputes; appraisal costs"
+        }
+      ],
+      "negotiation_strategy": "Request CPI-based with 2% floor and 4% cap, or negotiate fixed 3% with right to renegotiate at year 5."
+    }
+  ],
+  "contract_review_exercises": [
+    {
+      "id": "REVIEW_001",
+      "scenario": "Software Development Agreement - Payment Terms Review",
+      "clause": "Client shall pay Developer 50% of the total project fee upon signing this Agreement and 50% upon project completion. Project completion is defined as when Developer delivers all code and documentation to Client.",
+      "question": "What risks does this payment structure create for each party? How should it be improved?",
+      "risks": {
+        "developer_risks": [
+          "If client disputes whether project is 'complete,' developer may not get second payment",
+          "No protection if client rejects work for subjective reasons",
+          "All work could be delivered but payment withheld due to dispute",
+          "No payment for work done between milestones if project is cancelled"
+        ],
+        "client_risks": [
+          "Could receive non-functional or poor quality code and still owe 50%",
+          "No leverage to ensure quality or completion",
+          "Developer could deliver and walk away before fixing bugs",
+          "No defined acceptance testing period"
+        ]
+      },
+      "improved_structure": "Payment Schedule:\n- 25% upon signing\n- 25% upon completion of Phase 1 (defined milestones)\n- 25% upon completion of Phase 2 (defined milestones)\n- 20% upon Client's acceptance of final deliverables\n- 5% held for 30 days post-launch for bug fixes\n\nAcceptance Process:\n- Developer delivers work with notice\n- Client has 10 business days to test and provide feedback\n- If Client identifies defects, Developer has 10 days to correct\n- If Client doesn't respond within testing period, deemed accepted\n- Client may only reject for failure to meet written specifications",
+      "why_better": [
+        "Milestone-based payments reduce risk for both parties",
+        "Defined acceptance process prevents disputes",
+        "Retention amount incentivizes bug fixes",
+        "Clear timelines prevent indefinite delays",
+        "Objective criteria (written specs) for acceptance/rejection"
+      ]
+    },
+    {
+      "id": "REVIEW_002",
+      "scenario": "Data Processing Agreement - GDPR Compliance",
+      "clause": "Processor shall implement appropriate technical and organizational measures to protect Personal Data.",
+      "question": "Is this clause sufficient for GDPR compliance? What's missing?",
+      "issues": [
+        "Too vague - 'appropriate measures' is not defined",
+        "Missing required GDPR elements",
+        "No audit rights for Controller",
+        "No data breach notification provisions",
+        "No subprocessor requirements",
+        "No data subject rights procedures",
+        "No data retention/deletion obligations"
+      ],
+      "required_additions": [
+        {
+          "requirement": "Specific security measures",
+          "language": "Processor shall implement: (a) encryption of data at rest and in transit, (b) access controls and authentication, (c) regular security assessments, (d) employee training, (e) incident response procedures."
+        },
+        {
+          "requirement": "Breach notification",
+          "language": "Processor shall notify Controller within 24 hours of becoming aware of any Personal Data breach, providing details of the breach, affected data, and remediation steps taken."
+        },
+        {
+          "requirement": "Subprocessor provisions",
+          "language": "Processor shall not engage subprocessors without Controller's prior written consent. All subprocessors must agree to same data protection obligations."
+        },
+        {
+          "requirement": "Audit rights",
+          "language": "Controller may audit Processor's compliance annually, with 30 days notice, during business hours. Processor shall provide all information reasonably necessary for audit."
+        },
+        {
+          "requirement": "Data subject rights",
+          "language": "Processor shall assist Controller in responding to data subject requests (access, rectification, erasure, portability) within 10 business days of request."
+        },
+        {
+          "requirement": "Data deletion",
+          "language": "Upon termination, Processor shall, at Controller's option, delete or return all Personal Data within 30 days and certify deletion."
+        }
+      ],
+      "compliance_note": "GDPR Article 28 mandates specific DPA requirements. This clause would not satisfy regulatory requirements."
+    }
+  ],
+  "clause_comparison_exercises": [
+    {
+      "id": "COMPARE_001",
+      "title": "Indemnification Clauses - Mutual vs One-Way",
+      "version_a": {
+        "label": "One-Way (Provider favored)",
+        "text": "Customer shall indemnify, defend, and hold harmless Provider from any claims arising out of Customer's use of the Services, including any claims that Customer's data or use infringes third-party rights.",
+        "analysis": "Only Customer indemnifies Provider. Provider has no indemnification obligations. Extremely one-sided."
+      },
+      "version_b": {
+        "label": "Mutual (Balanced)",
+        "text": "Each party shall indemnify the other from third-party claims arising from: (a) the indemnifying party's breach of this Agreement, (b) the indemnifying party's negligence or willful misconduct, or (c) the indemnifying party's infringement of third-party intellectual property rights.",
+        "analysis": "Both parties have symmetric obligations. Each is responsible for its own breaches and IP infringement. More balanced."
+      },
+      "version_c": {
+        "label": "Mutual with Carve-outs",
+        "text": "Provider shall indemnify Customer from third-party claims that the Services infringe third-party IP rights.\n\nCustomer shall indemnify Provider from third-party claims arising from: (a) Customer Data, (b) Customer's breach of Acceptable Use Policy, or (c) Customer's combination of Services with third-party products.\n\nEach party's indemnification obligation is subject to: (i) prompt written notice of claim, (ii) sole control of defense and settlement, and (iii) reasonable cooperation from the other party.",
+        "analysis": "Specific allocations based on what each party controls. Provider responsible for its IP, Customer responsible for its data and use. Includes procedural requirements. Most sophisticated and fair."
+      },
+      "recommendation": "Version C is best practice. Allocates risk to the party best able to control it. Always review indemnification scope and ensure it's not unlimited."
+    }
+  ],
+  "red_flag_identification": [
+    {
+      "id": "REDFLAG_001",
+      "clause_text": "This Agreement shall automatically renew for successive one-year terms unless either party provides written notice of non-renewal at least 90 days prior to the end of the then-current term. Upon renewal, pricing may be adjusted at Provider's sole discretion.",
+      "red_flags": [
+        {
+          "flag": "Auto-renewal with long notice period",
+          "risk": "Easy to miss 90-day deadline, get locked into another year",
+          "severity": "medium",
+          "mitigation": "Set calendar reminder at 120 days before term end; negotiate 30-day notice period"
+        },
+        {
+          "flag": "Unilateral price increases on renewal",
+          "risk": "Provider can raise prices to any amount; no price protection",
+          "severity": "high",
+          "mitigation": "Negotiate price cap (e.g., 'not to exceed 10% annually') or require mutual agreement on new pricing"
+        }
+      ],
+      "improved_clause": "This Agreement shall renew for successive one-year terms unless either party provides written notice of non-renewal at least 30 days prior to term end. Pricing for renewal terms shall not increase by more than 7% annually unless otherwise agreed in writing by both parties."
+    },
+    {
+      "id": "REDFLAG_002",
+      "clause_text": "Company may modify these Terms at any time by posting updated Terms on the website. Your continued use of the Service constitutes acceptance of the modified Terms.",
+      "red_flags": [
+        {
+          "flag": "Unilateral modification right",
+          "risk": "Provider can change material terms (pricing, features, limitations) without consent",
+          "severity": "high",
+          "mitigation": "Negotiate requirement for notice and opt-out right for material changes"
+        },
+        {
+          "flag": "Acceptance by continued use",
+          "risk": "May not be aware of changes; deemed to accept just by using service",
+          "severity": "high",
+          "mitigation": "Require affirmative acceptance for material changes; passive acceptance only for minor updates"
+        },
+        {
+          "flag": "No notice requirement",
+          "risk": "Changes can be made silently; customer must constantly monitor website",
+          "severity": "medium",
+          "mitigation": "Require email notice of all changes at least 30 days in advance"
+        }
+      ],
+      "improved_clause": "Company may modify these Terms by providing Customer with 30 days' prior written notice via email. Material changes (affecting pricing, core functionality, data rights, or liability) require Customer's affirmative written acceptance. If Customer does not accept material changes, Customer may terminate this Agreement without penalty within the 30-day notice period. Non-material changes (clarifications, administrative updates) may be accepted by continued use."
+    }
+  ],
+  "analysis_prompts": [
+    {
+      "id": "PROMPT_001",
+      "prompt": "Review the following termination clause and identify what happens to customer data upon termination:\n\n'Either party may terminate this Agreement with 30 days written notice. Upon termination, all rights granted to Customer shall immediately cease, and Customer shall immediately cease using the Service.'",
+      "expected_analysis": {
+        "data_issues": [
+          "No mention of data return or deletion",
+          "No transition assistance period",
+          "Immediate termination of access could prevent data export",
+          "No specification of Provider's obligations to delete data"
+        ],
+        "questions_to_ask": [
+          "What happens to Customer data after termination?",
+          "How long does Customer have to export data?",
+          "Will Provider assist with data migration?",
+          "When will Provider delete Customer data from its systems?",
+          "Will Provider provide certification of deletion?"
+        ],
+        "recommended_additions": "Add: 'Upon termination, Customer shall have 30 days to export all Customer Data through the Service interface. Provider shall provide reasonable assistance with data export. After the 30-day period, Provider shall delete all Customer Data from its systems within 60 days and provide written certification of deletion upon request.'"
+      }
+    }
+  ]
+}

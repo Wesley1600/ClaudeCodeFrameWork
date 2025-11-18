@@ -1,0 +1,457 @@
+{
+  "metadata": {
+    "domain": "financial_analysis",
+    "data_type": "financial_statements",
+    "version": "1.0",
+    "description": "Sample financial statements for training financial analysis skills",
+    "record_count": 10,
+    "generated_date": "2025-11-18"
+  },
+  "companies": [
+    {
+      "company_id": "TECH001",
+      "company_name": "TechVision Inc.",
+      "industry": "Software & Services",
+      "fiscal_year": 2024,
+      "balance_sheet": {
+        "assets": {
+          "current_assets": {
+            "cash_and_equivalents": 45000000,
+            "accounts_receivable": 28000000,
+            "inventory": 12000000,
+            "prepaid_expenses": 3000000,
+            "total_current_assets": 88000000
+          },
+          "non_current_assets": {
+            "property_plant_equipment": 65000000,
+            "accumulated_depreciation": -15000000,
+            "intangible_assets": 30000000,
+            "goodwill": 42000000,
+            "long_term_investments": 18000000,
+            "total_non_current_assets": 140000000
+          },
+          "total_assets": 228000000
+        },
+        "liabilities": {
+          "current_liabilities": {
+            "accounts_payable": 15000000,
+            "short_term_debt": 8000000,
+            "accrued_expenses": 7000000,
+            "deferred_revenue": 12000000,
+            "total_current_liabilities": 42000000
+          },
+          "non_current_liabilities": {
+            "long_term_debt": 55000000,
+            "deferred_tax_liabilities": 8000000,
+            "pension_obligations": 5000000,
+            "total_non_current_liabilities": 68000000
+          },
+          "total_liabilities": 110000000
+        },
+        "shareholders_equity": {
+          "common_stock": 20000000,
+          "retained_earnings": 85000000,
+          "accumulated_other_comprehensive_income": 13000000,
+          "total_shareholders_equity": 118000000
+        },
+        "total_liabilities_and_equity": 228000000
+      },
+      "income_statement": {
+        "revenue": {
+          "product_revenue": 180000000,
+          "service_revenue": 95000000,
+          "total_revenue": 275000000
+        },
+        "cost_of_revenue": {
+          "cost_of_products": 72000000,
+          "cost_of_services": 38000000,
+          "total_cost_of_revenue": 110000000
+        },
+        "gross_profit": 165000000,
+        "operating_expenses": {
+          "research_and_development": 45000000,
+          "sales_and_marketing": 38000000,
+          "general_and_administrative": 22000000,
+          "total_operating_expenses": 105000000
+        },
+        "operating_income": 60000000,
+        "other_income_expense": {
+          "interest_income": 2000000,
+          "interest_expense": -4500000,
+          "other_income": 500000,
+          "total_other_income_expense": -2000000
+        },
+        "income_before_taxes": 58000000,
+        "income_tax_expense": 14500000,
+        "net_income": 43500000
+      },
+      "cash_flow_statement": {
+        "operating_activities": {
+          "net_income": 43500000,
+          "depreciation_and_amortization": 12000000,
+          "stock_based_compensation": 8000000,
+          "changes_in_working_capital": {
+            "accounts_receivable": -5000000,
+            "inventory": -2000000,
+            "accounts_payable": 3000000,
+            "deferred_revenue": 4000000
+          },
+          "net_cash_from_operating_activities": 63500000
+        },
+        "investing_activities": {
+          "capital_expenditures": -18000000,
+          "acquisitions": -15000000,
+          "purchase_of_investments": -8000000,
+          "net_cash_from_investing_activities": -41000000
+        },
+        "financing_activities": {
+          "proceeds_from_debt": 10000000,
+          "repayment_of_debt": -12000000,
+          "dividends_paid": -8000000,
+          "stock_repurchase": -5000000,
+          "net_cash_from_financing_activities": -15000000
+        },
+        "net_change_in_cash": 7500000,
+        "beginning_cash_balance": 37500000,
+        "ending_cash_balance": 45000000
+      },
+      "key_metrics": {
+        "current_ratio": 2.10,
+        "quick_ratio": 1.81,
+        "debt_to_equity": 0.53,
+        "return_on_assets": 0.19,
+        "return_on_equity": 0.37,
+        "gross_margin": 0.60,
+        "operating_margin": 0.22,
+        "net_margin": 0.16,
+        "asset_turnover": 1.21,
+        "inventory_turnover": 9.17,
+        "days_sales_outstanding": 37.2,
+        "earnings_per_share": 2.18,
+        "price_to_earnings": 22.5,
+        "free_cash_flow": 45500000
+      }
+    },
+    {
+      "company_id": "RETAIL002",
+      "company_name": "GlobalMart Corporation",
+      "industry": "Retail",
+      "fiscal_year": 2024,
+      "balance_sheet": {
+        "assets": {
+          "current_assets": {
+            "cash_and_equivalents": 12000000,
+            "accounts_receivable": 45000000,
+            "inventory": 180000000,
+            "prepaid_expenses": 8000000,
+            "total_current_assets": 245000000
+          },
+          "non_current_assets": {
+            "property_plant_equipment": 320000000,
+            "accumulated_depreciation": -95000000,
+            "intangible_assets": 15000000,
+            "goodwill": 25000000,
+            "long_term_investments": 5000000,
+            "total_non_current_assets": 270000000
+          },
+          "total_assets": 515000000
+        },
+        "liabilities": {
+          "current_liabilities": {
+            "accounts_payable": 85000000,
+            "short_term_debt": 25000000,
+            "accrued_expenses": 18000000,
+            "deferred_revenue": 2000000,
+            "total_current_liabilities": 130000000
+          },
+          "non_current_liabilities": {
+            "long_term_debt": 150000000,
+            "deferred_tax_liabilities": 12000000,
+            "pension_obligations": 18000000,
+            "total_non_current_liabilities": 180000000
+          },
+          "total_liabilities": 310000000
+        },
+        "shareholders_equity": {
+          "common_stock": 50000000,
+          "retained_earnings": 148000000,
+          "accumulated_other_comprehensive_income": 7000000,
+          "total_shareholders_equity": 205000000
+        },
+        "total_liabilities_and_equity": 515000000
+      },
+      "income_statement": {
+        "revenue": {
+          "product_revenue": 1850000000,
+          "service_revenue": 45000000,
+          "total_revenue": 1895000000
+        },
+        "cost_of_revenue": {
+          "cost_of_products": 1420000000,
+          "cost_of_services": 28000000,
+          "total_cost_of_revenue": 1448000000
+        },
+        "gross_profit": 447000000,
+        "operating_expenses": {
+          "research_and_development": 8000000,
+          "sales_and_marketing": 185000000,
+          "general_and_administrative": 142000000,
+          "total_operating_expenses": 335000000
+        },
+        "operating_income": 112000000,
+        "other_income_expense": {
+          "interest_income": 500000,
+          "interest_expense": -15000000,
+          "other_income": -2000000,
+          "total_other_income_expense": -16500000
+        },
+        "income_before_taxes": 95500000,
+        "income_tax_expense": 23875000,
+        "net_income": 71625000
+      },
+      "cash_flow_statement": {
+        "operating_activities": {
+          "net_income": 71625000,
+          "depreciation_and_amortization": 32000000,
+          "stock_based_compensation": 4000000,
+          "changes_in_working_capital": {
+            "accounts_receivable": -8000000,
+            "inventory": -15000000,
+            "accounts_payable": 12000000,
+            "deferred_revenue": 500000
+          },
+          "net_cash_from_operating_activities": 97125000
+        },
+        "investing_activities": {
+          "capital_expenditures": -45000000,
+          "acquisitions": -8000000,
+          "purchase_of_investments": -2000000,
+          "net_cash_from_investing_activities": -55000000
+        },
+        "financing_activities": {
+          "proceeds_from_debt": 20000000,
+          "repayment_of_debt": -35000000,
+          "dividends_paid": -18000000,
+          "stock_repurchase": -12000000,
+          "net_cash_from_financing_activities": -45000000
+        },
+        "net_change_in_cash": -2875000,
+        "beginning_cash_balance": 14875000,
+        "ending_cash_balance": 12000000
+      },
+      "key_metrics": {
+        "current_ratio": 1.88,
+        "quick_ratio": 0.50,
+        "debt_to_equity": 0.85,
+        "return_on_assets": 0.14,
+        "return_on_equity": 0.35,
+        "gross_margin": 0.24,
+        "operating_margin": 0.06,
+        "net_margin": 0.04,
+        "asset_turnover": 3.68,
+        "inventory_turnover": 8.04,
+        "days_sales_outstanding": 8.7,
+        "earnings_per_share": 1.43,
+        "price_to_earnings": 15.2,
+        "free_cash_flow": 52125000
+      }
+    },
+    {
+      "company_id": "PHARMA003",
+      "company_name": "BioHealth Pharmaceuticals",
+      "industry": "Pharmaceuticals",
+      "fiscal_year": 2024,
+      "balance_sheet": {
+        "assets": {
+          "current_assets": {
+            "cash_and_equivalents": 125000000,
+            "accounts_receivable": 85000000,
+            "inventory": 45000000,
+            "prepaid_expenses": 12000000,
+            "total_current_assets": 267000000
+          },
+          "non_current_assets": {
+            "property_plant_equipment": 280000000,
+            "accumulated_depreciation": -72000000,
+            "intangible_assets": 420000000,
+            "goodwill": 180000000,
+            "long_term_investments": 55000000,
+            "total_non_current_assets": 863000000
+          },
+          "total_assets": 1130000000
+        },
+        "liabilities": {
+          "current_liabilities": {
+            "accounts_payable": 42000000,
+            "short_term_debt": 18000000,
+            "accrued_expenses": 35000000,
+            "deferred_revenue": 8000000,
+            "total_current_liabilities": 103000000
+          },
+          "non_current_liabilities": {
+            "long_term_debt": 285000000,
+            "deferred_tax_liabilities": 48000000,
+            "pension_obligations": 22000000,
+            "total_non_current_liabilities": 355000000
+          },
+          "total_liabilities": 458000000
+        },
+        "shareholders_equity": {
+          "common_stock": 150000000,
+          "retained_earnings": 495000000,
+          "accumulated_other_comprehensive_income": 27000000,
+          "total_shareholders_equity": 672000000
+        },
+        "total_liabilities_and_equity": 1130000000
+      },
+      "income_statement": {
+        "revenue": {
+          "product_revenue": 685000000,
+          "service_revenue": 28000000,
+          "total_revenue": 713000000
+        },
+        "cost_of_revenue": {
+          "cost_of_products": 148000000,
+          "cost_of_services": 8000000,
+          "total_cost_of_revenue": 156000000
+        },
+        "gross_profit": 557000000,
+        "operating_expenses": {
+          "research_and_development": 215000000,
+          "sales_and_marketing": 145000000,
+          "general_and_administrative": 68000000,
+          "total_operating_expenses": 428000000
+        },
+        "operating_income": 129000000,
+        "other_income_expense": {
+          "interest_income": 5500000,
+          "interest_expense": -22000000,
+          "other_income": 3000000,
+          "total_other_income_expense": -13500000
+        },
+        "income_before_taxes": 115500000,
+        "income_tax_expense": 23100000,
+        "net_income": 92400000
+      },
+      "cash_flow_statement": {
+        "operating_activities": {
+          "net_income": 92400000,
+          "depreciation_and_amortization": 45000000,
+          "stock_based_compensation": 18000000,
+          "changes_in_working_capital": {
+            "accounts_receivable": -12000000,
+            "inventory": -8000000,
+            "accounts_payable": 5000000,
+            "deferred_revenue": 2000000
+          },
+          "net_cash_from_operating_activities": 142400000
+        },
+        "investing_activities": {
+          "capital_expenditures": -55000000,
+          "acquisitions": -85000000,
+          "purchase_of_investments": -25000000,
+          "net_cash_from_investing_activities": -165000000
+        },
+        "financing_activities": {
+          "proceeds_from_debt": 50000000,
+          "repayment_of_debt": -28000000,
+          "dividends_paid": -35000000,
+          "stock_repurchase": 0,
+          "net_cash_from_financing_activities": -13000000
+        },
+        "net_change_in_cash": -35600000,
+        "beginning_cash_balance": 160600000,
+        "ending_cash_balance": 125000000
+      },
+      "key_metrics": {
+        "current_ratio": 2.59,
+        "quick_ratio": 2.16,
+        "debt_to_equity": 0.45,
+        "return_on_assets": 0.08,
+        "return_on_equity": 0.14,
+        "gross_margin": 0.78,
+        "operating_margin": 0.18,
+        "net_margin": 0.13,
+        "asset_turnover": 0.63,
+        "inventory_turnover": 3.47,
+        "days_sales_outstanding": 43.5,
+        "earnings_per_share": 6.16,
+        "price_to_earnings": 18.7,
+        "free_cash_flow": 87400000
+      }
+    }
+  ],
+  "analysis_prompts": [
+    {
+      "prompt_id": "FA001",
+      "prompt": "Calculate the working capital and working capital ratio for TechVision Inc. Explain what these metrics indicate about the company's short-term financial health.",
+      "expected_output": {
+        "working_capital": 46000000,
+        "working_capital_ratio": 2.10,
+        "interpretation": "TechVision has $46M in working capital with a current ratio of 2.10, indicating strong short-term liquidity. The company has more than twice the current assets needed to cover current liabilities, suggesting healthy operational efficiency and low liquidity risk."
+      }
+    },
+    {
+      "prompt_id": "FA002",
+      "prompt": "Compare the gross margins of TechVision Inc., GlobalMart Corporation, and BioHealth Pharmaceuticals. What do these differences tell you about their business models?",
+      "expected_output": {
+        "comparison": {
+          "TechVision": 0.60,
+          "GlobalMart": 0.24,
+          "BioHealth": 0.78
+        },
+        "interpretation": "BioHealth has the highest gross margin (78%) typical of pharmaceuticals with high R&D costs but low production costs. TechVision's 60% margin reflects software's scalable nature. GlobalMart's 24% margin is characteristic of retail's high volume, low margin model."
+      }
+    },
+    {
+      "prompt_id": "FA003",
+      "prompt": "Analyze the cash flow from operating activities for all three companies. Which company has the strongest cash generation relative to net income?",
+      "expected_output": {
+        "analysis": {
+          "TechVision": {
+            "operating_cash_flow": 63500000,
+            "net_income": 43500000,
+            "ratio": 1.46
+          },
+          "GlobalMart": {
+            "operating_cash_flow": 97125000,
+            "net_income": 71625000,
+            "ratio": 1.36
+          },
+          "BioHealth": {
+            "operating_cash_flow": 142400000,
+            "net_income": 92400000,
+            "ratio": 1.54
+          }
+        },
+        "conclusion": "BioHealth has the strongest cash generation at 1.54x net income, followed by TechVision at 1.46x. This indicates high-quality earnings with strong cash conversion."
+      }
+    },
+    {
+      "prompt_id": "FA004",
+      "prompt": "Evaluate the debt levels of GlobalMart Corporation. Is the company overleveraged?",
+      "expected_output": {
+        "debt_metrics": {
+          "total_debt": 175000000,
+          "total_equity": 205000000,
+          "debt_to_equity": 0.85,
+          "interest_coverage": 7.47
+        },
+        "assessment": "GlobalMart's D/E ratio of 0.85 is moderate for retail. Interest coverage of 7.47x (EBIT/Interest) is healthy, indicating the company can comfortably service its debt. Not overleveraged, but higher than tech/pharma peers."
+      }
+    },
+    {
+      "prompt_id": "FA005",
+      "prompt": "Calculate the DuPont ROE decomposition for TechVision Inc. and identify which component contributes most to its ROE.",
+      "expected_output": {
+        "dupont_analysis": {
+          "roe": 0.37,
+          "net_margin": 0.16,
+          "asset_turnover": 1.21,
+          "equity_multiplier": 1.93
+        },
+        "interpretation": "ROE of 37% = Net Margin (16%) × Asset Turnover (1.21) × Equity Multiplier (1.93). The equity multiplier (leverage) and strong margins both contribute significantly. The company efficiently uses both operational performance and financial leverage."
+      }
+    }
+  ]
+}

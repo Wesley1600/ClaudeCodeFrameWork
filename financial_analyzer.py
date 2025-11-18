@@ -232,8 +232,12 @@ class FinancialAnalyzer:
         # This is a placeholder - actual implementation would be more sophisticated
         return statement
 
-    def _extract_from_text(self, text: str, statement: FinancialStatement) -> FinancialStatement:
+    def _extract_from_text(self, text: Optional[str], statement: FinancialStatement) -> FinancialStatement:
         """Extract financial data from PDF text using regex patterns"""
+        # Guard against None text (pages with no text content)
+        if text is None:
+            return statement
+
         # Common patterns for financial figures
         patterns = {
             'revenue': r'(?:Revenue|Sales|Total Revenue)[:\s]+\$?([\d,]+(?:\.\d+)?)',

@@ -10,12 +10,14 @@ A comprehensive AI/ML development ecosystem combining skill orchestration, seman
 1. **[Skill Orchestration Framework](#1-skill-orchestration-framework-)** - Chain multiple skills into complex workflows
 2. **[UMAP Analogy Engine](#2-umap-inspired-universal-analogy-engine)** - Semantic relationship learning and analogies
 3. **[Claude Code Skills](#3-claude-code-skills)** - 14+ production-ready skills for development workflows
+4. **[MCP API Connector](#4-mcp-api-connector-skill)** - Interact with MCP servers and external APIs
 
 ### Python Tools & Libraries
-4. **[Agent Pulse](#4-agent-pulse---proactive-ai-assistant-)** - Proactive AI assistant with overnight research
-5. **[Memory Tool](#5-persistent-memory-tool)** - Persistent storage and retrieval across sessions
-6. **[Workflow Orchestrator](#6-workflow-orchestration-tools)** - Task management and execution
-7. **[Task Classification & Routing](#7-task-classification-and-routing)** - Intelligent task routing system
+5. **[Agent Template System](#5-agent-template-population-system)** - Generate and manage AI agent configurations
+6. **[Agent Pulse](#6-agent-pulse---proactive-ai-assistant-)** - Proactive AI assistant with overnight research
+7. **[Memory Tool](#7-persistent-memory-tool)** - Persistent storage and retrieval across sessions
+8. **[Workflow Orchestrator](#8-workflow-orchestration-tools)** - Task management and execution
+9. **[Task Classification & Routing](#9-task-classification-and-routing)** - Intelligent task routing system
 
 ### Additional Resources
 - [Installation](#installation)
@@ -164,7 +166,59 @@ See `.claude/skills/USAGE_GUIDE.md` for detailed examples and best practices.
 
 ---
 
-## 4. Agent Pulse - Proactive AI Assistant 🌅
+## 4. MCP API Connector Skill
+
+A Claude Code skill that enables interaction with the Model Context Protocol (MCP) servers and external API systems like GitHub, Figma, Slack, Linear, and more.
+
+**Location**: `.claude/skills/mcp-api-connector/`
+
+**Features**:
+- ✅ Connect to MCP servers following the Model Context Protocol specification
+- ✅ Query REST APIs (GitHub, Figma, Slack, etc.)
+- ✅ Execute GraphQL queries (Linear, etc.)
+- ✅ Secure authentication (Bearer tokens, API keys, OAuth)
+- ✅ Automatic response translation into agent context
+- ✅ Comprehensive test suite (25 tests, 100% passing)
+
+**Quick Start**:
+```bash
+# Install dependencies
+cd .claude/skills/mcp-api-connector
+pip install -r requirements.txt
+
+# Configure authentication
+cp ../../.env.example ../../.env
+# Edit .env and add your API tokens
+
+# Run examples
+python examples.py
+
+# Run tests
+python test_skill.py
+```
+
+**Documentation**: See [.claude/skills/mcp-api-connector/README.md](./.claude/skills/mcp-api-connector/README.md) for detailed usage and API reference.
+
+---
+
+## 5. Agent Template Population System
+
+A comprehensive system for creating, managing, and configuring AI agents and their skills using templates.
+
+**Location**: Root directory (`agents/`, `templates/`, `config/`)
+
+**Features**:
+- ✅ Template Population: Dynamically generate agent and skill configurations from Jinja2 templates
+- ✅ Metadata Management: Store, retrieve, and validate metadata for agents and skills
+- ✅ Auto-generate skill and agent IDs following naming conventions
+- ✅ Populate YAML configurations from Jinja2 templates
+- ✅ Validate configurations against schemas
+
+**Documentation**: See [AGENT_TEMPLATE_SYSTEM.md](AGENT_TEMPLATE_SYSTEM.md) for complete documentation.
+
+---
+
+## 6. Agent Pulse - Proactive AI Assistant 🌅
 
 **Agent Pulse** is a ChatGPT Pulse-inspired system that transforms reactive AI assistance into proactive support.
 
@@ -193,7 +247,7 @@ python -m agent_pulse.cli.pulse_cli status
 
 ---
 
-## 5. Persistent Memory Tool
+## 7. Persistent Memory Tool
 
 A powerful **Memory Tool** that enables persistent storage and retrieval of information across sessions.
 
@@ -233,7 +287,7 @@ bundle = manager.load_trained_model("gender_analogy_v1")
 
 ---
 
-## 6. Workflow Orchestration Tools
+## 8. Workflow Orchestration Tools
 
 Comprehensive tools for managing complex AI/ML workflows:
 
@@ -246,7 +300,7 @@ See **[ORCHESTRATOR_README.md](ORCHESTRATOR_README.md)** and **[TASK_EXECUTION_S
 
 ---
 
-## 7. Task Classification and Routing
+## 9. Task Classification and Routing
 
 An intelligent task classification and routing system that automatically classifies input tasks into categories and routes them to appropriate skills or agents.
 

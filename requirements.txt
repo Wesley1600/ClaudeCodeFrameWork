@@ -1,5 +1,9 @@
+# UMAP Analogy Engine dependencies
 torch>=2.0.0
 numpy>=1.20.0
+
+# Agent Template Population System dependencies
+jinja2>=3.1.0
 
 # Skill Orchestration Framework
 pyyaml>=6.0

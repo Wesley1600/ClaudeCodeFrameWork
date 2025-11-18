@@ -1,0 +1,34 @@
+{
+  "name": "automated-ui-testing-examples",
+  "version": "1.0.0",
+  "description": "Comprehensive UI testing examples for Claude Code automated-ui-testing skill",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:mobile": "playwright test --project='Mobile Chrome'",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report test-results/html-report",
+    "install:browsers": "playwright install --with-deps",
+    "clean": "rm -rf test-results node_modules package-lock.json"
+  },
+  "keywords": [
+    "playwright",
+    "testing",
+    "automation",
+    "ui-testing",
+    "e2e",
+    "qa"
+  ],
+  "author": "Claude Code",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,50 @@
+# Agent Configuration: {{ name }}
+# Generated on: {{ created_at | timestamp }}
+# Template Type: {{ template_type }}
+
+# Agent identification and metadata
+id: "{{ id }}"
+name: "{{ name }}"
+version: "{{ version }}"
+description: |
+  {{ description }}
+
+# Skills this agent can use
+skills:
+{%- for skill_id in skills %}
+  - "{{ skill_id }}"
+{%- endfor %}
+
+# Agent metadata
+metadata:
+  author: "{{ metadata.get('author', 'Unknown') }}"
+  created_at: "{{ created_at | timestamp }}"
+{%- if metadata.get('tags') %}
+  tags:
+  {%- for tag in metadata.tags %}
+    - "{{ tag }}"
+  {%- endfor %}
+{%- endif %}
+{%- if metadata.get('complexity') %}
+  complexity: "{{ metadata.complexity }}"
+{%- endif %}
+{%- if metadata.get('license') %}
+  license: "{{ metadata.license }}"
+{%- endif %}
+
+{%- if prompt_template %}
+# Prompt template reference
+prompt_template: "{{ prompt_template }}"
+{%- endif %}
+
+# Agent parameters
+parameters:
+  temperature: {{ parameters.get('temperature', 0.7) }}
+  max_tokens: {{ parameters.get('max_tokens', 2000) }}
+  top_p: {{ parameters.get('top_p', 0.9) }}
+{%- if parameters.get('stop_sequences') %}
+  stop_sequences:
+  {%- for seq in parameters.stop_sequences %}
+    - "{{ seq }}"
+  {%- endfor %}
+{%- endif %}

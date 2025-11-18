@@ -1,0 +1,80 @@
+# Skill Configuration: {{ name }}
+# Generated on: {{ created_at | timestamp }}
+# Template Type: {{ template_type }}
+
+# Skill identification
+skill_id: "{{ skill_id }}"
+name: "{{ name }}"
+description: |
+  {{ description }}
+
+# Skill category
+category: "{{ category }}"
+
+{%- if inputs %}
+# Input specifications
+inputs:
+{%- for input in inputs %}
+  - name: "{{ input.name }}"
+    type: "{{ input.type }}"
+    required: {{ input.get('required', false) | lower }}
+  {%- if input.get('description') %}
+    description: "{{ input.description }}"
+  {%- endif %}
+  {%- if input.get('default') is not none %}
+    default: {{ input.default if input.type in ['integer', 'float', 'boolean'] else '"' + input.default | string + '"' }}
+  {%- endif %}
+{%- endfor %}
+{%- endif %}
+
+{%- if outputs %}
+# Output specifications
+outputs:
+{%- for output in outputs %}
+  - name: "{{ output.name }}"
+    type: "{{ output.type }}"
+  {%- if output.get('description') %}
+    description: "{{ output.description }}"
+  {%- endif %}
+{%- endfor %}
+{%- endif %}
+
+{%- if prompt_template %}
+# Prompt template reference
+prompt_template: "{{ prompt_template }}"
+{%- endif %}
+
+# Skill metadata
+metadata:
+  complexity: "{{ metadata.get('complexity', 'medium') }}"
+{%- if metadata.get('version') %}
+  version: "{{ metadata.version }}"
+{%- endif %}
+{%- if metadata.get('author') %}
+  author: "{{ metadata.author }}"
+{%- endif %}
+  created_at: "{{ created_at | timestamp }}"
+{%- if metadata.get('dependencies') %}
+  dependencies:
+  {%- for dep in metadata.dependencies %}
+    - "{{ dep }}"
+  {%- endfor %}
+{%- endif %}
+{%- if metadata.get('tags') %}
+  tags:
+  {%- for tag in metadata.tags %}
+    - "{{ tag }}"
+  {%- endfor %}
+{%- endif %}
+{%- if metadata.get('license') %}
+  license: "{{ metadata.license }}"
+{%- endif %}
+{%- if metadata.get('performance') %}
+  performance:
+  {%- if metadata.performance.get('avg_execution_time') %}
+    avg_execution_time: {{ metadata.performance.avg_execution_time }}
+  {%- endif %}
+  {%- if metadata.performance.get('memory_usage') %}
+    memory_usage: "{{ metadata.performance.memory_usage }}"
+  {%- endif %}
+{%- endif %}

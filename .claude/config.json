@@ -1,0 +1,34 @@
+{
+  "skills": [
+    {
+      "name": "mcp-api-connector",
+      "enabled": true,
+      "path": "./skills/mcp-api-connector",
+      "config": {
+        "api_connectors": {
+          "github": {
+            "enabled": true,
+            "base_url": "https://api.github.com"
+          },
+          "figma": {
+            "enabled": false,
+            "base_url": "https://api.figma.com/v1"
+          },
+          "slack": {
+            "enabled": false,
+            "base_url": "https://slack.com/api"
+          },
+          "linear": {
+            "enabled": false,
+            "base_url": "https://api.linear.app/graphql"
+          }
+        },
+        "mcp_servers": []
+      }
+    }
+  ],
+  "settings": {
+    "log_level": "INFO",
+    "timeout": 30
+  }
+}

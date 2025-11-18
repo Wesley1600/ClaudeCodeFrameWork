@@ -1,0 +1,36 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "I'm building a web application with React and need help with state management."
+    },
+    {
+      "role": "assistant",
+      "content": "For state management in React, you have several options: Context API, Redux, Zustand, or Recoil. What's the complexity of your application?"
+    },
+    {
+      "role": "user",
+      "content": "It's a medium-sized app with user authentication, real-time updates, and data fetching. I'm thinking Redux might be overkill."
+    },
+    {
+      "role": "assistant",
+      "content": "For that use case, I'd recommend Zustand or React Query combined with Context API. Zustand is lightweight and has a simple API, while React Query excels at server state management."
+    },
+    {
+      "role": "user",
+      "content": "That sounds good. I'll try Zustand. Also, I'm having performance issues with re-renders when the state updates."
+    },
+    {
+      "role": "assistant",
+      "content": "You can optimize re-renders by: 1) Using React.memo for components, 2) Splitting your state into smaller stores, 3) Using selectors in Zustand to subscribe only to needed state slices."
+    },
+    {
+      "role": "user",
+      "content": "Perfect! I should also implement proper error boundaries and loading states. Need to add those to my todo list."
+    }
+  ],
+  "metadata": {
+    "tags": ["react", "state management", "performance"],
+    "project": "web application"
+  }
+}

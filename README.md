@@ -331,6 +331,40 @@ index.add(X.cpu().numpy())
 D, I = index.search(X.cpu().numpy(), k=kmax+1)
 ```
 
+## Task Classification and Routing System
+
+This repository also includes an **intelligent task classification and routing system** that automatically classifies input tasks into categories and routes them to appropriate skills or agents.
+
+### Quick Example
+
+```python
+from task_classification_routing import TaskRouter
+
+router = TaskRouter()
+
+# Route a task to the appropriate skill
+result = router.route("Find semantic analogies: king is to queen as man is to what?")
+print(f"Skill: {result.skill_name}")  # "Analogy Finder (UMAP)"
+print(f"Confidence: {result.confidence:.2f}")
+```
+
+### Features
+
+- **12 Built-in Categories**: PDF, Spreadsheet, Code Execution, Text Processing, Image Processing, Data Analysis, Web Scraping, File Management, API Interaction, Database Query, Machine Learning, and Analogy Finding
+- **Extensible Skill Registry**: Register custom skills with metadata and capabilities
+- **Multi-Strategy Classification**: Pattern matching, keyword detection, and contextual analysis
+- **Confidence Scoring**: Returns classification confidence for validation
+- **Batch Processing**: Classify and route multiple tasks efficiently
+
+### Documentation
+
+For detailed documentation, see [TASK_CLASSIFICATION_ROUTING.md](TASK_CLASSIFICATION_ROUTING.md)
+
+For working examples, run:
+```bash
+python example_task_routing.py
+```
+
 ## Citation
 
 If you use this code in your research, please cite:

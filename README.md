@@ -1,4 +1,45 @@
-# UMAP-Inspired Universal Analogy Engine
+# Claude Code Framework
+
+A comprehensive framework containing AI/ML tools and Claude Code skills for advanced development workflows.
+
+## 📦 Contents
+
+### 1. MCP API Connector Skill
+
+A Claude Code skill that enables interaction with the Model Context Protocol (MCP) servers and external API systems like GitHub, Figma, Slack, Linear, and more.
+
+**Location**: `.claude/skills/mcp-api-connector/`
+
+**Features**:
+- ✅ Connect to MCP servers following the Model Context Protocol specification
+- ✅ Query REST APIs (GitHub, Figma, Slack, etc.)
+- ✅ Execute GraphQL queries (Linear, etc.)
+- ✅ Secure authentication (Bearer tokens, API keys, OAuth)
+- ✅ Automatic response translation into agent context
+- ✅ Comprehensive test suite (25 tests, 100% passing)
+
+**Quick Start**:
+```bash
+# Install dependencies
+cd .claude/skills/mcp-api-connector
+pip install -r requirements.txt
+
+# Configure authentication
+cp ../../.env.example ../../.env
+# Edit .env and add your API tokens
+
+# Run examples
+python examples.py
+
+# Run tests
+python test_skill.py
+```
+
+**Documentation**: See [.claude/skills/mcp-api-connector/README.md](./.claude/skills/mcp-api-connector/README.md) for detailed usage and API reference.
+
+---
+
+### 2. UMAP-Inspired Universal Analogy Engine
 
 A semantic relationship engine that learns universal relationship mappings inspired by UMAP's topological data analysis approach. This engine enables semantic analogies like "boy:girl :: king:?" → "queen" by learning and applying consistent relationship transformations in a low-dimensional embedding space.
 

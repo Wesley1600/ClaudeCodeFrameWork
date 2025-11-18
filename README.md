@@ -295,6 +295,57 @@ See `CODE_REVIEW.md` for detailed analysis. Key fixes:
 
 *Estimated with FAISS acceleration (not included by default)
 
+## Data Extraction Module
+
+In addition to the analogy engine, this framework includes a comprehensive **data extraction module** for parsing structured information from various sources.
+
+### Features
+
+- **Text Entity Extraction**: Parse dates, names, amounts, emails, phone numbers, URLs, percentages, and more
+- **Table Extraction**: Extract tables from HTML and CSV files
+- **Web Scraping**: Extract structured data from web pages
+- **PDF Processing**: Extract text and tables from PDF files using pdfplumber
+
+### Quick Start - Data Extraction
+
+```python
+from data_extraction import (
+    extract_text_entities,
+    extract_from_pdf,
+    extract_from_url,
+    extract_from_html
+)
+
+# Extract entities from text
+text = "Contact John Doe at john@example.com or call (555) 123-4567. Meeting on Jan 15, 2024."
+entities = extract_text_entities(text)
+print(entities['emails'])  # ['john@example.com']
+print(entities['phone_numbers'])  # ['5551234567']
+print(entities['dates'])  # [{'raw': 'Jan 15, 2024', ...}]
+
+# Extract from PDF
+pdf_data = extract_from_pdf('invoice.pdf')
+print(f"Pages: {pdf_data['metadata']['num_pages']}")
+print(f"Tables: {len(pdf_data['tables'])}")
+
+# Extract from web page
+web_data = extract_from_url('https://example.com')
+print(web_data['entities'])
+print(web_data['tables'])
+```
+
+### Running Examples
+
+```bash
+# Run all data extraction examples
+python example_data_extraction.py
+
+# Run specific module
+python -c "from data_extraction import TextExtractor; e = TextExtractor(); print(e.extract_all('Email: test@example.com'))"
+```
+
+See `example_data_extraction.py` for comprehensive usage examples.
+
 ## Roadmap
 
 ### Phase 1: Foundation (Current)
@@ -302,6 +353,7 @@ See `CODE_REVIEW.md` for detailed analysis. Key fixes:
 - ✅ Multi-relation alignment
 - ✅ Analogy finding API
 - ✅ Optimization and bug fixes
+- ✅ Data extraction module
 
 ### Phase 2: Inverse Projection (Planned)
 - [ ] Inverse parametric model (Z_low → X_high)
@@ -314,6 +366,8 @@ See `CODE_REVIEW.md` for detailed analysis. Key fixes:
 - [ ] Hierarchical relations
 - [ ] Compositional analogies (multi-hop)
 - [ ] Interactive visualization
+- [ ] Advanced NLP entity recognition
+- [ ] OCR support for image-based PDFs
 
 ## Scaling to Large Datasets
 

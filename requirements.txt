@@ -1,2 +1,7 @@
 torch>=2.0.0
 numpy>=1.20.0
+
+# Data extraction dependencies
+beautifulsoup4>=4.9.0
+requests>=2.25.0
+pdfplumber>=0.9.0

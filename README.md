@@ -19,6 +19,7 @@ This project implements a novel approach to semantic analogies by:
 - ✅ **Production-ready** with comprehensive documentation and error handling
 - ✅ **Flexible metric selection** (Euclidean or cosine similarity)
 - ✅ **Auto-balancing** of loss weights via gradient norm matching
+- ✅ **Structured output formats** (JSON, CSV, Markdown, HTML) with sorting, deduplication, and schema validation
 
 ## Installation
 
@@ -273,6 +274,220 @@ analogy_from_pair(
     k: int = 1,                     # Number of results
     metric: str = "euclidean",      # Distance metric
 ) -> List[Tuple[int, float]]
+```
+
+## Structured Output Formats
+
+The `output_formats` module provides comprehensive formatting capabilities for converting unstructured outputs into structured formats such as JSON, tables, CSV, and Markdown. It includes sorting, deduplication, and schema validation to ensure data conforms to expected schemas for downstream consumption.
+
+### Features
+
+- **Multiple Output Formats**: JSON, CSV, Markdown, HTML tables
+- **Data Processing**: Sorting, deduplication, filtering, normalization
+- **Schema Validation**: Ensure data conforms to expected structure
+- **Easy Integration**: Works seamlessly with analogy results, training metrics, and relation axes
+
+### Quick Example
+
+```python
+from output_formats import format_analogies
+
+# Get analogy results from engine
+results = find_analogy(model, Z_low, query_idx=10, relation_idx=0, top_k=10)
+
+# Format as JSON
+json_output = format_analogies(
+    results,
+    vocab=vocab,
+    output_format='json',
+    query_word=vocab[10],
+    relation_name='gender',
+    deduplicate=True,
+    sort=True,
+    top_k=5
+)
+
+print(json_output)
+# {
+#   "query_word": "king",
+#   "relation_name": "gender",
+#   "results": [
+#     {"rank": 1, "word": "queen", "similarity_score": 0.95},
+#     {"rank": 2, "word": "princess", "similarity_score": 0.87},
+#     ...
+#   ]
+# }
+```
+
+### Formatting Analogy Results
+
+```python
+from output_formats import AnalogiesFormatter
+
+# Create structured result set
+result_set = AnalogiesFormatter.from_raw_results(
+    raw_results,
+    vocab=vocab,
+    query_word="king",
+    relation_name="gender",
+    deduplicate=True,
+    sort=True,
+    top_k=10
+)
+
+# Export to different formats
+json_str = AnalogiesFormatter.to_json(result_set, pretty=True)
+csv_str = AnalogiesFormatter.to_csv(result_set)
+markdown_str = AnalogiesFormatter.to_markdown(result_set)
+html_str = AnalogiesFormatter.to_html_table(result_set)
+
+# Save to files
+with open('results.json', 'w') as f:
+    f.write(json_str)
+```
+
+### Formatting Training Reports
+
+```python
+from output_formats import TrainingReportFormatter
+
+# Create training report from history
+report = TrainingReportFormatter.from_training_history(
+    loss_history=loss_history,
+    umap_loss_history=umap_losses,
+    align_loss_history=align_losses,
+    ortho_loss_history=ortho_losses,
+    lr_history=learning_rates,
+    relation_stats=relation_statistics,
+    hyperparameters={'epochs': 400, 'lr': 0.001}
+)
+
+# Export to different formats
+json_report = TrainingReportFormatter.to_json(report, pretty=True)
+markdown_report = TrainingReportFormatter.to_markdown(report)
+csv_metrics = TrainingReportFormatter.to_csv(report)
+```
+
+### Exporting Relation Axes
+
+```python
+from output_formats import AxisExportFormatter
+
+# Extract and format relation axes
+axes = extract_relation_axes(model, X_high, Z_low, relation_pairs)
+
+structured_axes = AxisExportFormatter.from_raw_axes(
+    axes,
+    relation_names=['gender', 'plural', 'tense'],
+    include_centroids=True
+)
+
+# Export to different formats
+json_axes = AxisExportFormatter.to_json(structured_axes, pretty=True)
+csv_axes = AxisExportFormatter.to_csv(structured_axes)
+markdown_axes = AxisExportFormatter.to_markdown(structured_axes)
+
+# Save as NumPy archive for later use
+AxisExportFormatter.to_numpy_archive(structured_axes, 'relation_axes.npz')
+```
+
+### Data Processing Utilities
+
+```python
+from output_formats import DataProcessor
+
+# Deduplicate results by index
+unique_results = DataProcessor.deduplicate_by_key(
+    results,
+    key='word_index',
+    keep='first'
+)
+
+# Sort by multiple keys
+sorted_results = DataProcessor.sort_by_keys(
+    results,
+    keys=['similarity_score', 'rank'],
+    reverse=True
+)
+
+# Filter by threshold
+filtered_results = DataProcessor.filter_by_threshold(
+    results,
+    key='similarity_score',
+    threshold=0.8,
+    comparison='ge'  # greater than or equal
+)
+
+# Normalize scores to 0-1 range
+normalized_results = DataProcessor.normalize_scores(
+    results,
+    score_key='similarity_score',
+    method='minmax'
+)
+```
+
+### Schema Validation
+
+```python
+from output_formats import SchemaValidator
+
+# Validate analogy result
+result = {
+    'rank': 1,
+    'word_index': 42,
+    'word': 'queen',
+    'similarity_score': 0.95
+}
+
+# Non-strict validation (returns True/False)
+is_valid = SchemaValidator.validate_analogy_result(result, strict=False)
+
+# Strict validation (raises ValueError on failure)
+try:
+    SchemaValidator.validate_analogy_result(result, strict=True)
+    print("Valid!")
+except ValueError as e:
+    print(f"Validation error: {e}")
+```
+
+### Running the Output Formats Demo
+
+```bash
+python example_output_formats.py
+```
+
+This demonstrates:
+- Analogy result formatting in all formats (JSON, CSV, Markdown, HTML)
+- Training report generation
+- Relation axes export (including NumPy .npz format)
+- Data processing utilities (deduplication, sorting, filtering)
+- Schema validation
+
+All output files are saved to `output_examples/` directory.
+
+### Convenience Functions
+
+Quick one-liners for common formatting tasks:
+
+```python
+from output_formats import (
+    format_analogies,
+    format_training_report,
+    format_relation_axes
+)
+
+# Format analogies in one line
+json_output = format_analogies(results, vocab, output_format='json')
+csv_output = format_analogies(results, vocab, output_format='csv')
+md_output = format_analogies(results, vocab, output_format='markdown')
+
+# Format training report in one line
+json_report = format_training_report(loss_history, output_format='json')
+md_report = format_training_report(loss_history, output_format='markdown')
+
+# Format relation axes in one line
+json_axes = format_relation_axes(axes, output_format='json')
+csv_axes = format_relation_axes(axes, output_format='csv')
 ```
 
 ## Critical Fixes from V1

@@ -19,6 +19,73 @@ This project implements a novel approach to semantic analogies by:
 - ✅ **Production-ready** with comprehensive documentation and error handling
 - ✅ **Flexible metric selection** (Euclidean or cosine similarity)
 - ✅ **Auto-balancing** of loss weights via gradient norm matching
+- ✅ **Persistent memory system** for session continuity and experiment tracking
+
+## Persistent Memory Tool
+
+The project now includes a powerful **Memory Tool** that enables persistent storage and retrieval of information across sessions:
+
+### Features
+- 📦 **CRUD operations**: Create, Read, Update, Delete memories with simple API
+- 🔍 **Semantic search**: Vector-based similarity search to find relevant memories
+- 💾 **Multiple types**: Store facts, summaries, models, embeddings, and experiments
+- 🔄 **Session continuity**: Maintain context across conversations with session summaries
+- 📊 **Experiment tracking**: Save and compare training runs with metadata
+
+### Quick Example
+
+```python
+from memory_tool import MemoryTool
+from memory_integration import AnalogyMemoryManager
+
+# Basic memory operations
+memory = MemoryTool()
+memory.create("user_pref", "User prefers technical explanations", memory_type="fact")
+results = memory.search("user preferences", k=3)
+
+# Save a trained model with full context
+manager = AnalogyMemoryManager()
+manager.save_trained_model(
+    model_state=model.state_dict(),
+    embeddings=Z,
+    relation_axes=axes,
+    model_name="gender_analogy_v1",
+    metadata={"epochs": 300, "accuracy": 0.87}
+)
+
+# Load it later in a new session
+bundle = manager.load_trained_model("gender_analogy_v1")
+```
+
+See **[MEMORY_TOOL_GUIDE.md](MEMORY_TOOL_GUIDE.md)** for complete documentation.
+
+## 🌅 NEW: Agent Pulse - Proactive AI Assistant
+
+This repository now includes **Agent Pulse**, a ChatGPT Pulse-inspired system that transforms reactive AI assistance into proactive support:
+
+- 📊 **Analyzes past conversations** to understand your interests and projects
+- 🔍 **Conducts overnight research** on relevant topics
+- 💡 **Identifies opportunities** for learning and optimization
+- 🔧 **Suggests solutions** to recurring problems
+- ✅ **Tracks action items** and commitments
+- 🎯 **Learns from feedback** to personalize updates
+
+### Quick Start with Agent Pulse
+
+```bash
+# Generate your first pulse update
+python -m agent_pulse.cli.pulse_cli generate
+
+# Configure your interests
+python -m agent_pulse.cli.pulse_cli config --add-interest "machine learning"
+
+# View system status
+python -m agent_pulse.cli.pulse_cli status
+```
+
+**[📖 Full Agent Pulse Documentation →](./AGENT_PULSE.md)**
+
+---
 
 ## Installation
 

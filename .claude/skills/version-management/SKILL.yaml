@@ -1,0 +1,14 @@
+name: version-management
+version: 1.0.0
+description: Manage versions of skills, prompts, and documents with git-based version control. Tag releases, maintain changelogs, and rollback to previous versions.
+author: Claude Code Framework
+created: 2025-11-18
+tags:
+  - version-control
+  - git
+  - changelog
+  - rollback
+  - release-management
+category: development-tools
+dependencies: []
+gitignored: false

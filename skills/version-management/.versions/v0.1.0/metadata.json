@@ -1,0 +1,8 @@
+{
+  "version": "0.1.0",
+  "timestamp": "2025-11-18T02:07:14Z",
+  "author": "Claude <noreply@anthropic.com>",
+  "commit": "e4642846a8532fbc622880d67c5f3d10e7481e31",
+  "description": "Initial version",
+  "files_tracked": ["SKILL.md","scripts/","templates/"]
+}

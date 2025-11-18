@@ -1,0 +1,367 @@
+{
+  "metadata": {
+    "domain": "technical_documentation",
+    "data_type": "documentation_examples_and_prompts",
+    "version": "1.0",
+    "description": "Technical documentation examples for training API docs, user guides, and technical writing skills",
+    "example_count": 15,
+    "doc_types": ["API documentation", "user guides", "architecture docs", "README files"]
+  },
+  "api_documentation_examples": [
+    {
+      "id": "API_001",
+      "title": "RESTful API Endpoint Documentation",
+      "poor_example": {
+        "content": "POST /users\nCreates a user.\nReturns user object.",
+        "issues": [
+          "No authentication details",
+          "No request body specification",
+          "No response codes",
+          "No error handling",
+          "No examples",
+          "Unclear what fields are required"
+        ]
+      },
+      "good_example": {
+        "endpoint": "POST /api/v1/users",
+        "description": "Creates a new user account with the specified details. Requires admin authentication.",
+        "authentication": "Bearer token with 'admin:write' scope",
+        "request_headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer {access_token}"
+        },
+        "request_body": {
+          "type": "object",
+          "required": ["email", "username", "password"],
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email",
+              "description": "User's email address. Must be unique.",
+              "example": "user@example.com"
+            },
+            "username": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 30,
+              "pattern": "^[a-zA-Z0-9_]+$",
+              "description": "Unique username. Alphanumeric and underscores only.",
+              "example": "john_doe_42"
+            },
+            "password": {
+              "type": "string",
+              "minLength": 8,
+              "description": "User password. Must contain uppercase, lowercase, number, and special character.",
+              "example": "SecureP@ss123"
+            },
+            "full_name": {
+              "type": "string",
+              "description": "User's full name (optional)",
+              "example": "John Doe"
+            },
+            "role": {
+              "type": "string",
+              "enum": ["user", "moderator", "admin"],
+              "default": "user",
+              "description": "User role. Defaults to 'user' if not specified."
+            }
+          }
+        },
+        "response_codes": {
+          "201": {
+            "description": "User created successfully",
+            "body": {
+              "id": "usr_1a2b3c4d",
+              "email": "user@example.com",
+              "username": "john_doe_42",
+              "full_name": "John Doe",
+              "role": "user",
+              "created_at": "2024-11-18T10:30:00Z",
+              "status": "active"
+            }
+          },
+          "400": {
+            "description": "Invalid request data",
+            "body": {
+              "error": "validation_error",
+              "message": "Invalid request parameters",
+              "details": [
+                {
+                  "field": "email",
+                  "issue": "Email address is already registered"
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "Authentication failed",
+            "body": {
+              "error": "unauthorized",
+              "message": "Invalid or expired access token"
+            }
+          },
+          "403": {
+            "description": "Insufficient permissions",
+            "body": {
+              "error": "forbidden",
+              "message": "Admin access required to create users"
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "body": {
+              "error": "internal_server_error",
+              "message": "An unexpected error occurred. Please try again later.",
+              "request_id": "req_xyz789"
+            }
+          }
+        },
+        "example_request": "curl -X POST https://api.example.com/api/v1/users \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer eyJhbGc...\" \\\n  -d '{\n    \"email\": \"user@example.com\",\n    \"username\": \"john_doe_42\",\n    \"password\": \"SecureP@ss123\",\n    \"full_name\": \"John Doe\",\n    \"role\": \"user\"\n  }'",
+        "notes": [
+          "Email verification email is sent asynchronously after user creation",
+          "Password is hashed using bcrypt before storage (never stored in plain text)",
+          "Username cannot be changed after creation",
+          "Rate limit: 100 requests per hour per IP address"
+        ]
+      },
+      "best_practices": [
+        "Include all possible response codes with examples",
+        "Specify required vs optional fields clearly",
+        "Provide working curl examples",
+        "Document validation rules (min/max length, regex patterns)",
+        "Include error response formats",
+        "Note any side effects (emails sent, webhooks triggered)",
+        "Specify rate limits and authentication requirements"
+      ]
+    }
+  ],
+  "user_guide_examples": [
+    {
+      "id": "GUIDE_001",
+      "title": "Feature Walkthrough - How to Schedule a Report",
+      "poor_example": {
+        "content": "To schedule a report:\n1. Click Reports\n2. Click Schedule\n3. Fill out the form\n4. Click Save",
+        "issues": [
+          "Assumes user knows where to find 'Reports'",
+          "No screenshots or visual aids",
+          "Doesn't explain form fields",
+          "No troubleshooting or common issues",
+          "No explanation of what happens after scheduling"
+        ]
+      },
+      "good_example": {
+        "title": "How to Schedule Automated Reports",
+        "introduction": "Scheduled reports allow you to automatically receive analytics data via email at regular intervals. This guide walks through creating your first scheduled report.",
+        "prerequisites": [
+          "You need 'Report Manager' role or higher",
+          "At least one report template must exist in your workspace"
+        ],
+        "estimated_time": "5 minutes",
+        "steps": [
+          {
+            "step": 1,
+            "title": "Navigate to Reports Dashboard",
+            "instruction": "From the main navigation menu on the left, click **Analytics**, then select **Reports** from the dropdown.",
+            "visual_aid": "[Screenshot showing navigation path highlighted]",
+            "tip": "If you don't see the Reports option, you may not have the required permissions. Contact your workspace administrator."
+          },
+          {
+            "step": 2,
+            "title": "Create New Schedule",
+            "instruction": "In the top-right corner of the Reports page, click the **Schedule Report** button (calendar icon).",
+            "visual_aid": "[Screenshot of Schedule Report button]"
+          },
+          {
+            "step": 3,
+            "title": "Configure Report Settings",
+            "instruction": "Fill out the scheduling form with the following information:",
+            "sub_steps": [
+              {
+                "field": "Report Template",
+                "instruction": "Select which report to schedule from the dropdown. Use the search box if you have many templates.",
+                "example": "Monthly Sales Summary"
+              },
+              {
+                "field": "Frequency",
+                "instruction": "Choose how often to receive the report: Daily, Weekly, Monthly, or Custom.",
+                "details": {
+                  "daily": "Sent every day at specified time",
+                  "weekly": "Sent on selected day(s) of week",
+                  "monthly": "Sent on specified date each month (1-28)",
+                  "custom": "Use cron expression for advanced scheduling"
+                }
+              },
+              {
+                "field": "Delivery Time",
+                "instruction": "Select the time to send the report (in your local timezone).",
+                "best_practice": "Choose morning hours (6-9 AM) for reports you want to review daily."
+              },
+              {
+                "field": "Recipients",
+                "instruction": "Enter email addresses of recipients (comma-separated). You can add up to 10 recipients.",
+                "example": "john@example.com, team@example.com"
+              },
+              {
+                "field": "Format",
+                "instruction": "Select output format: PDF, Excel, or CSV.",
+                "guidance": "PDF for stakeholder reports, Excel/CSV for data analysis"
+              }
+            ]
+          },
+          {
+            "step": 4,
+            "title": "Review and Save",
+            "instruction": "Review your settings, then click **Save Schedule**. You'll see a confirmation message and your new schedule will appear in the list.",
+            "visual_aid": "[Screenshot of confirmation message]"
+          },
+          {
+            "step": 5,
+            "title": "Verify First Delivery",
+            "instruction": "Your first report will be sent at the next scheduled time. Check the 'Next Run' column to see when that will be.",
+            "note": "To send a test report immediately, click the three-dot menu next to your schedule and select 'Send Now'."
+          }
+        ],
+        "what_happens_next": [
+          "Reports are generated automatically at the scheduled time",
+          "All recipients receive an email with the report attached",
+          "Delivery history is logged and viewable under 'Schedule History'",
+          "Failed deliveries trigger automatic retries (3 attempts) and notify you"
+        ],
+        "troubleshooting": [
+          {
+            "problem": "I don't receive the scheduled report",
+            "solutions": [
+              "Check your spam/junk folder",
+              "Verify your email address is spelled correctly in recipients list",
+              "Check Schedule History for error messages",
+              "Ensure the report template still exists and has data"
+            ]
+          },
+          {
+            "problem": "Report is empty or shows no data",
+            "solutions": [
+              "Verify date range filters in the report template",
+              "Check that you have data for the selected time period",
+              "Ensure data source permissions haven't changed"
+            ]
+          }
+        ],
+        "related_articles": [
+          "Creating Custom Report Templates",
+          "Understanding Report Filters",
+          "Managing User Permissions"
+        ]
+      },
+      "best_practices_for_user_guides": [
+        "Start with clear prerequisites",
+        "Use numbered steps for procedures",
+        "Include screenshots/visuals for complex UIs",
+        "Explain WHY as well as HOW (best practices)",
+        "Provide troubleshooting for common issues",
+        "Link to related documentation",
+        "Use consistent terminology",
+        "Include examples and use cases"
+      ]
+    }
+  ],
+  "readme_examples": [
+    {
+      "id": "README_001",
+      "title": "Project README Template",
+      "sections": {
+        "header": {
+          "elements": ["Project title", "Brief description (1-2 sentences)", "Badges (build status, version, license)", "Screenshot or demo GIF if applicable"],
+          "example": "# DataViz Pro\n\nA powerful, lightweight data visualization library for creating interactive charts and graphs.\n\n[![Build Status](https://img.shields.io/badge/build-passing-success)]\n[![npm version](https://img.shields.io/badge/npm-v2.1.0-blue)]\n[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]\n\n![Demo](demo.gif)"
+        },
+        "features": {
+          "purpose": "Quickly show value proposition",
+          "example": "## Features\n\n✨ **Simple API** - Create charts with just 3 lines of code\n📊 **12+ Chart Types** - Line, bar, pie, scatter, and more\n🎨 **Fully Customizable** - Control every aspect of appearance\n📱 **Responsive** - Works on mobile, tablet, and desktop\n⚡ **Fast** - Render 100k data points in <100ms\n🔧 **TypeScript Support** - Full type definitions included"
+        },
+        "installation": {
+          "example": "## Installation\n\n```bash\nnpm install dataviz-pro\n# or\nyarn add dataviz-pro\n```"
+        },
+        "quick_start": {
+          "purpose": "Get users to success ASAP",
+          "example": "## Quick Start\n\n```javascript\nimport { LineChart } from 'dataviz-pro';\n\nconst chart = new LineChart('#container', {\n  data: [1, 4, 2, 8, 5],\n  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May']\n});\n\nchart.render();\n```\n\nThat's it! You now have a working line chart. [See it in action →](https://example.com/demo)"
+        },
+        "documentation": {
+          "example": "## Documentation\n\n📘 [Full Documentation](https://docs.example.com)\n🎓 [Tutorials](https://docs.example.com/tutorials)\n📖 [API Reference](https://docs.example.com/api)\n💡 [Examples](https://examples.example.com)"
+        },
+        "contributing": {
+          "example": "## Contributing\n\nWe welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.\n\n### Development Setup\n\n```bash\ngit clone https://github.com/yourorg/dataviz-pro.git\ncd dataviz-pro\nnpm install\nnpm run dev\n```\n\n### Running Tests\n\n```bash\nnpm test\n```"
+        },
+        "license": {
+          "example": "## License\n\nMIT © [Your Name](https://github.com/yourname)"
+        }
+      },
+      "readme_best_practices": [
+        "Put most important info first (what it does, why use it)",
+        "Include a quick start that works copy-paste",
+        "Use badges for credibility (build status, downloads, version)",
+        "Add visuals (screenshots, GIFs, diagrams) - especially for UI libraries",
+        "Link to full documentation rather than cramming everything in README",
+        "Include installation instructions for all package managers",
+        "Specify prerequisites/requirements clearly",
+        "Show example code that actually runs",
+        "Keep it scannable with headings and bullet points",
+        "Update README when features change"
+      ]
+    }
+  ],
+  "architecture_documentation": [
+    {
+      "id": "ARCH_001",
+      "title": "System Architecture Document",
+      "sections": [
+        {
+          "section": "Overview",
+          "purpose": "High-level summary of the system",
+          "example": "## System Overview\n\nThe E-Commerce Platform is a microservices-based architecture that handles product catalog, user management, order processing, and payment integration. The system is designed for:\n\n- **Scale**: Handle 10,000 concurrent users\n- **Reliability**: 99.9% uptime SLA\n- **Security**: PCI DSS compliance for payment processing\n- **Performance**: <200ms API response time (p95)"
+        },
+        {
+          "section": "Architecture Diagram",
+          "purpose": "Visual representation of system components",
+          "content": "[Include diagram showing: Frontend, API Gateway, Microservices, Databases, Message Queue, Cache Layer]",
+          "tool_suggestions": ["Lucidchart", "Draw.io", "Mermaid diagrams in markdown"]
+        },
+        {
+          "section": "Component Description",
+          "purpose": "Detailed explanation of each component",
+          "example": "### API Gateway (Kong)\n\n**Purpose**: Single entry point for all client requests. Handles authentication, rate limiting, and routing.\n\n**Technology**: Kong API Gateway v3.0\n\n**Responsibilities**:\n- JWT token validation\n- Rate limiting (100 req/min per user)\n- Request routing to appropriate microservice\n- CORS handling\n- SSL termination\n\n**Scalability**: Horizontally scalable, currently 3 instances behind load balancer\n\n**Dependencies**: None (stateless)"
+        },
+        {
+          "section": "Data Flow",
+          "purpose": "Explain how data moves through the system",
+          "example": "### Order Placement Flow\n\n1. User submits order via Web UI\n2. Request hits API Gateway → validates JWT\n3. Order Service receives request\n   - Validates product availability (calls Inventory Service)\n   - Calculates total (calls Pricing Service)\n   - Creates order record in Orders DB\n4. Order Service publishes 'OrderCreated' event to message queue\n5. Payment Service consumes event → processes payment\n6. Payment Service publishes 'PaymentProcessed' event\n7. Fulfillment Service consumes event → creates shipping label\n8. Email Service consumes event → sends order confirmation\n\n[Include sequence diagram]"
+        },
+        {
+          "section": "Technology Stack",
+          "example": "### Technology Choices\n\n| Component | Technology | Justification |\n|-----------|------------|---------------|\n| Frontend | React 18 | Large ecosystem, good performance |\n| API Gateway | Kong | Plugin ecosystem, high performance |\n| Services | Node.js / Express | Team expertise, npm ecosystem |\n| Database | PostgreSQL | ACID compliance, strong community |\n| Cache | Redis | High performance, persistence options |\n| Message Queue | RabbitMQ | Reliable, mature, good monitoring |\n| Deployment | Kubernetes | Auto-scaling, self-healing |\n| Monitoring | Prometheus + Grafana | Open source, powerful querying |"
+        }
+      ]
+    }
+  ],
+  "writing_improvement_exercises": [
+    {
+      "id": "IMPROVE_001",
+      "title": "Passive to Active Voice",
+      "weak": "The error was caused by incorrect configuration of the database connection string.",
+      "strong": "Incorrect database connection string caused the error.",
+      "lesson": "Active voice is more direct and clear. Use passive voice only when actor is unknown or irrelevant."
+    },
+    {
+      "id": "IMPROVE_002",
+      "title": "Remove Jargon",
+      "weak": "Leverage the API endpoint to facilitate the creation of user entities in the persistence layer.",
+      "strong": "Use the API endpoint to create users in the database.",
+      "lesson": "Avoid unnecessary jargon and buzzwords. Say what you mean simply."
+    },
+    {
+      "id": "IMPROVE_003",
+      "title": "Be Specific",
+      "weak": "The system performs well under high load.",
+      "strong": "The system handles 10,000 requests per second with p95 latency under 100ms.",
+      "lesson": "Quantify performance claims with specific metrics."
+    }
+  ]
+}

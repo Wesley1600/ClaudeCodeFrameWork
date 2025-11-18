@@ -43,6 +43,73 @@ This component implements a novel approach to semantic analogies by:
 - ✅ **Production-ready** with comprehensive documentation and error handling
 - ✅ **Flexible metric selection** (Euclidean or cosine similarity)
 - ✅ **Auto-balancing** of loss weights via gradient norm matching
+- ✅ **Persistent memory system** for session continuity and experiment tracking
+
+## Persistent Memory Tool
+
+The project now includes a powerful **Memory Tool** that enables persistent storage and retrieval of information across sessions:
+
+### Features
+- 📦 **CRUD operations**: Create, Read, Update, Delete memories with simple API
+- 🔍 **Semantic search**: Vector-based similarity search to find relevant memories
+- 💾 **Multiple types**: Store facts, summaries, models, embeddings, and experiments
+- 🔄 **Session continuity**: Maintain context across conversations with session summaries
+- 📊 **Experiment tracking**: Save and compare training runs with metadata
+
+### Quick Example
+
+```python
+from memory_tool import MemoryTool
+from memory_integration import AnalogyMemoryManager
+
+# Basic memory operations
+memory = MemoryTool()
+memory.create("user_pref", "User prefers technical explanations", memory_type="fact")
+results = memory.search("user preferences", k=3)
+
+# Save a trained model with full context
+manager = AnalogyMemoryManager()
+manager.save_trained_model(
+    model_state=model.state_dict(),
+    embeddings=Z,
+    relation_axes=axes,
+    model_name="gender_analogy_v1",
+    metadata={"epochs": 300, "accuracy": 0.87}
+)
+
+# Load it later in a new session
+bundle = manager.load_trained_model("gender_analogy_v1")
+```
+
+See **[MEMORY_TOOL_GUIDE.md](MEMORY_TOOL_GUIDE.md)** for complete documentation.
+
+## 🌅 NEW: Agent Pulse - Proactive AI Assistant
+
+This repository now includes **Agent Pulse**, a ChatGPT Pulse-inspired system that transforms reactive AI assistance into proactive support:
+
+- 📊 **Analyzes past conversations** to understand your interests and projects
+- 🔍 **Conducts overnight research** on relevant topics
+- 💡 **Identifies opportunities** for learning and optimization
+- 🔧 **Suggests solutions** to recurring problems
+- ✅ **Tracks action items** and commitments
+- 🎯 **Learns from feedback** to personalize updates
+
+### Quick Start with Agent Pulse
+
+```bash
+# Generate your first pulse update
+python -m agent_pulse.cli.pulse_cli generate
+
+# Configure your interests
+python -m agent_pulse.cli.pulse_cli config --add-interest "machine learning"
+
+# View system status
+python -m agent_pulse.cli.pulse_cli status
+```
+
+**[📖 Full Agent Pulse Documentation →](./AGENT_PULSE.md)**
+
+---
 
 ## Installation
 
@@ -356,6 +423,40 @@ index.add(X.cpu().numpy())
 D, I = index.search(X.cpu().numpy(), k=kmax+1)
 ```
 
+## Task Classification and Routing System
+
+This repository also includes an **intelligent task classification and routing system** that automatically classifies input tasks into categories and routes them to appropriate skills or agents.
+
+### Quick Example
+
+```python
+from task_classification_routing import TaskRouter
+
+router = TaskRouter()
+
+# Route a task to the appropriate skill
+result = router.route("Find semantic analogies: king is to queen as man is to what?")
+print(f"Skill: {result.skill_name}")  # "Analogy Finder (UMAP)"
+print(f"Confidence: {result.confidence:.2f}")
+```
+
+### Features
+
+- **12 Built-in Categories**: PDF, Spreadsheet, Code Execution, Text Processing, Image Processing, Data Analysis, Web Scraping, File Management, API Interaction, Database Query, Machine Learning, and Analogy Finding
+- **Extensible Skill Registry**: Register custom skills with metadata and capabilities
+- **Multi-Strategy Classification**: Pattern matching, keyword detection, and contextual analysis
+- **Confidence Scoring**: Returns classification confidence for validation
+- **Batch Processing**: Classify and route multiple tasks efficiently
+
+### Documentation
+
+For detailed documentation, see [TASK_CLASSIFICATION_ROUTING.md](TASK_CLASSIFICATION_ROUTING.md)
+
+For working examples, run:
+```bash
+python example_task_routing.py
+```
+
 ## Citation
 
 If you use this code in your research, please cite:
@@ -378,6 +479,41 @@ If you use this code in your research, please cite:
 
 MIT License (or your preferred license)
 
+## Claude Code Skills
+
+This repository includes custom Claude Code skills to enhance development workflows:
+
+### Error Handling Skill
+
+A comprehensive framework for robust error handling with tool calls in Claude Code. Located in `.claude/skills/error-handling.md`, this skill provides:
+
+- **Automatic retry logic** with exponential backoff for transient failures
+- **Error classification** (retryable vs non-retryable vs critical)
+- **Fallback strategies** for common failure scenarios
+- **Structured error logging** and reporting
+- **Human escalation** when appropriate
+
+**Key features:**
+- Git operations with network retry (push/pull/fetch)
+- File I/O with lock and permission handling
+- Web requests with timeout and rate limit handling
+- Build/test operations with transient failure retry
+- Multi-step operations with recovery mechanisms
+
+**Quick usage:**
+```
+Use the error-handling skill to push my changes to git
+```
+
+See `.claude/skills/USAGE_GUIDE.md` for detailed examples and best practices.
+
+**Python implementation example:**
+The `error_handling_example.py` file demonstrates these patterns in Python code with:
+- Retry decorators with exponential backoff
+- Error classification logic
+- Fallback function support
+- Real-world usage examples
+
 ## Contributing
 
 Contributions welcome! Please:
@@ -386,12 +522,99 @@ Contributions welcome! Please:
 3. Add tests for new functionality
 4. Submit a pull request
 
+## Version Management
+
+This project uses a specialized version management system that tracks changes, maintains a changelog, and integrates with Git.
+
+### Quick Start
+
+```bash
+# Show current version
+python version_manager.py current
+
+# Show version status and unreleased changes
+python version_manager.py status
+
+# Add a change to the unreleased section
+python version_manager.py add-change "Fixed bug in analogy finding" -c Fixed
+
+# Bump version (major.minor.patch)
+python version_manager.py bump patch    # 1.0.0 → 1.0.1
+python version_manager.py bump minor    # 1.0.0 → 1.1.0
+python version_manager.py bump major    # 1.0.0 → 2.0.0
+
+# Create a git tag for the current version
+python version_manager.py tag
+
+# Full release workflow with auto-commit and tag
+python version_manager.py bump minor --tag
+```
+
+### Version Management Features
+
+- **Semantic Versioning**: Follows [SemVer](https://semver.org/) (MAJOR.MINOR.PATCH)
+- **Changelog Maintenance**: Automatically updates `CHANGELOG.md` using [Keep a Changelog](https://keepachangelog.com/) format
+- **Git Integration**: Creates commits and tags for releases
+- **Multi-file Tracking**: Updates version in all tracked files
+- **Change Categories**: Supports Added, Changed, Fixed, Deprecated, Removed, Security, Performance
+
+### Workflow Example
+
+```bash
+# 1. Make code changes
+# ... edit files ...
+
+# 2. Record your changes
+python version_manager.py add-change "Added support for FAISS indexing" -c Added
+python version_manager.py add-change "Fixed numerical stability in clustering" -c Fixed
+python version_manager.py add-change "Improved training speed by 2x" -c Performance
+
+# 3. Check status
+python version_manager.py status
+
+# 4. Create a release
+python version_manager.py bump minor --tag
+
+# 5. Push to repository
+git push origin claude/version-management-changelog-012Fdwp6GtUpaaVwdDjpZqvc
+git push origin v1.1.0  # Push the tag
+```
+
+### Configuration
+
+Edit `.version_config.json` to customize version management:
+
+```json
+{
+  "auto_commit": true,              // Auto-commit version bumps
+  "auto_tag": false,                // Auto-create git tags
+  "commit_template": "chore: bump version to {version}",
+  "tag_prefix": "v",                // Tag prefix (e.g., v1.0.0)
+  "track_files": [                  // Files to update versions in
+    "umap_analogy_engine.py",
+    "version_manager.py"
+  ]
+}
+```
+
+### Change Categories
+
+Use these categories when adding changes:
+
+- **Added**: New features
+- **Changed**: Changes in existing functionality
+- **Deprecated**: Soon-to-be removed features
+- **Removed**: Removed features
+- **Fixed**: Bug fixes
+- **Security**: Security vulnerability fixes
+- **Performance**: Performance improvements
+
 ## Contact
 
 For questions or issues, please open a GitHub issue or contact [your email].
 
 ---
 
-**Status**: Production-ready V1.0
+**Current Version**: 1.0.0
 
-**Last updated**: 2025-11-13
+**Last Updated**: 2025-11-18

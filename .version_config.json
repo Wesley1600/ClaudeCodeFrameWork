@@ -1,0 +1,25 @@
+{
+  "auto_commit": true,
+  "auto_tag": false,
+  "commit_template": "chore: bump version to {version}",
+  "tag_prefix": "v",
+  "track_files": [
+    "umap_analogy_engine.py",
+    "version_manager.py",
+    "example_word_analogies.py"
+  ],
+  "changelog_path": "CHANGELOG.md",
+  "github_repo": "Wesley1600/ClaudeCodeFrameWork",
+  "version_format": "semantic",
+  "categories": [
+    "Added",
+    "Changed",
+    "Deprecated",
+    "Removed",
+    "Fixed",
+    "Security",
+    "Performance"
+  ],
+  "auto_update_date": true,
+  "date_format": "%Y-%m-%d"
+}

@@ -1,0 +1,246 @@
+{
+  "metadata": {
+    "domain": "financial_analysis",
+    "data_type": "ratio_analysis_training_prompts",
+    "version": "1.0",
+    "description": "Training prompts for financial ratio analysis and interpretation",
+    "prompt_count": 25,
+    "difficulty_levels": ["beginner", "intermediate", "advanced"]
+  },
+  "prompts": [
+    {
+      "id": "RA001",
+      "difficulty": "beginner",
+      "category": "liquidity",
+      "prompt": "A company has current assets of $500,000 and current liabilities of $250,000. Calculate the current ratio and explain what it means.",
+      "solution": {
+        "calculation": "Current Ratio = Current Assets / Current Liabilities = $500,000 / $250,000 = 2.0",
+        "interpretation": "A current ratio of 2.0 means the company has $2 of current assets for every $1 of current liabilities. This indicates good short-term liquidity and the ability to meet obligations.",
+        "benchmark": "Generally, a ratio above 1.5 is considered healthy, though this varies by industry."
+      }
+    },
+    {
+      "id": "RA002",
+      "difficulty": "beginner",
+      "category": "profitability",
+      "prompt": "Calculate the gross profit margin for a company with revenue of $1,000,000 and cost of goods sold of $650,000.",
+      "solution": {
+        "calculation": "Gross Profit = Revenue - COGS = $1,000,000 - $650,000 = $350,000\nGross Profit Margin = (Gross Profit / Revenue) × 100 = ($350,000 / $1,000,000) × 100 = 35%",
+        "interpretation": "A 35% gross margin means the company retains $0.35 for every dollar of revenue after direct production costs. This margin must cover operating expenses and generate profit.",
+        "context": "Gross margins vary widely: software (70-90%), retail (20-40%), manufacturing (20-35%)."
+      }
+    },
+    {
+      "id": "RA003",
+      "difficulty": "intermediate",
+      "category": "efficiency",
+      "prompt": "A retailer has average inventory of $800,000 and COGS of $3,200,000. Calculate inventory turnover and days inventory outstanding (DIO). What does this tell you?",
+      "solution": {
+        "calculations": {
+          "inventory_turnover": "COGS / Average Inventory = $3,200,000 / $800,000 = 4.0",
+          "days_inventory_outstanding": "365 / Inventory Turnover = 365 / 4.0 = 91.25 days"
+        },
+        "interpretation": "The company turns over its inventory 4 times per year, holding inventory for approximately 91 days on average. For retail, this might indicate slow-moving inventory or a business selling durable goods.",
+        "recommendations": "Compare to industry benchmarks. Grocery stores might turn 15-20x, while furniture retailers 3-5x. Lower turnover ties up working capital."
+      }
+    },
+    {
+      "id": "RA004",
+      "difficulty": "intermediate",
+      "category": "leverage",
+      "prompt": "Calculate the debt-to-equity ratio for a company with total debt of $2,000,000 and shareholders' equity of $3,500,000. Assess the risk level.",
+      "solution": {
+        "calculation": "Debt-to-Equity = Total Debt / Shareholders' Equity = $2,000,000 / $3,500,000 = 0.57",
+        "interpretation": "A D/E ratio of 0.57 means the company has $0.57 of debt for every $1 of equity. This is moderate leverage.",
+        "risk_assessment": "Ratios under 1.0 are generally conservative. However, optimal D/E varies by industry: utilities (1.5-2.0), tech (0.2-0.5), manufacturing (0.5-1.0).",
+        "additional_analysis": "Should also examine interest coverage ratio and debt service capacity to fully assess financial risk."
+      }
+    },
+    {
+      "id": "RA005",
+      "difficulty": "advanced",
+      "category": "valuation",
+      "prompt": "A company has net income of $5,000,000, 2,000,000 shares outstanding, and trades at $75 per share. Calculate EPS, P/E ratio, and determine if the stock is overvalued compared to an industry average P/E of 18.",
+      "solution": {
+        "calculations": {
+          "eps": "Net Income / Shares Outstanding = $5,000,000 / 2,000,000 = $2.50",
+          "pe_ratio": "Stock Price / EPS = $75 / $2.50 = 30",
+          "premium_to_industry": "(30 - 18) / 18 × 100 = 66.7% premium"
+        },
+        "valuation_assessment": "The stock trades at a P/E of 30, a 66.7% premium to the industry average of 18. This suggests the market expects higher growth or the stock may be overvalued.",
+        "considerations": "High P/E could be justified by: superior growth prospects, better margins, competitive advantages, or lower risk. Need to examine PEG ratio (P/E divided by growth rate) for context."
+      }
+    },
+    {
+      "id": "RA006",
+      "difficulty": "advanced",
+      "category": "profitability",
+      "prompt": "Perform a DuPont analysis for a company with: Net Margin = 8%, Asset Turnover = 1.5, Equity Multiplier = 2.0. What's the ROE and which lever should management focus on?",
+      "solution": {
+        "dupont_formula": "ROE = Net Margin × Asset Turnover × Equity Multiplier",
+        "calculation": "ROE = 0.08 × 1.5 × 2.0 = 0.24 or 24%",
+        "component_analysis": {
+          "net_margin": "8% is moderate - opportunities in cost control or pricing power",
+          "asset_turnover": "1.5x is healthy - efficient asset utilization",
+          "equity_multiplier": "2.0x indicates 50% debt financing - moderate leverage"
+        },
+        "recommendation": "Focus on improving net margin through operational efficiency or pricing strategies, as this offers the most direct path to ROE improvement without increasing financial risk."
+      }
+    },
+    {
+      "id": "RA007",
+      "difficulty": "intermediate",
+      "category": "cash_flow",
+      "prompt": "A company reports: Operating Cash Flow = $12M, Capital Expenditures = $4M, Dividends = $3M. Calculate Free Cash Flow and assess cash generation quality.",
+      "solution": {
+        "calculation": "Free Cash Flow = Operating Cash Flow - Capital Expenditures = $12M - $4M = $8M",
+        "cash_available": "After dividends: $8M - $3M = $5M available for debt reduction, acquisitions, or reserves",
+        "quality_metrics": {
+          "capex_ratio": "CapEx/OCF = 33% - reasonable for growth companies",
+          "dividend_coverage": "FCF/Dividends = 2.67x - well covered"
+        },
+        "interpretation": "Strong cash generation with sufficient FCF to fund dividends and retain capital for growth or debt reduction."
+      }
+    },
+    {
+      "id": "RA008",
+      "difficulty": "beginner",
+      "category": "profitability",
+      "prompt": "Calculate the operating margin for a company with revenue of $5M, COGS of $2M, and operating expenses of $1.8M.",
+      "solution": {
+        "calculations": {
+          "gross_profit": "$5M - $2M = $3M",
+          "operating_income": "$3M - $1.8M = $1.2M",
+          "operating_margin": "($1.2M / $5M) × 100 = 24%"
+        },
+        "interpretation": "24% operating margin indicates the company retains $0.24 per revenue dollar after all operating costs. This is strong for most industries.",
+        "context": "Operating margin reveals operational efficiency independent of financing and tax structures."
+      }
+    },
+    {
+      "id": "RA009",
+      "difficulty": "advanced",
+      "category": "efficiency",
+      "prompt": "Calculate the Cash Conversion Cycle (CCC) given: DIO = 45 days, DSO = 30 days, DPO = 40 days. Interpret the result.",
+      "solution": {
+        "calculation": "CCC = DIO + DSO - DPO = 45 + 30 - 40 = 35 days",
+        "interpretation": "The company takes 35 days to convert resource inputs back into cash. This means working capital is tied up for 35 days in the operating cycle.",
+        "analysis": {
+          "dio_45": "Inventory held for 45 days - moderate for many industries",
+          "dso_30": "Customers pay in 30 days - good collection",
+          "dpo_40": "Company pays suppliers in 40 days - using trade credit effectively"
+        },
+        "optimization": "A shorter CCC is generally better. Could improve by: reducing inventory (JIT), accelerating collections (early payment discounts), or extending payables (negotiating terms)."
+      }
+    },
+    {
+      "id": "RA010",
+      "difficulty": "intermediate",
+      "category": "leverage",
+      "prompt": "A company has EBIT of $8M and interest expense of $1.2M. Calculate the interest coverage ratio and assess debt servicing ability.",
+      "solution": {
+        "calculation": "Interest Coverage Ratio = EBIT / Interest Expense = $8M / $1.2M = 6.67",
+        "interpretation": "The company earns $6.67 in operating income for every $1 of interest expense. This indicates strong ability to service debt.",
+        "risk_levels": {
+          "below_1.5": "High risk - barely covering interest",
+          "1.5_to_2.5": "Adequate but limited cushion",
+          "2.5_to_4.0": "Comfortable coverage",
+          "above_4.0": "Strong coverage - low default risk"
+        },
+        "assessment": "At 6.67x, this company has excellent interest coverage with significant buffer for earnings volatility."
+      }
+    }
+  ],
+  "scenario_based_exercises": [
+    {
+      "id": "SB001",
+      "scenario": "Company A and Company B both have ROE of 20%. Company A: Net Margin=10%, Asset Turnover=2.0, Equity Multiplier=1.0. Company B: Net Margin=5%, Asset Turnover=1.0, Equity Multiplier=4.0. Which company is higher quality?",
+      "analysis": {
+        "company_a_profile": "High margin, high efficiency, no leverage - operating excellence drives returns",
+        "company_b_profile": "Low margin, average efficiency, high leverage - returns driven by financial risk",
+        "conclusion": "Company A is higher quality. Its ROE comes from sustainable operational performance rather than financial leverage. Company B's 4.0x equity multiplier indicates 75% debt financing - vulnerable to rate changes and economic downturns.",
+        "risk_comparison": "Company A can sustain ROE even in downturns. Company B faces refinancing risk and amplified losses if margins compress."
+      }
+    },
+    {
+      "id": "SB002",
+      "scenario": "A retail company shows: Current Ratio=3.5, Quick Ratio=0.8, Inventory Turnover=2.5. What does this combination suggest?",
+      "analysis": {
+        "current_ratio_high": "3.5 suggests strong liquidity overall",
+        "quick_ratio_low": "0.8 indicates most current assets are inventory, not cash or receivables",
+        "inventory_turnover_low": "2.5 is slow for retail (typically 5-15x)",
+        "diagnosis": "The company has excess, slow-moving inventory. High current ratio is misleading - liquidity quality is poor.",
+        "red_flags": [
+          "Inventory may be obsolete or overvalued",
+          "Working capital tied up inefficiently",
+          "Potential write-downs ahead",
+          "Real liquidity weaker than current ratio suggests"
+        ],
+        "recommendations": "Investigate inventory aging, implement JIT, improve demand forecasting, consider markdowns to convert inventory to cash."
+      }
+    },
+    {
+      "id": "SB003",
+      "scenario": "Tech startup: Revenue growing 100% YoY, Gross Margin=70%, Operating Margin=-25%, OCF=-$10M, FCF=-$15M. Assess viability.",
+      "analysis": {
+        "growth": "100% growth is exceptional - strong market traction",
+        "gross_margin": "70% is excellent for tech - scalable business model",
+        "operating_margin": "Negative 25% is expected in growth phase - investing heavily in S&M and R&D",
+        "cash_burn": "Burning $15M/year - need to assess runway",
+        "unit_economics": "Need to verify: Customer Acquisition Cost < Lifetime Value, path to profitability exists",
+        "viability_factors": [
+          "Gross margin supports eventual profitability",
+          "Need sufficient capital to reach profitability (12-24 months runway minimum)",
+          "Must demonstrate improving unit economics",
+          "Growth should continue at high rate to justify burn"
+        ],
+        "verdict": "Viable if well-capitalized and unit economics are sound. Typical pattern for high-growth SaaS. Monitor: burn rate, growth retention, path to positive margins."
+      }
+    }
+  ],
+  "comparative_analysis_exercises": [
+    {
+      "id": "CA001",
+      "companies": [
+        {
+          "name": "Company X",
+          "metrics": {
+            "revenue_growth": "15%",
+            "gross_margin": "45%",
+            "operating_margin": "18%",
+            "roe": "22%",
+            "debt_to_equity": "0.4",
+            "current_ratio": "2.1",
+            "pe_ratio": "25"
+          }
+        },
+        {
+          "name": "Company Y",
+          "metrics": {
+            "revenue_growth": "8%",
+            "gross_margin": "42%",
+            "operating_margin": "20%",
+            "roe": "18%",
+            "debt_to_equity": "0.6",
+            "current_ratio": "1.8",
+            "pe_ratio": "16"
+          }
+        }
+      ],
+      "question": "Which company would you invest in and why?",
+      "sample_answer": {
+        "choice": "Company X",
+        "reasoning": [
+          "Higher growth (15% vs 8%) - more dynamic business",
+          "Superior ROE (22% vs 18%) - better shareholder returns",
+          "Lower leverage (0.4 vs 0.6) - less financial risk",
+          "Better liquidity (2.1 vs 1.8) - stronger financial position",
+          "Growth margin: 3% higher gross margin shows pricing power",
+          "Valuation: P/E of 25 vs 16 seems justified by superior growth and returns"
+        ],
+        "caveat": "Company X trades at a premium (56% higher P/E). This is warranted if it can sustain high growth. Company Y offers value if X's growth slows.",
+        "final_recommendation": "Company X for growth investors, Company Y for value investors. X has better fundamentals across all dimensions."
+      }
+    }
+  ]
+}

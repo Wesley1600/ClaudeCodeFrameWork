@@ -1,0 +1,17 @@
+# PDF Processing Skill - Python Dependencies
+
+# Core PDF libraries
+pypdf>=3.17.0          # Modern PDF parsing (PyPDF2 successor)
+pdfplumber>=0.10.0     # Advanced table extraction and layout analysis
+pdf2image>=1.16.0      # Convert PDF pages to images
+
+# OCR support (optional but recommended)
+pytesseract>=0.3.10    # Python wrapper for Tesseract OCR
+Pillow>=10.0.0         # Image processing
+
+# Utilities
+requests>=2.31.0       # HTTP library for downloading PDFs
+
+# Optional: Enhanced text processing
+# python-magic>=0.4.27  # File type detection
+# tabula-py>=2.8.0      # Alternative table extraction (requires Java)

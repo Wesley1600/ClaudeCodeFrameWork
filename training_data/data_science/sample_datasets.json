@@ -1,0 +1,472 @@
+{
+  "metadata": {
+    "domain": "data_science",
+    "data_type": "sample_datasets_and_analysis_prompts",
+    "version": "1.0",
+    "description": "Sample datasets with analysis prompts for training data science and ML skills",
+    "dataset_count": 5,
+    "analysis_types": ["exploratory", "predictive", "classification", "clustering", "time_series"]
+  },
+  "datasets": [
+    {
+      "dataset_id": "DS001",
+      "name": "E-commerce Customer Behavior",
+      "description": "Customer transaction and behavior data for churn prediction and segmentation",
+      "rows": 1000,
+      "columns": 12,
+      "schema": [
+        {"name": "customer_id", "type": "string", "description": "Unique customer identifier"},
+        {"name": "age", "type": "integer", "description": "Customer age", "range": [18, 75]},
+        {"name": "gender", "type": "categorical", "values": ["M", "F", "Other"]},
+        {"name": "account_age_days", "type": "integer", "description": "Days since account creation"},
+        {"name": "total_purchases", "type": "integer", "description": "Total number of purchases"},
+        {"name": "total_spent", "type": "float", "description": "Total amount spent in USD"},
+        {"name": "avg_order_value", "type": "float", "description": "Average order value"},
+        {"name": "days_since_last_purchase", "type": "integer", "description": "Recency metric"},
+        {"name": "product_categories", "type": "integer", "description": "Number of different categories purchased from"},
+        {"name": "support_tickets", "type": "integer", "description": "Number of support tickets opened"},
+        {"name": "email_engagement", "type": "float", "description": "Email open rate", "range": [0, 1]},
+        {"name": "churned", "type": "boolean", "description": "Whether customer churned (target variable)"}
+      ],
+      "sample_data": [
+        {
+          "customer_id": "CUST_001",
+          "age": 34,
+          "gender": "F",
+          "account_age_days": 456,
+          "total_purchases": 23,
+          "total_spent": 1842.50,
+          "avg_order_value": 80.11,
+          "days_since_last_purchase": 12,
+          "product_categories": 5,
+          "support_tickets": 2,
+          "email_engagement": 0.42,
+          "churned": false
+        },
+        {
+          "customer_id": "CUST_002",
+          "age": 28,
+          "gender": "M",
+          "account_age_days": 892,
+          "total_purchases": 67,
+          "total_spent": 5234.80,
+          "avg_order_value": 78.13,
+          "days_since_last_purchase": 156,
+          "product_categories": 8,
+          "support_tickets": 8,
+          "email_engagement": 0.15,
+          "churned": true
+        },
+        {
+          "customer_id": "CUST_003",
+          "age": 42,
+          "gender": "F",
+          "account_age_days": 234,
+          "total_purchases": 12,
+          "total_spent": 980.25,
+          "avg_order_value": 81.69,
+          "days_since_last_purchase": 8,
+          "product_categories": 3,
+          "support_tickets": 0,
+          "email_engagement": 0.68,
+          "churned": false
+        }
+      ],
+      "analysis_prompts": [
+        {
+          "id": "ANALYSIS_001",
+          "type": "exploratory",
+          "prompt": "Perform exploratory data analysis on the customer dataset. Identify key patterns, distributions, and correlations.",
+          "expected_steps": [
+            "Check for missing values and data quality issues",
+            "Analyze distribution of numerical features (histograms, box plots)",
+            "Calculate correlation matrix for numerical features",
+            "Examine churn rate and class imbalance",
+            "Analyze categorical variables (gender distribution)",
+            "Identify potential outliers"
+          ],
+          "key_insights": [
+            "High correlation between total_purchases and total_spent (r=0.92)",
+            "Churned customers have significantly higher days_since_last_purchase (median: 145 vs 18)",
+            "Email engagement is negatively correlated with churn",
+            "Support tickets show weak positive correlation with churn",
+            "Class imbalance: 25% churn rate"
+          ]
+        },
+        {
+          "id": "ANALYSIS_002",
+          "type": "predictive",
+          "prompt": "Build a churn prediction model. What features are most important? What accuracy can you achieve?",
+          "expected_approach": [
+            "Split data into train/test (80/20 or cross-validation)",
+            "Handle class imbalance (SMOTE, class weights, or stratified sampling)",
+            "Feature engineering: create recency/frequency/monetary (RFM) features",
+            "Try multiple models: Logistic Regression, Random Forest, XGBoost",
+            "Evaluate using precision, recall, F1, AUC-ROC (not just accuracy)",
+            "Feature importance analysis"
+          ],
+          "expected_important_features": [
+            "days_since_last_purchase (most important)",
+            "email_engagement",
+            "support_tickets",
+            "total_purchases",
+            "avg_order_value"
+          ],
+          "expected_performance": {
+            "accuracy": 0.82,
+            "precision": 0.75,
+            "recall": 0.68,
+            "f1_score": 0.71,
+            "auc_roc": 0.87
+          }
+        },
+        {
+          "id": "ANALYSIS_003",
+          "type": "clustering",
+          "prompt": "Segment customers into groups based on their behavior. Describe each segment.",
+          "expected_approach": [
+            "Standardize features (z-score or min-max)",
+            "Determine optimal k using elbow method or silhouette score",
+            "Apply K-means or hierarchical clustering",
+            "Profile each cluster",
+            "Visualize using PCA or t-SNE"
+          ],
+          "expected_segments": [
+            {
+              "name": "High-Value Loyalists",
+              "characteristics": "High total_spent, low days_since_last_purchase, high email_engagement",
+              "size": "15%",
+              "strategy": "VIP treatment, exclusive offers"
+            },
+            {
+              "name": "At-Risk",
+              "characteristics": "High days_since_last_purchase, declining engagement, multiple support tickets",
+              "size": "25%",
+              "strategy": "Win-back campaigns, address pain points"
+            },
+            {
+              "name": "Bargain Hunters",
+              "characteristics": "Low avg_order_value, high purchase frequency during sales",
+              "size": "35%",
+              "strategy": "Promotional emails, bundle deals"
+            },
+            {
+              "name": "Occasional Shoppers",
+              "characteristics": "Moderate spending, low frequency, responsive to seasonal campaigns",
+              "size": "25%",
+              "strategy": "Seasonal outreach, personalized recommendations"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dataset_id": "DS002",
+      "name": "Real Estate Prices",
+      "description": "Housing price data for regression modeling",
+      "rows": 500,
+      "columns": 10,
+      "schema": [
+        {"name": "property_id", "type": "string"},
+        {"name": "price", "type": "float", "description": "Sale price in USD (target)"},
+        {"name": "square_feet", "type": "integer", "description": "Total living area"},
+        {"name": "bedrooms", "type": "integer", "range": [1, 6]},
+        {"name": "bathrooms", "type": "float", "range": [1, 4.5]},
+        {"name": "year_built", "type": "integer"},
+        {"name": "lot_size", "type": "float", "description": "Lot size in acres"},
+        {"name": "garage_spaces", "type": "integer", "range": [0, 3]},
+        {"name": "neighborhood_score", "type": "float", "description": "Quality score 1-10", "range": [1, 10]},
+        {"name": "distance_to_downtown", "type": "float", "description": "Miles to city center"}
+      ],
+      "sample_data": [
+        {
+          "property_id": "PROP_001",
+          "price": 425000,
+          "square_feet": 2100,
+          "bedrooms": 3,
+          "bathrooms": 2.5,
+          "year_built": 2005,
+          "lot_size": 0.25,
+          "garage_spaces": 2,
+          "neighborhood_score": 7.8,
+          "distance_to_downtown": 8.5
+        },
+        {
+          "property_id": "PROP_002",
+          "price": 685000,
+          "square_feet": 3200,
+          "bedrooms": 4,
+          "bathrooms": 3.0,
+          "year_built": 2015,
+          "lot_size": 0.42,
+          "garage_spaces": 3,
+          "neighborhood_score": 9.2,
+          "distance_to_downtown": 5.2
+        }
+      ],
+      "analysis_prompts": [
+        {
+          "id": "REGRESSION_001",
+          "prompt": "Build a price prediction model. What factors most influence house prices?",
+          "expected_approach": [
+            "Feature engineering: age of house (current_year - year_built), price per sqft",
+            "Check for multicollinearity (VIF)",
+            "Log transform price if right-skewed",
+            "Try Linear Regression, Ridge, Lasso, Random Forest, Gradient Boosting",
+            "Cross-validation for model selection",
+            "Residual analysis"
+          ],
+          "expected_important_features": [
+            "square_feet",
+            "neighborhood_score",
+            "year_built/age",
+            "bathrooms",
+            "distance_to_downtown"
+          ],
+          "expected_metrics": {
+            "r_squared": 0.78,
+            "mae": 35000,
+            "rmse": 48000
+          }
+        },
+        {
+          "id": "REGRESSION_002",
+          "prompt": "Identify overpriced and underpriced properties based on your model.",
+          "expected_approach": [
+            "Calculate residuals (actual - predicted)",
+            "Define thresholds (e.g., ±15% of predicted price)",
+            "Flag properties outside thresholds",
+            "Investigate characteristics of outliers"
+          ]
+        }
+      ]
+    },
+    {
+      "dataset_id": "DS003",
+      "name": "Marketing Campaign Performance",
+      "description": "Time series data on marketing campaign metrics",
+      "rows": 365,
+      "columns": 8,
+      "temporal_granularity": "daily",
+      "date_range": ["2024-01-01", "2024-12-31"],
+      "schema": [
+        {"name": "date", "type": "date"},
+        {"name": "ad_spend", "type": "float", "description": "Daily ad spend in USD"},
+        {"name": "impressions", "type": "integer", "description": "Ad impressions"},
+        {"name": "clicks", "type": "integer", "description": "Ad clicks"},
+        {"name": "conversions", "type": "integer", "description": "Purchases"},
+        {"name": "revenue", "type": "float", "description": "Revenue generated"},
+        {"name": "day_of_week", "type": "categorical", "values": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]},
+        {"name": "is_holiday", "type": "boolean"}
+      ],
+      "sample_data": [
+        {
+          "date": "2024-01-15",
+          "ad_spend": 2500.00,
+          "impressions": 125000,
+          "clicks": 3200,
+          "conversions": 85,
+          "revenue": 12750.00,
+          "day_of_week": "Mon",
+          "is_holiday": false
+        },
+        {
+          "date": "2024-07-04",
+          "ad_spend": 4500.00,
+          "impressions": 280000,
+          "clicks": 8400,
+          "conversions": 245,
+          "revenue": 38500.00,
+          "day_of_week": "Thu",
+          "is_holiday": true
+        }
+      ],
+      "analysis_prompts": [
+        {
+          "id": "TIMESERIES_001",
+          "prompt": "Analyze marketing campaign performance over time. Identify trends and seasonality.",
+          "expected_approach": [
+            "Calculate derived metrics: CTR, CPC, Conversion Rate, ROAS",
+            "Plot time series with trend lines",
+            "Decompose into trend, seasonality, residual (STL decomposition)",
+            "Identify weekly patterns",
+            "Analyze holiday impact",
+            "Moving averages for smoothing"
+          ],
+          "key_metrics": {
+            "avg_ctr": 0.026,
+            "avg_conversion_rate": 0.032,
+            "avg_roas": 4.8,
+            "trend": "Increasing ROAS over the year (3.5 → 5.2)"
+          }
+        },
+        {
+          "id": "TIMESERIES_002",
+          "prompt": "Forecast next month's conversions and revenue.",
+          "expected_approach": [
+            "Check for stationarity (ADF test)",
+            "Try ARIMA, SARIMA for seasonality",
+            "Prophet for multiple seasonality patterns",
+            "Train/test split (last 30 days as test)",
+            "Evaluate using MAPE, RMSE"
+          ]
+        },
+        {
+          "id": "OPTIMIZATION_001",
+          "prompt": "Optimize ad spend allocation across days of week to maximize ROAS.",
+          "expected_approach": [
+            "Calculate ROAS by day of week",
+            "Identify high-performing days",
+            "Recommend budget reallocation",
+            "A/B test framework design"
+          ]
+        }
+      ]
+    },
+    {
+      "dataset_id": "DS004",
+      "name": "Sensor Data - Equipment Maintenance",
+      "description": "IoT sensor data for predictive maintenance",
+      "rows": 10000,
+      "columns": 9,
+      "schema": [
+        {"name": "timestamp", "type": "datetime"},
+        {"name": "machine_id", "type": "string"},
+        {"name": "temperature", "type": "float", "unit": "celsius"},
+        {"name": "vibration", "type": "float", "unit": "mm/s"},
+        {"name": "pressure", "type": "float", "unit": "psi"},
+        {"name": "rotation_speed", "type": "float", "unit": "rpm"},
+        {"name": "power_consumption", "type": "float", "unit": "kW"},
+        {"name": "operating_hours", "type": "float"},
+        {"name": "failure_within_24h", "type": "boolean", "description": "Target variable"}
+      ],
+      "analysis_prompts": [
+        {
+          "id": "ANOMALY_001",
+          "prompt": "Detect anomalies in sensor readings that might indicate impending failure.",
+          "expected_approach": [
+            "Statistical methods: Z-score, IQR for outlier detection",
+            "Isolation Forest for multivariate anomaly detection",
+            "LSTM autoencoder for sequence anomalies",
+            "Set thresholds based on normal operation",
+            "Time-based features: rolling statistics"
+          ]
+        },
+        {
+          "id": "PREDICTIVE_MAINT_001",
+          "prompt": "Build a model to predict equipment failure 24 hours in advance.",
+          "expected_approach": [
+            "Feature engineering: rolling means, std dev, rate of change",
+            "Handle time dependencies with LSTM or lag features",
+            "Address class imbalance (failures are rare)",
+            "Optimize for recall (catch all potential failures)",
+            "Evaluate cost: false positive vs false negative"
+          ],
+          "business_impact": "Reduce unplanned downtime by 60%, maintenance cost by 30%"
+        }
+      ]
+    },
+    {
+      "dataset_id": "DS005",
+      "name": "Natural Language - Product Reviews",
+      "description": "Customer product reviews for sentiment analysis and topic modeling",
+      "rows": 2000,
+      "columns": 6,
+      "schema": [
+        {"name": "review_id", "type": "string"},
+        {"name": "product_id", "type": "string"},
+        {"name": "rating", "type": "integer", "range": [1, 5]},
+        {"name": "review_text", "type": "text"},
+        {"name": "review_date", "type": "date"},
+        {"name": "verified_purchase", "type": "boolean"}
+      ],
+      "sample_data": [
+        {
+          "review_id": "REV_001",
+          "product_id": "PROD_A",
+          "rating": 5,
+          "review_text": "Absolutely love this product! The quality exceeded my expectations and shipping was fast. Highly recommend to anyone looking for a reliable solution.",
+          "review_date": "2024-10-15",
+          "verified_purchase": true
+        },
+        {
+          "review_id": "REV_002",
+          "product_id": "PROD_B",
+          "rating": 2,
+          "review_text": "Disappointed with the purchase. The product arrived damaged and customer service was unresponsive. Would not buy again.",
+          "review_date": "2024-10-18",
+          "verified_purchase": true
+        }
+      ],
+      "analysis_prompts": [
+        {
+          "id": "NLP_001",
+          "prompt": "Perform sentiment analysis on reviews. Does sentiment align with ratings?",
+          "expected_approach": [
+            "Preprocess: lowercase, remove punctuation, tokenize",
+            "Use VADER or TextBlob for rule-based sentiment",
+            "Train classifier on rating labels (1-2=negative, 3=neutral, 4-5=positive)",
+            "TF-IDF or word embeddings as features",
+            "Identify reviews where sentiment disagrees with rating"
+          ]
+        },
+        {
+          "id": "NLP_002",
+          "prompt": "Extract main topics discussed in negative reviews (rating ≤ 2).",
+          "expected_approach": [
+            "Filter negative reviews",
+            "Apply LDA (Latent Dirichlet Allocation) for topic modeling",
+            "Or use keyword extraction (TF-IDF, RAKE)",
+            "Identify common complaints: shipping, quality, customer service, etc."
+          ],
+          "expected_topics": [
+            "Shipping/Delivery issues",
+            "Product quality/defects",
+            "Customer service",
+            "Price/value concerns",
+            "Packaging/presentation"
+          ]
+        }
+      ]
+    }
+  ],
+  "data_preprocessing_exercises": [
+    {
+      "id": "PREP_001",
+      "challenge": "Handle Missing Data",
+      "scenario": "A dataset has 15% missing values in 'income' column, 5% in 'age', and 30% in 'phone_number'.",
+      "questions": [
+        "How would you handle each column differently?",
+        "When would you drop rows vs impute?",
+        "What imputation strategies are appropriate for each column?"
+      ],
+      "solutions": {
+        "income": "Impute with median (robust to outliers) or use regression imputation based on correlated features",
+        "age": "Impute with median or mean (if normally distributed), or mode if discrete age groups",
+        "phone_number": "Likely not predictive - consider dropping column or flag as missing (create is_missing indicator)"
+      }
+    },
+    {
+      "id": "PREP_002",
+      "challenge": "Feature Scaling",
+      "scenario": "Features: age (18-75), income ($20k-$500k), credit_score (300-850), number_of_purchases (0-100)",
+      "question": "Should you scale? Which method?",
+      "solution": {
+        "answer": "Yes, scale for distance-based algorithms (KNN, SVM, Neural Networks, K-means)",
+        "method": "StandardScaler (z-score) if features are approximately normal. MinMaxScaler if bounded ranges preferred. RobustScaler if outliers present.",
+        "not_needed_for": "Tree-based models (Random Forest, XGBoost) - scale-invariant"
+      }
+    },
+    {
+      "id": "PREP_003",
+      "challenge": "Encoding Categorical Variables",
+      "scenario": "Variables: country (200 unique), product_category (5 unique), order_priority (low/medium/high)",
+      "question": "How to encode each variable?",
+      "solutions": {
+        "country": "High cardinality - use target encoding or frequency encoding. One-hot creates too many features (curse of dimensionality)",
+        "product_category": "Low cardinality - one-hot encoding suitable",
+        "order_priority": "Ordinal variable - label encode with order: low=0, medium=1, high=2"
+      }
+    }
+  ]
+}

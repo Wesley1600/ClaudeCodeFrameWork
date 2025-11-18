@@ -1,0 +1,85 @@
+{
+  "metadata": {
+    "title": "Example Data Structure",
+    "description": "This file demonstrates a well-structured JSON example",
+    "version": "1.0.0",
+    "author": "Claude Skills Team",
+    "created": "2024-01-15T10:00:00Z"
+  },
+  "users": [
+    {
+      "id": "usr_001",
+      "name": "Alice Johnson",
+      "email": "alice.johnson@example.com",
+      "role": "admin",
+      "active": true,
+      "created_at": "2024-01-01T09:00:00Z",
+      "tags": ["lead", "developer", "python"]
+    },
+    {
+      "id": "usr_002",
+      "name": "Bob Smith",
+      "email": "bob.smith@example.com",
+      "role": "contributor",
+      "active": true,
+      "created_at": "2024-01-05T14:30:00Z",
+      "tags": ["developer", "javascript"]
+    },
+    {
+      "id": "usr_003",
+      "name": "Charlie Brown",
+      "email": "charlie.brown@example.com",
+      "role": "viewer",
+      "active": false,
+      "created_at": "2024-01-10T11:15:00Z",
+      "tags": ["analyst"]
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj_001",
+      "name": "API Documentation",
+      "description": "Comprehensive API documentation and examples",
+      "status": "active",
+      "owner_id": "usr_001",
+      "members": ["usr_001", "usr_002"],
+      "created_at": "2024-01-01T10:00:00Z",
+      "updated_at": "2024-01-15T15:30:00Z",
+      "metrics": {
+        "documentation_coverage": 92,
+        "test_coverage": 87,
+        "health_score": 89.5
+      }
+    },
+    {
+      "id": "proj_002",
+      "name": "Data Pipeline",
+      "description": "ETL pipeline for data processing",
+      "status": "in_progress",
+      "owner_id": "usr_002",
+      "members": ["usr_002"],
+      "created_at": "2024-01-05T12:00:00Z",
+      "updated_at": "2024-01-14T09:45:00Z",
+      "metrics": {
+        "documentation_coverage": 65,
+        "test_coverage": 72,
+        "health_score": 68.5
+      }
+    }
+  ],
+  "statistics": {
+    "total_users": 3,
+    "active_users": 2,
+    "total_projects": 2,
+    "active_projects": 1,
+    "total_commits": 247,
+    "lines_of_code": 15420
+  },
+  "configuration": {
+    "enable_notifications": true,
+    "max_project_size_mb": 1024,
+    "retention_days": 90,
+    "backup_enabled": true,
+    "backup_frequency": "daily"
+  }
+}

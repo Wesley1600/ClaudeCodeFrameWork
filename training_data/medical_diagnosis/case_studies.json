@@ -1,0 +1,216 @@
+{
+  "metadata": {
+    "domain": "medical_diagnosis",
+    "data_type": "clinical_case_studies",
+    "version": "1.0",
+    "description": "Medical case studies for training diagnostic reasoning and clinical decision-making",
+    "case_count": 10,
+    "disclaimer": "EDUCATIONAL USE ONLY. Not for actual medical diagnosis. All cases are fictional. Consult licensed healthcare professionals for medical advice.",
+    "specialties": ["internal_medicine", "emergency_medicine", "cardiology", "endocrinology"]
+  },
+  "clinical_cases": [
+    {
+      "case_id": "MED_001",
+      "specialty": "cardiology",
+      "difficulty": "intermediate",
+      "presenting_complaint": "67-year-old male presenting with chest pain",
+      "history_of_present_illness": "Patient reports 2 hours of substernal chest pressure, radiating to left arm and jaw. Describes pain as 'heavy weight on chest,' 7/10 severity. Associated with diaphoresis and nausea. Pain began while shoveling snow. Not relieved by rest. Denies shortness of breath or palpitations.",
+      "past_medical_history": ["Hypertension (15 years)", "Type 2 Diabetes (10 years)", "Hyperlipidemia (8 years)", "Former smoker (quit 5 years ago, 30 pack-year history)"],
+      "medications": ["Metformin 1000mg BID", "Lisinopril 20mg daily", "Atorvastatin 40mg daily", "Aspirin 81mg daily"],
+      "vital_signs": {
+        "blood_pressure": "158/92 mmHg",
+        "heart_rate": "102 bpm",
+        "respiratory_rate": "20/min",
+        "temperature": "37.1°C (98.8°F)",
+        "oxygen_saturation": "96% on room air"
+      },
+      "physical_exam": {
+        "general": "Alert, anxious, diaphoretic",
+        "cardiovascular": "Tachycardic, regular rhythm, no murmurs/rubs/gallops, no JVD",
+        "respiratory": "Clear to auscultation bilaterally, no wheezes/crackles",
+        "extremities": "No edema, pulses 2+ bilaterally"
+      },
+      "initial_workup": {
+        "ecg": "ST-segment elevation 2mm in leads II, III, aVF; reciprocal ST depression in leads I, aVL",
+        "troponin_i": "0.8 ng/mL (normal <0.04)",
+        "bnp": "180 pg/mL",
+        "complete_blood_count": "Within normal limits",
+        "basic_metabolic_panel": "Glucose 185 mg/dL, otherwise normal"
+      },
+      "diagnostic_reasoning": {
+        "differential_diagnosis": [
+          {
+            "diagnosis": "ST-Elevation Myocardial Infarction (STEMI) - Inferior wall",
+            "probability": "Very High",
+            "supporting_evidence": [
+              "Classic anginal symptoms (substernal pressure radiating to arm/jaw)",
+              "ST elevation in inferior leads (II, III, aVF)",
+              "Elevated troponin (cardiac biomarker)",
+              "Multiple cardiac risk factors (HTN, DM, smoking history, hyperlipidemia)",
+              "Symptom onset with exertion"
+            ],
+            "critical_next_steps": [
+              "Activate cardiac catheterization lab immediately (door-to-balloon time <90 min)",
+              "Administer dual antiplatelet therapy (aspirin 325mg + P2Y12 inhibitor)",
+              "Consider thrombolytic therapy if PCI not available within 120 minutes",
+              "Continuous cardiac monitoring",
+              "IV access, oxygen if SpO2 <90%"
+            ]
+          },
+          {
+            "diagnosis": "Unstable Angina",
+            "probability": "Low (ruled out by ST elevation and troponin)",
+            "supporting_evidence": ["Chest pain pattern"],
+            "against": ["ST elevation present", "Positive troponin indicates myocardial necrosis"]
+          },
+          {
+            "diagnosis": "Pericarditis",
+            "probability": "Very Low",
+            "supporting_evidence": ["Chest pain"],
+            "against": ["No pleuritic/positional component", "ST elevation pattern is localized (not diffuse)", "Elevated troponin suggests MI"]
+          }
+        ],
+        "most_likely_diagnosis": "Inferior STEMI (likely right coronary artery occlusion)",
+        "diagnosis_confidence": "95%"
+      },
+      "management_plan": {
+        "immediate": [
+          "Call cardiology - activate cath lab for emergent PCI",
+          "Aspirin 325mg chewed (if not already given)",
+          "Ticagrelor 180mg or Clopidogrel 600mg loading dose",
+          "Heparin bolus + infusion",
+          "Morphine 2-4mg IV for pain (if needed)",
+          "Sublingual nitroglycerin if BP allows",
+          "Continuous telemetry monitoring",
+          "NPO status"
+        ],
+        "hospital_course": "Emergent cardiac catheterization showing 100% occlusion of proximal RCA. Successful PCI with drug-eluting stent placement. Post-procedure troponin peak at 28 ng/mL. Echo shows mild inferior wall hypokinesis, EF 50%.",
+        "discharge_plan": [
+          "Dual antiplatelet therapy (aspirin + ticagrelor) x 12 months",
+          "High-intensity statin (atorvastatin 80mg)",
+          "Beta-blocker (metoprolol)",
+          "ACE inhibitor (continue lisinopril, uptitrate)",
+          "Cardiac rehabilitation referral",
+          "Diabetes optimization (HbA1c goal <7%)",
+          "Strict risk factor modification: diet, exercise, smoking cessation maintenance",
+          "Follow-up with cardiology in 2 weeks"
+        ]
+      },
+      "learning_points": [
+        "STEMI is a time-critical emergency - door-to-balloon time <90 minutes",
+        "Inferior STEMI (II, III, aVF) suggests RCA occlusion",
+        "Always check right-sided leads (V4R) in inferior STEMI to assess RV involvement",
+        "Classic STEMI presentation: substernal pressure, radiation, diaphoresis, nausea",
+        "Risk factors accumulate: HTN + DM + smoking + hyperlipidemia significantly increase risk"
+      ]
+    },
+    {
+      "case_id": "MED_002",
+      "specialty": "endocrinology",
+      "difficulty": "intermediate",
+      "presenting_complaint": "32-year-old female with fatigue, weight gain, and cold intolerance",
+      "history_of_present_illness": "6-month history of progressive fatigue, 15-pound weight gain despite normal appetite, feeling cold when others are comfortable, constipation, dry skin, and hair loss. Also reports irregular menstrual periods and difficulty concentrating at work. Denies heat intolerance, palpitations, or tremor.",
+      "past_medical_history": ["No significant past medical history", "G1P1 (one pregnancy 3 years ago, uncomplicated)"],
+      "family_history": "Mother with 'thyroid problems' (patient unsure of details), maternal aunt with Type 1 Diabetes",
+      "medications": "Multivitamin only",
+      "vital_signs": {
+        "blood_pressure": "118/76 mmHg",
+        "heart_rate": "58 bpm",
+        "respiratory_rate": "14/min",
+        "temperature": "36.4°C (97.5°F)",
+        "bmi": "27.5 (increased from 24.2 six months ago)"
+      },
+      "physical_exam": {
+        "general": "Appears stated age, mildly overweight, speaks slowly",
+        "heent": "Dry skin, thinning of lateral eyebrows, no exophthalmos",
+        "neck": "Thyroid slightly enlarged, diffusely firm, no nodules",
+        "cardiovascular": "Bradycardic, regular rhythm, normal S1/S2",
+        "extremities": "Delayed relaxation phase of deep tendon reflexes, trace pretibial edema"
+      },
+      "laboratory_results": {
+        "tsh": "12.4 mIU/L (normal: 0.4-4.0)",
+        "free_t4": "0.6 ng/dL (normal: 0.8-1.8)",
+        "tpo_antibodies": "385 IU/mL (normal: <35)",
+        "thyroglobulin_antibodies": "210 IU/mL (normal: <20)",
+        "complete_blood_count": "Mild anemia (Hgb 11.2 g/dL)",
+        "lipid_panel": "Total cholesterol 245 mg/dL, LDL 165 mg/dL"
+      },
+      "diagnostic_reasoning": {
+        "differential_diagnosis": [
+          {
+            "diagnosis": "Primary Hypothyroidism (Hashimoto's Thyroiditis)",
+            "probability": "Very High",
+            "supporting_evidence": [
+              "Classic symptoms: fatigue, weight gain, cold intolerance, constipation, dry skin, hair loss",
+              "Elevated TSH with low free T4 (confirms primary hypothyroidism)",
+              "Positive TPO and thyroglobulin antibodies (indicates autoimmune etiology)",
+              "Physical exam: delayed DTRs, bradycardia, thyroid enlargement",
+              "Family history of autoimmune thyroid disease",
+              "Associated findings: mild anemia, hyperlipidemia"
+            ]
+          },
+          {
+            "diagnosis": "Secondary Hypothyroidism (pituitary/hypothalamic)",
+            "probability": "Very Low",
+            "supporting_evidence": [],
+            "against": ["TSH is elevated (would be low/normal in secondary hypothyroidism)"]
+          },
+          {
+            "diagnosis": "Chronic Fatigue Syndrome",
+            "probability": "Very Low",
+            "supporting_evidence": ["Fatigue"],
+            "against": ["Objective findings: elevated TSH, low T4, positive antibodies, specific hypothyroid symptoms"]
+          }
+        ],
+        "most_likely_diagnosis": "Primary Hypothyroidism due to Hashimoto's Thyroiditis",
+        "diagnosis_confidence": "98%"
+      },
+      "management_plan": {
+        "treatment": [
+          "Levothyroxine 50 mcg daily (starting dose for young, otherwise healthy patient)",
+          "Recheck TSH and free T4 in 6-8 weeks",
+          "Titrate levothyroxine by 12.5-25 mcg increments until TSH normalized",
+          "Goal TSH: 0.5-2.5 mIU/L for reproductive-age women",
+          "Take medication on empty stomach, 30-60 min before breakfast",
+          "Avoid taking with calcium, iron supplements, or PPIs (affects absorption)"
+        ],
+        "monitoring": [
+          "TSH every 6-8 weeks during titration",
+          "Once stable, check TSH annually",
+          "Monitor for symptoms of over-replacement (palpitations, anxiety, weight loss)",
+          "Repeat lipid panel after TSH normalized (hypothyroidism can cause hyperlipidemia)"
+        ],
+        "patient_education": [
+          "Lifelong thyroid hormone replacement likely necessary",
+          "Symptoms should improve in 2-4 weeks, fully resolve in 3-6 months",
+          "Report pregnancy immediately (dose adjustment needed)",
+          "Maintain consistent medication brand if possible",
+          "Annual thyroid monitoring recommended"
+        ]
+      },
+      "learning_points": [
+        "Hashimoto's is the most common cause of hypothyroidism in iodine-sufficient areas",
+        "TSH is the best screening test for primary thyroid disorders",
+        "Classic hypothyroid symptoms: fatigue, weight gain, cold intolerance, constipation, dry skin",
+        "Delayed DTR relaxation phase is a specific physical exam finding",
+        "Start levothyroxine conservatively and titrate based on TSH",
+        "Hypothyroidism can cause reversible hyperlipidemia and anemia"
+      ]
+    }
+  ],
+  "diagnostic_reasoning_exercises": [
+    {
+      "id": "DIAG_001",
+      "scenario": "45-year-old female with polyuria, polydipsia, and fatigue. Random glucose: 285 mg/dL. What additional tests do you order?",
+      "expected_workup": [
+        "Fasting glucose or HbA1c to confirm diabetes diagnosis",
+        "Basic metabolic panel (check for DKA: glucose, electrolytes, anion gap)",
+        "Urinalysis (check for glucose, ketones, protein)",
+        "Lipid panel (assess cardiovascular risk)",
+        "Consider: GAD65 and IA-2 antibodies (if suspecting Type 1 vs Type 2)",
+        "Consider: C-peptide level (assess endogenous insulin production)"
+      ],
+      "diagnostic_criteria": "Diabetes diagnosed if: fasting glucose ≥126 mg/dL, random glucose ≥200 mg/dL with symptoms, or HbA1c ≥6.5%"
+    }
+  ]
+}

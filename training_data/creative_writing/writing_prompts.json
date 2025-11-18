@@ -1,0 +1,183 @@
+{
+  "metadata": {
+    "domain": "creative_writing",
+    "data_type": "writing_prompts_and_examples",
+    "version": "1.0",
+    "description": "Creative writing prompts with examples and techniques for training creative writing skills",
+    "prompt_count": 20,
+    "genres": ["fiction", "poetry", "dialogue", "descriptive", "narrative"]
+  },
+  "writing_prompts": [
+    {
+      "id": "WRITE_001",
+      "category": "descriptive",
+      "difficulty": "beginner",
+      "prompt": "Describe a bustling coffee shop on a rainy Monday morning using all five senses.",
+      "techniques_to_practice": ["Sensory details", "Show don't tell", "Atmospheric writing"],
+      "poor_example": "The coffee shop was busy. It was raining outside. People were drinking coffee and talking. It smelled like coffee.",
+      "poor_example_issues": [
+        "Generic descriptions lacking specificity",
+        "Telling instead of showing",
+        "No sensory details beyond basic observations",
+        "Repetitive language ('coffee' used 3 times in 3 sentences)"
+      ],
+      "good_example": "Steam rose from ceramic mugs as raindrops drummed against the foggy windows, each drop racing its neighbor down the glass. The hiss of the espresso machine punctuated conversations—a symphony of startup pitches, breakup confessions, and mundane Monday morning complaints. The air hung thick with the bitter-sweet aroma of dark roast, mingling with cinnamon from someone's latte and the petrichor carried in on damp wool coats. Sarah's fingers wrapped around her mug, drawing warmth from the smooth porcelain as she tasted the first sip—bold, slightly acidic, exactly what she needed to wash away the weekend's lingering regrets.",
+      "good_example_techniques": [
+        "Visual: steam, foggy windows, racing raindrops",
+        "Auditory: drumming rain, hissing machine, conversation symphony",
+        "Olfactory: dark roast, cinnamon, petrichor, wool",
+        "Tactile: smooth porcelain, warmth",
+        "Gustatory: bold, acidic coffee",
+        "Emotional context: 'weekend's lingering regrets' adds depth",
+        "Varied sentence structure creates rhythm"
+      ]
+    },
+    {
+      "id": "WRITE_002",
+      "category": "dialogue",
+      "difficulty": "intermediate",
+      "prompt": "Write a dialogue between two characters where one is hiding a significant secret. The secret should be apparent to the reader through subtext, not stated directly.",
+      "techniques_to_practice": ["Subtext", "Character voice", "Tension building", "Indirect revelation"],
+      "example": "\"So, how was your weekend?\" Mark asked, not looking up from his phone.\n\nSarah's coffee mug trembled slightly as she set it down. \"Fine. Quiet. You know, the usual.\"\n\n\"Didn't you mention something about visiting your sister upstate?\"\n\n\"Oh, that. Yeah, plans changed.\" She twisted her wedding ring—once, twice. \"She wasn't feeling well.\"\n\nMark finally glanced up. \"Funny. I saw her Instagram. She was at some wine festival Saturday.\"\n\nThe silence stretched between them like taffy. Sarah's laugh came out too bright, too quick. \"Must have been feeling better by then. You know how colds are—here one minute, gone the next.\"\n\n\"Right.\" Mark's jaw tightened. \"Gone the next.\"",
+      "analysis": {
+        "what_secret_implies": "Sarah is lying about her weekend; likely an affair or serious betrayal",
+        "subtext_techniques": [
+          "Physical tells: trembling mug, twisting ring",
+          "Contradictory information: sister 'sick' but at festival",
+          "Weak cover-up: 'plans changed,' vague 'feeling better'",
+          "Mark's suspicion: 'Funny. I saw...' shows he's investigating",
+          "Unnatural dialogue: Sarah's too-bright laugh, Mark's pointed repetition",
+          "Tension markers: silence 'stretched like taffy,' jaw tightening"
+        ],
+        "learning_points": [
+          "Reader knows more than is said",
+          "Physical actions reveal emotional state",
+          "Contradictions create suspicion",
+          "Short sentences increase tension",
+          "What's NOT said is as important as what is"
+        ]
+      }
+    },
+    {
+      "id": "WRITE_003",
+      "category": "narrative",
+      "difficulty": "advanced",
+      "prompt": "Write the same scene from two different POV characters, showing how perspective changes the story's meaning.",
+      "scenario": "A teacher returns a failed exam to a student.",
+      "pov_student": "The paper landed on my desk face-down, a small mercy. I didn't need to see the red ink to know what it meant—Ms. Chen's sympathetic half-smile told me everything. Around me, students compared scores, groaning about point deductions, debating answers. Nobody groaned like they'd gotten a 43.\n\nI slid the exam into my bag without looking, my face burning. Three weeks of staying up past midnight, flashcards spread across my bed, practice problems until my eyes blurred. And still, 43. Maybe everyone was right. Maybe I just wasn't 'math-minded.'\n\n'See me after class,' Ms. Chen had written at the top. Great. Nothing like a pity talk to complete the humiliation.",
+      "pov_teacher": "I watched Jenna slide the exam into her bag, her shoulders hunched like she could make herself invisible. No surprise, no argument—just quiet acceptance of failure. That was the part that worried me.\n\nHer exam told a story the score didn't: every problem attempted, work shown in meticulous detail, concepts applied almost correctly. She'd mixed up the quotient rule with the product rule, a simple reversal that cascaded through every derivative. One mistake, repeated fifteen times. Not lack of understanding—lack of confidence to double-check.\n\n'See me after class,' I'd written. Not to criticize. To tell her she was one formula sheet away from an A.",
+      "analysis": {
+        "student_perspective": "Focus on shame, social comparison, self-doubt, external validation ('everyone was right')",
+        "teacher_perspective": "Focus on observation, diagnostic thinking, hope, seeing potential",
+        "how_perspective_changes_meaning": [
+          "Student sees 43 as confirmation of inadequacy",
+          "Teacher sees 43 as fixable technical error",
+          "Student interprets 'see me' as punishment",
+          "Teacher intends 'see me' as encouragement",
+          "Same event, completely different emotional reality"
+        ],
+        "craft_lessons": [
+          "POV shapes reader's emotional experience",
+          "Internal monologue reveals character priorities",
+          "Same facts, different interpretations",
+          "Dramatic irony: reader knows more than characters"
+        ]
+      }
+    },
+    {
+      "id": "WRITE_004",
+      "category": "poetry",
+      "difficulty": "intermediate",
+      "prompt": "Write a poem about time using an extended metaphor. Avoid clichés like 'time flies.'",
+      "example_poem": "Time is a Collector\n\nTime keeps shelves in the attic of your spine,\nstacking moments like mason jars—\nsome full of fireflies still pulsing gold,\nothers empty except for a label\nin your mother's handwriting.\n\nHe's a meticulous archivist,\ndusting off the ones you've forgotten,\nreturning them when you smell lilacs\nor hear that song from the summer\nyou learned what it meant to be left.\n\nSometimes he loses things:\nthe exact shade of your father's eyes,\nthe name of your third-grade teacher,\nthe taste of the first thing you ever cooked alone.\nYou suspect he does this on purpose.\n\nAnd sometimes, late at night,\nyou catch him rearranging—\nmoving yesterday's grief next to tomorrow's hope,\nuntil you can't remember\nwhich shelf you put them on to begin with.",
+      "analysis": {
+        "extended_metaphor": "Time as a collector/archivist organizing memories",
+        "literary_devices": [
+          "Personification: Time as 'he' with intention",
+          "Concrete imagery: mason jars, fireflies, shelves",
+          "Sensory triggers: smell of lilacs, sound of song",
+          "Specific details: 'third-grade teacher,' 'mother's handwriting'",
+          "Emotional progression: nostalgia → loss → acceptance"
+        ],
+        "why_it_works": [
+          "Fresh metaphor (not overused)",
+          "Sustained throughout entire poem",
+          "Captures both memory and forgetting",
+          "Personal without being sentimental",
+          "Ending suggests confusion of time/memory"
+        ]
+      }
+    }
+  ],
+  "character_development_exercises": [
+    {
+      "id": "CHAR_001",
+      "exercise": "Create a character using the 'iceberg method'—90% of character depth is below the surface.",
+      "example": {
+        "surface_level": "Emma, 34, works as a data analyst, drinks too much coffee, always early to meetings",
+        "beneath_surface": {
+          "core_wound": "Father died suddenly when she was 12, no chance to say goodbye",
+          "resulting_belief": "If I'm in control and prepared, I can prevent bad things from happening",
+          "how_it_manifests": [
+            "Always early (control time, control outcomes)",
+            "Data analyst (seeks patterns, predictability)",
+            "Coffee consumption (needs to stay alert, vigilant)",
+            "Struggles with spontaneity and trust",
+            "Over-prepares for everything"
+          ],
+          "internal_conflict": "Desperate for control vs. yearning to let go and live",
+          "potential_arc": "Learning that preparedness doesn't prevent loss, but connection makes loss bearable"
+        }
+      },
+      "learning_points": [
+        "Every character trait should connect to deeper psychology",
+        "Surface behaviors are symptoms of core wounds/beliefs",
+        "Readers don't need to see the iceberg, but writer must know it's there",
+        "Contradictions make characters interesting (wants control but yearns for spontaneity)"
+      ]
+    }
+  ],
+  "revision_exercises": [
+    {
+      "id": "REV_001",
+      "title": "Strengthening Weak Verbs",
+      "weak_sentence": "She walked quickly across the room and took the letter from his hand.",
+      "issues": [
+        "'walked quickly' - generic verb + adverb",
+        "'took' - passive, doesn't show HOW"
+      ],
+      "strong_version": "She strode across the room and snatched the letter from his hand.",
+      "even_stronger": "She crossed the room in three strides and tore the letter from his grip.",
+      "lesson": "Strong verbs eliminate need for adverbs and add specificity. 'Strode' implies speed and purpose. 'Snatched' implies aggression. 'Tore from his grip' adds physical detail."
+    },
+    {
+      "id": "REV_002",
+      "title": "Cutting Redundancy",
+      "weak_sentence": "The reason why I didn't go to the party was because I was feeling sick and ill with a cold.",
+      "issues": [
+        "'reason why' and 'because' are redundant",
+        "'sick and ill' are synonyms",
+        "'with a cold' is unnecessarily specific after 'sick'"
+      ],
+      "strong_version": "I didn't go to the party because I had a cold.",
+      "lesson": "Every word should earn its place. Cut ruthlessly."
+    }
+  ],
+  "genre_specific_prompts": {
+    "science_fiction": [
+      "Write the first contact between humans and aliens, but the aliens communicate only through color changes in their skin.",
+      "Describe a world where humans have uploaded consciousness to the cloud, but 10% chose to stay biological. Explore the tension.",
+      "A time traveler's interference creates a paradox. Show the universe's 'immune response' to fix it."
+    ],
+    "mystery": [
+      "A detective realizes the witness they've been protecting is actually the killer. Write the moment of realization.",
+      "Write a locked-room mystery where the impossible crime has a mundane explanation that everyone overlooked.",
+      "The murder victim left a cryptic message in their last moments. Make it clever but solvable."
+    ],
+    "literary_fiction": [
+      "Write about a person experiencing a meaningful moment while doing something completely mundane.",
+      "Two estranged siblings meet at their parent's funeral. Neither says what they mean.",
+      "A character realizes their life philosophy has been wrong. Show the moment of recognition."
+    ]
+  }
+}

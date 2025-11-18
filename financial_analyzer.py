@@ -287,6 +287,7 @@ class FinancialAnalyzer:
                 'current_assets': ['current assets', 'total current assets'],
                 'total_assets': ['total assets'],
                 'accounts_payable': ['accounts payable', 'payables', 'trade payables'],
+                'short_term_debt': ['short-term debt', 'short term debt', 'current debt', 'current portion of long-term debt'],
                 'current_liabilities': ['current liabilities', 'total current liabilities'],
                 'long_term_debt': ['long-term debt', 'long term debt', 'non-current debt'],
                 'total_liabilities': ['total liabilities'],

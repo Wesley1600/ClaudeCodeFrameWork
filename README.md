@@ -353,6 +353,41 @@ If you use this code in your research, please cite:
 
 MIT License (or your preferred license)
 
+## Claude Code Skills
+
+This repository includes custom Claude Code skills to enhance development workflows:
+
+### Error Handling Skill
+
+A comprehensive framework for robust error handling with tool calls in Claude Code. Located in `.claude/skills/error-handling.md`, this skill provides:
+
+- **Automatic retry logic** with exponential backoff for transient failures
+- **Error classification** (retryable vs non-retryable vs critical)
+- **Fallback strategies** for common failure scenarios
+- **Structured error logging** and reporting
+- **Human escalation** when appropriate
+
+**Key features:**
+- Git operations with network retry (push/pull/fetch)
+- File I/O with lock and permission handling
+- Web requests with timeout and rate limit handling
+- Build/test operations with transient failure retry
+- Multi-step operations with recovery mechanisms
+
+**Quick usage:**
+```
+Use the error-handling skill to push my changes to git
+```
+
+See `.claude/skills/USAGE_GUIDE.md` for detailed examples and best practices.
+
+**Python implementation example:**
+The `error_handling_example.py` file demonstrates these patterns in Python code with:
+- Retry decorators with exponential backoff
+- Error classification logic
+- Fallback function support
+- Real-world usage examples
+
 ## Contributing
 
 Contributions welcome! Please:

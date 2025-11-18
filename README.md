@@ -1,10 +1,34 @@
-# UMAP-Inspired Universal Analogy Engine
+# ClaudeCodeFrameWork
+
+This repository contains two major components:
+
+## 1. Skill Orchestration Framework ⭐ NEW
+
+A flexible, extensible system for chaining AI/ML skills together into complex workflows. Build sophisticated pipelines by composing modular skills.
+
+**Quick Start:**
+```bash
+python example_skill_orchestration.py  # Run complete demonstration
+python test_orchestration.py           # Run test suite
+```
+
+**Documentation:** See [SKILL_ORCHESTRATION.md](SKILL_ORCHESTRATION.md) for complete guide.
+
+**Features:**
+- ✅ Chain multiple skills (RAG, Summarization, Reporting, etc.)
+- ✅ Configure via Python code or YAML/JSON files
+- ✅ Automatic skill discovery and registration
+- ✅ Data flow management between skills
+- ✅ Error handling and recovery
+- ✅ Extensible with custom skills
+
+## 2. UMAP-Inspired Universal Analogy Engine
 
 A semantic relationship engine that learns universal relationship mappings inspired by UMAP's topological data analysis approach. This engine enables semantic analogies like "boy:girl :: king:?" → "queen" by learning and applying consistent relationship transformations in a low-dimensional embedding space.
 
-## Overview
+### Overview
 
-This project implements a novel approach to semantic analogies by:
+This component implements a novel approach to semantic analogies by:
 
 1. **Learning a low-dimensional manifold** using parametric UMAP that preserves high-dimensional topology
 2. **Aligning semantic relationships** by clustering and regularizing difference vectors
@@ -33,8 +57,9 @@ pip install -r requirements.txt
 
 ### Requirements
 - Python 3.8+
-- PyTorch 2.0+
-- NumPy 1.20+
+- PyTorch 2.0+ (for UMAP analogy engine)
+- NumPy 1.20+ (optional, for advanced features)
+- PyYAML 6.0+ (for skill orchestration)
 
 ## Quick Start
 

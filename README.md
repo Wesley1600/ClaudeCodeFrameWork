@@ -503,6 +503,59 @@ find_analogy(
 
 ---
 
+## Financial Analysis Skill
+
+This repository also includes a comprehensive **Financial Analysis Skill** for Claude Code that analyzes financial statements, computes ratios, and generates insights.
+
+### Features
+
+- 📊 **Multi-format support**: Parse PDFs, Excel files, and CSV documents
+- 📈 **20+ financial ratios**: Liquidity, profitability, leverage, and efficiency metrics
+- 🎯 **Automated insights**: Benchmark against industry standards with health indicators
+- 📝 **Detailed reports**: Executive summaries and comprehensive analysis
+
+### Quick Start
+
+```python
+from financial_analyzer import analyze_file
+
+# Analyze financial data from any supported format
+statement, ratios, report = analyze_file('financial_report.pdf')
+print(report)
+```
+
+Or use with Claude Code:
+```
+Analyze the financial statement in examples/financial_data/sample_financial_statement.csv
+```
+
+See [`FINANCIAL_ANALYSIS_SKILL.md`](FINANCIAL_ANALYSIS_SKILL.md) for complete documentation.
+
+---
+
+## Roadmap
+
+### Phase 1: Foundation (Current)
+- ✅ Parametric UMAP implementation
+- ✅ Multi-relation alignment
+- ✅ Analogy finding API
+- ✅ Optimization and bug fixes
+- ✅ Financial Analysis Skill
+
+### Phase 2: Inverse Projection (Planned)
+- [ ] Inverse parametric model (Z_low → X_high)
+- [ ] Riemannian manifold reconstruction
+- [ ] Relation simplex aggregation
+- [ ] High-dimensional analogy prediction
+
+### Phase 3: Advanced Features (Future)
+- [ ] Automatic relation discovery
+- [ ] Hierarchical relations
+- [ ] Compositional analogies (multi-hop)
+- [ ] Interactive visualization
+
+---
+
 ## Version Management
 
 This project uses a specialized version management system.

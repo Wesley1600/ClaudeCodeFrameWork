@@ -1,0 +1,55 @@
+# Skill: {{ name }}
+# ID: {{ skill_id }}
+
+{{ description }}
+
+## Input Parameters
+
+{%- for input in inputs %}
+### {{ input.name }} ({{ input.type }})
+{%- if input.required %}
+**Required**: Yes
+{%- else %}
+**Required**: No
+{%- endif %}
+{%- if input.get('description') %}
+{{ input.description }}
+{%- endif %}
+{%- if input.get('default') is not none %}
+**Default**: {{ input.default }}
+{%- endif %}
+
+{%- endfor %}
+
+## Expected Outputs
+
+{%- for output in outputs %}
+### {{ output.name }} ({{ output.type }})
+{%- if output.get('description') %}
+{{ output.description }}
+{%- endif %}
+
+{%- endfor %}
+
+## Processing Instructions
+
+When analyzing text:
+
+1. **Extract Content**: Parse the input text carefully
+2. **Analyze Patterns**: Identify linguistic patterns, sentiment, and themes
+3. **Compute Metrics**: Calculate relevant statistics and scores
+4. **Generate Insights**: Synthesize findings into actionable insights
+5. **Format Output**: Structure results according to output specifications
+
+## Quality Standards
+
+- Accuracy: Ensure all analyses are precise and reliable
+- Completeness: Address all requested analysis dimensions
+- Clarity: Present findings in clear, understandable format
+- Consistency: Maintain uniform analysis methodology
+
+---
+Skill Category: {{ category }}
+Complexity: {{ metadata.get('complexity', 'medium') }}
+Version: {{ metadata.get('version', '1.0.0') }}
+Generated: {{ created_at | timestamp }}

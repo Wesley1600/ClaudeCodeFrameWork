@@ -676,6 +676,98 @@ For questions or issues, please open a GitHub issue or contact [your email].
 
 ---
 
-**Current Version**: 1.0.0
+## Agent Template Population System
 
+In addition to the UMAP Analogy Engine, this repository includes a **comprehensive agent template population system** for creating, managing, and configuring AI agents and their skills.
+
+### Features
+
+- **Template Population**: Dynamically generate agent and skill configurations from Jinja2 templates
+- **Metadata Management**: Store, retrieve, and validate metadata for agents and skills
+- **Skill Registry**: Centralized management of available skills with dependency tracking
+- **Agent Registry**: Management of agent instances and capabilities
+- **Schema Validation**: Ensure configurations conform to defined schemas
+- **Auto ID Generation**: Automatic generation of skill_id and agent_id following conventions
+
+### Quick Start
+
+```python
+from templates import populate_agent_config, populate_skill_config, TemplatePopulator
+from utils import validate_skill_config, validate_agent_config
+from skills import SkillRegistry
+from agents import BaseAgent, AgentConfig, AgentRegistry
+
+# Create a skill configuration
+skill_config = populate_skill_config(
+    name="TextAnalyzer",
+    description="Analyzes text for sentiment and themes",
+    category="nlp",
+    inputs=[{"name": "text", "type": "string", "required": True}],
+    outputs=[{"name": "sentiment", "type": "string"}]
+)
+
+# Validate the skill
+validate_skill_config(skill_config)
+
+# Populate a template
+populator = TemplatePopulator()
+yaml_content = populator.populate_skill(skill_config)
+
+# Create an agent that uses the skill
+agent_config = populate_agent_config(
+    name="ResearchAgent",
+    description="Conducts research tasks",
+    skills=[skill_config['skill_id']],
+    version="1.0.0"
+)
+
+# Validate the agent
+validate_agent_config(agent_config)
+
+# Register and use
+skill_registry = SkillRegistry()
+skill_registry.register(skill_config['skill_id'], skill_config)
+
+agent = BaseAgent(AgentConfig.from_dict(agent_config), skill_registry)
+agent.initialize()
+```
+
+### Running Examples
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run comprehensive examples
+python example_usage.py
+```
+
+### Documentation
+
+For complete documentation on the agent template system, see [AGENT_TEMPLATE_SYSTEM.md](AGENT_TEMPLATE_SYSTEM.md).
+
+Key capabilities:
+- Auto-generate skill and agent IDs following naming conventions
+- Populate YAML configurations from Jinja2 templates
+- Validate configurations against schemas
+- Manage metadata with caching
+- Track skill dependencies
+- Search and filter agents/skills by category, tags, or keywords
+
+### Directory Structure
+
+```
+ClaudeCodeFrameWork/
+├── agents/           # Agent management system
+├── skills/           # Skill registry and loading
+├── templates/        # Jinja2 templates and population engine
+├── config/           # Schema definitions (YAML)
+├── utils/            # Validation and metadata utilities
+└── metadata/         # Metadata storage
+```
+
+---
+
+**Status**: Production-ready V1.0
+**Current Version**: 1.0.0
 **Last Updated**: 2025-11-18

@@ -87,12 +87,12 @@ def demonstrate_analogy_formatting(model, Z_low, vocab, relation_axes):
 
     # Get raw results
     raw_results = find_analogy(
-        model=model,
-        Z_low=Z_low,
-        query_idx=query_idx,
+        embeddings=Z_low,
         relation_axes=relation_axes,
+        query_word_idx=query_idx,
         relation_idx=0,
-        top_k=10
+        k=10,
+        metric="euclidean"
     )
 
     print(f"Found {len(raw_results)} raw results")

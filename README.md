@@ -292,8 +292,14 @@ The `output_formats` module provides comprehensive formatting capabilities for c
 ```python
 from output_formats import format_analogies
 
-# Get analogy results from engine
-results = find_analogy(model, Z_low, query_idx=10, relation_idx=0, top_k=10)
+# Get analogy results from engine (assuming relation_axes already extracted)
+results = find_analogy(
+    embeddings=Z_low,
+    relation_axes=relation_axes,
+    query_word_idx=10,
+    relation_idx=0,
+    k=10
+)
 
 # Format as JSON
 json_output = format_analogies(

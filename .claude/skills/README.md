@@ -12,6 +12,7 @@ This directory contains custom skills for Claude Code that use progressive discl
 ├── umap-optimization/                 # UMAP-specific optimization skill
 │   └── skill.md
 ├── automated-ui-testing.md            # UI testing automation skill
+├── batch-processing.md                # Batch processing skill
 ├── error-handling.md                  # Error handling framework skill
 └── [other-skills]/                    # Additional skills
     └── skill.md
@@ -126,6 +127,43 @@ cd .claude/skills/examples
 ```
 
 See [automated-ui-testing.md](automated-ui-testing.md) for complete documentation and `examples/` directory for working test suites.
+
+---
+
+### Batch Processing Skill (`batch-processing.md`)
+
+A comprehensive skill for executing batch operations efficiently, reducing overhead and maintaining consistent processing across multiple similar tasks.
+
+**Type:** Data Processing
+**Triggers:** batch processing, bulk operations, process multiple files, batch execution, parallel processing, bulk refactoring, batch script execution
+
+**Use this skill when:**
+- Processing multiple files (PDFs, images, text files, code files)
+- Running multiple scripts or tests
+- Applying the same transformation across multiple files
+- Bulk data processing operations
+- Mass code refactoring or migrations
+- Executing similar tasks repeatedly
+
+**Key features:**
+- Intelligent parallel vs sequential processing strategies
+- Comprehensive error handling (continues on failure)
+- Progress tracking via todo lists
+- Detailed success/failure reporting with statistics
+- Resource-aware processing with safety checks
+- Support for various file types and operations
+- Hybrid batch processing for large datasets
+
+**How to activate:**
+Claude Code automatically uses skills when relevant. For explicit activation:
+```
+"Process all PDF files in the /docs folder and extract text"
+"Run all test files in the tests/ directory"
+"Apply eslint fixes to all JavaScript files in src/"
+"Convert all PNG images in /images to JPEG format"
+```
+
+See [batch-processing.md](batch-processing.md) for complete documentation including workflow phases, processing strategies, and best practices.
 
 ---
 
@@ -278,6 +316,7 @@ Track progressive disclosure effectiveness:
 
 ## Version History
 
+- **v1.2.0** (2025-11-18): Added Batch Processing Skill
 - **v1.1.0** (2025-11-18): Added Automated UI Testing Skill
 - **v1.0.0** (2025-11-18): Initial progressive disclosure implementation
 

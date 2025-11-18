@@ -239,52 +239,82 @@ class RAGPipelineSkill(BaseSkill):
 
         Shared State Keys Read:
             - query: Search query (fallback if not in kwargs)
-            - documents: List of documents to index
-            - initial_data: Dict that may contain 'documents' key (from YAML chains)
+            - documents: List of documents to index (canonical key)
+            - initial_data: Alternative key for documents (YAML chains)
+            - input_documents: Alternative key for documents
 
         Shared State Keys Written:
-            - retrieved_documents: List of retrieved document contents for downstream skills
+            - retrieved_documents: List of retrieved document contents (extended, not replaced)
+            - retrieved_context: Assembled context text with scores
         """
         # Get query
         query = kwargs.get("query")
         if not query:
-            # Try to get from context
             query = context.shared_state.get("query")
 
         if not query:
             raise ValueError("No query provided. Pass 'query' parameter or set in context.")
 
-        # Collect documents from all sources
-        docs_to_load = []
+        # Collect documents from kwargs and shared_state
+        docs_to_load: List[str] = []
 
-        # 1. Documents from kwargs (direct parameter)
-        kwargs_docs = kwargs.get("documents")
-        if kwargs_docs:
-            if isinstance(kwargs_docs, list):
-                docs_to_load.extend(kwargs_docs)
+        # 1. Documents passed directly to the skill via kwargs
+        new_documents = kwargs.get("documents")
+        if new_documents:
+            if isinstance(new_documents, str):
+                docs_to_load.append(new_documents)
+            elif isinstance(new_documents, dict):
+                # Handle dict with 'content' key or similar
+                docs_to_load.append(str(new_documents.get("content", new_documents)))
+            elif isinstance(new_documents, list):
+                docs_to_load.extend(new_documents)
             else:
-                logger.warning(f"kwargs['documents'] is not a list, ignoring")
+                logger.warning(f"kwargs['documents'] has unexpected type {type(new_documents)}, ignoring")
 
-        # 2. Documents from shared_state['documents'] key
-        shared_docs = context.shared_state.get("documents")
+        # 2. Documents from shared_state (check multiple common keys)
+        shared_docs = None
+        for key in ("documents", "initial_data", "input_documents"):
+            shared_docs = context.shared_state.get(key)
+            if shared_docs:
+                logger.debug(f"Found documents in shared_state['{key}']")
+                break
+
         if shared_docs:
-            if isinstance(shared_docs, list):
+            if isinstance(shared_docs, str):
+                docs_to_load.append(shared_docs)
+            elif isinstance(shared_docs, dict):
+                # Handle dict that might contain 'documents' key or be a document itself
+                if "documents" in shared_docs:
+                    nested_docs = shared_docs["documents"]
+                    if isinstance(nested_docs, list):
+                        docs_to_load.extend(nested_docs)
+                    else:
+                        docs_to_load.append(str(nested_docs))
+                else:
+                    docs_to_load.append(str(shared_docs.get("content", shared_docs)))
+            elif isinstance(shared_docs, list):
                 docs_to_load.extend(shared_docs)
             else:
-                logger.warning(f"shared_state['documents'] is not a list, ignoring")
+                logger.warning(f"shared_state documents have unexpected type {type(shared_docs)}, ignoring")
 
-        # 3. Documents from shared_state['initial_data'] (YAML chains)
-        initial_data = context.shared_state.get("initial_data")
-        if initial_data and isinstance(initial_data, dict):
-            initial_docs = initial_data.get("documents")
-            if initial_docs and isinstance(initial_docs, list):
-                docs_to_load.extend(initial_docs)
+        # Normalize: filter out None/empty and ensure all are strings
+        docs_to_load = [str(d) for d in docs_to_load if d]
 
-        # Load all collected documents
-        if docs_to_load:
-            logger.info(f"Loading {len(docs_to_load)} documents from all sources")
-            self._load_documents(docs_to_load)
-            self.index_built = False  # Rebuild index
+        # Deduplicate based on content (simple approach)
+        seen_content = set()
+        unique_docs = []
+        for doc in docs_to_load:
+            # Use first 100 chars as signature for deduplication
+            signature = doc[:100] if len(doc) > 100 else doc
+            if signature not in seen_content:
+                seen_content.add(signature)
+                unique_docs.append(doc)
+
+        # Load unique documents and force index rebuild
+        if unique_docs:
+            logger.info(f"Loading {len(unique_docs)} unique documents (deduplicated from {len(docs_to_load)} total)")
+            self._load_documents(unique_docs)
+            self.index_built = False
 
         # Perform retrieval
         result = self._retrieve(query)
@@ -295,9 +325,22 @@ class RAGPipelineSkill(BaseSkill):
             for i, doc in enumerate(result.documents)
         ])
 
-        # Save retrieved documents to shared_state for downstream skills
-        context.shared_state["retrieved_documents"] = [doc.content for doc in result.documents]
+        # Persist results to shared_state for downstream skills (extend, don't replace)
+        context.shared_state.setdefault("retrieved_documents", [])
+        context.shared_state["retrieved_documents"].extend([doc.content for doc in result.documents])
         context.shared_state["retrieved_context"] = context_text
+
+        # Also save richer metadata for advanced downstream skills
+        context.shared_state.setdefault("retrieved_documents_full", [])
+        context.shared_state["retrieved_documents_full"].extend([
+            {
+                "content": doc.content,
+                "metadata": doc.metadata,
+                "doc_id": doc.doc_id,
+                "score": result.scores[i] if i < len(result.scores) else 0.0
+            }
+            for i, doc in enumerate(result.documents)
+        ])
 
         # Return structured result
         return {

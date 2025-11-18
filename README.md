@@ -20,6 +20,34 @@ This project implements a novel approach to semantic analogies by:
 - ✅ **Flexible metric selection** (Euclidean or cosine similarity)
 - ✅ **Auto-balancing** of loss weights via gradient norm matching
 
+## 🌅 NEW: Agent Pulse - Proactive AI Assistant
+
+This repository now includes **Agent Pulse**, a ChatGPT Pulse-inspired system that transforms reactive AI assistance into proactive support:
+
+- 📊 **Analyzes past conversations** to understand your interests and projects
+- 🔍 **Conducts overnight research** on relevant topics
+- 💡 **Identifies opportunities** for learning and optimization
+- 🔧 **Suggests solutions** to recurring problems
+- ✅ **Tracks action items** and commitments
+- 🎯 **Learns from feedback** to personalize updates
+
+### Quick Start with Agent Pulse
+
+```bash
+# Generate your first pulse update
+python -m agent_pulse.cli.pulse_cli generate
+
+# Configure your interests
+python -m agent_pulse.cli.pulse_cli config --add-interest "machine learning"
+
+# View system status
+python -m agent_pulse.cli.pulse_cli status
+```
+
+**[📖 Full Agent Pulse Documentation →](./AGENT_PULSE.md)**
+
+---
+
 ## Installation
 
 ```bash

@@ -45,6 +45,9 @@ env/
 *.vec
 *.h5
 
+# Activity logs and reports (runtime generated)
+memory/
+
 # OS
 .DS_Store
 Thumbs.db

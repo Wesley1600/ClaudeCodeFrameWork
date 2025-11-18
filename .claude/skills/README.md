@@ -14,6 +14,14 @@ This directory contains custom skills for Claude Code that use progressive discl
 ├── automated-ui-testing.md            # UI testing automation skill
 ├── batch-processing.md                # Batch processing skill
 ├── error-handling.md                  # Error handling framework skill
+├── scenario-simulation/               # Scenario modeling and decision analysis
+│   ├── SKILL.md
+│   ├── README.md
+│   ├── QUICK_START.md
+│   ├── examples/
+│   └── templates/
+├── summarization/                     # Text summarization skill
+│   └── SKILL.md
 └── [other-skills]/                    # Additional skills
     └── skill.md
 ```
@@ -113,20 +121,11 @@ A comprehensive skill for automating web application testing using headless brow
 - Support for multiple browsers and viewports
 
 **How to activate:**
-Claude Code automatically uses skills when relevant. For explicit activation:
 ```
 "Set up automated UI testing for my React app"
 "Create tests for the login flow"
 "Test the shopping cart functionality"
 ```
-
-**Quick start:**
-```bash
-cd .claude/skills/examples
-./quick-start.sh
-```
-
-See [automated-ui-testing.md](automated-ui-testing.md) for complete documentation and `examples/` directory for working test suites.
 
 ---
 
@@ -155,15 +154,12 @@ A comprehensive skill for executing batch operations efficiently, reducing overh
 - Hybrid batch processing for large datasets
 
 **How to activate:**
-Claude Code automatically uses skills when relevant. For explicit activation:
 ```
 "Process all PDF files in the /docs folder and extract text"
 "Run all test files in the tests/ directory"
 "Apply eslint fixes to all JavaScript files in src/"
 "Convert all PNG images in /images to JPEG format"
 ```
-
-See [batch-processing.md](batch-processing.md) for complete documentation including workflow phases, processing strategies, and best practices.
 
 ---
 
@@ -186,9 +182,55 @@ A comprehensive framework for wrapping tool calls with robust error handling, re
 - Clear escalation paths for human intervention
 
 **How to activate:**
-Claude Code automatically uses skills when relevant. For explicit activation:
 ```
 Use the error-handling skill to execute this git push with retry logic
+```
+
+---
+
+### Scenario Simulation Skill (`scenario-simulation/SKILL.md`)
+
+A comprehensive skill for modeling different scenarios, creating decision trees, running simulations, and analyzing impacts.
+
+**Use this skill when:**
+- Making business decisions (pricing, hiring, investments)
+- Planning technical architecture (scaling, migrations)
+- Assessing risks and mitigation strategies
+- Forecasting outcomes under uncertainty
+- Comparing multiple options or strategies
+
+**Key features:**
+- Multi-scenario analysis (best/worst/expected cases)
+- Decision tree creation and visualization
+- Monte Carlo simulations
+- Sensitivity analysis
+- Python and TypeScript implementation templates
+
+**How to activate:**
+```
+Use the scenario simulation skill to model launching a new product
+```
+
+### Summarization Skill (`summarization/SKILL.md`)
+
+Condenses long documents, conversation logs, or transcripts into concise summaries.
+
+**Use this skill when:**
+- Processing long documents or articles
+- Summarizing conversation histories
+- Creating executive summaries
+- Extracting key points from verbose content
+- Different detail levels needed
+
+**Key features:**
+- Multiple output formats (bullet points, paragraphs, executive summary)
+- Customizable detail levels
+- Supports retrieval from memory/files
+- Focus on key insights and actionable items
+
+**How to activate:**
+```
+Use the summarization skill to summarize this document
 ```
 
 ---
@@ -206,7 +248,7 @@ Use the template from `progressive-disclosure/skill.md` (Appendix A) to create n
 ## Metadata
 
 **Skill Name:** [Name]
-**Type:** [implementation|debugging|optimization|testing|etc.]
+**Type:** [implementation|debugging|optimization|etc.]
 **Version:** [Semantic version]
 **Purpose:** [One-line description]
 **Triggers:** [Comma-separated keywords]
@@ -248,6 +290,18 @@ For simpler skills, create a markdown file directly in `.claude/skills/`:
 3. Provide clear examples and patterns
 4. Include decision trees for when to use the skill
 5. Add an entry to this README
+
+### Subdirectory Format (For Complex Skills)
+
+For skills with multiple files (templates, examples, docs):
+
+1. Create a subdirectory in `.claude/skills/`
+2. Add `SKILL.md` as the main skill definition
+3. Include `README.md` for detailed documentation
+4. Add `examples/` and `templates/` as needed
+5. Follow the progressive disclosure levels in `SKILL.md`
+
+See `scenario-simulation/` for a complete example.
 
 ## Best Practices
 
@@ -302,8 +356,10 @@ Common skill categories:
 - **Testing:** Writing tests, validation, QA
 - **Documentation:** Creating docs, comments
 - **Integration:** Connecting systems, APIs
-- **Data Processing:** ETL, transformations
+- **Data Processing:** ETL, transformations, batch processing
 - **Machine Learning:** Training, inference, evaluation
+- **Decision Support:** Scenario modeling, option evaluation
+- **Content Processing:** Summarization, extraction, transformation
 
 ## Metrics
 
@@ -316,6 +372,7 @@ Track progressive disclosure effectiveness:
 
 ## Version History
 
+- **v1.3.0** (2025-11-18): Added Scenario Simulation and Summarization skills
 - **v1.2.0** (2025-11-18): Added Batch Processing Skill
 - **v1.1.0** (2025-11-18): Added Automated UI Testing Skill
 - **v1.0.0** (2025-11-18): Initial progressive disclosure implementation

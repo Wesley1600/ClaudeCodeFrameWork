@@ -25,7 +25,7 @@ This project implements a novel approach to semantic analogies by:
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/Wesley1600/ClaudeCodeFrameWork.git
 cd ClaudeCodeFrameWork
 
 # Install dependencies
@@ -380,7 +380,12 @@ csv_metrics = TrainingReportFormatter.to_csv(report)
 from output_formats import AxisExportFormatter
 
 # Extract and format relation axes
-axes = extract_relation_axes(model, X_high, Z_low, relation_pairs)
+axes = extract_relation_axes(
+    model=model,
+    X_high=X_high,
+    pair_indices_list=pair_indices_list,
+    n_clusters_list=n_clusters_list
+)
 
 structured_axes = AxisExportFormatter.from_raw_axes(
     axes,
@@ -559,9 +564,9 @@ If you use this code in your research, please cite:
 ```bibtex
 @software{umap_analogy_engine,
   title={UMAP-Inspired Universal Analogy Engine},
-  author={Your Name},
+  author={ClaudeCodeFrameWork Contributors},
   year={2025},
-  url={https://github.com/yourusername/ClaudeCodeFrameWork}
+  url={https://github.com/Wesley1600/ClaudeCodeFrameWork}
 }
 ```
 
@@ -572,7 +577,15 @@ If you use this code in your research, please cite:
 
 ## License
 
-MIT License (or your preferred license)
+MIT License
+
+Copyright (c) 2025 ClaudeCodeFrameWork Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Contributing
 
@@ -584,10 +597,10 @@ Contributions welcome! Please:
 
 ## Contact
 
-For questions or issues, please open a GitHub issue or contact [your email].
+For questions or issues, please open a GitHub issue at: https://github.com/Wesley1600/ClaudeCodeFrameWork/issues
 
 ---
 
-**Status**: Production-ready V1.0
+**Status**: Production-ready V1.1 with Structured Output Formats
 
-**Last updated**: 2025-11-13
+**Last updated**: 2025-11-18

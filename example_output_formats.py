@@ -51,8 +51,9 @@ def create_synthetic_data(n_samples=1000, dim=300, n_relations=3):
     # Create vocabulary
     vocab = [f"word_{i}" for i in range(n_samples)]
 
-    # Create relation pairs
-    relation_pairs = []
+    # Create relation pairs as tensors (required format for API)
+    pair_indices_list = []
+    n_clusters_list = []
     relation_names = []
 
     for rel_idx in range(n_relations):
@@ -65,12 +66,15 @@ def create_synthetic_data(n_samples=1000, dim=300, n_relations=3):
             idx2 = np.random.randint(0, n_samples)
 
             if idx1 != idx2:
-                pairs.append((idx1, idx2))
+                pairs.append([idx1, idx2])
 
-        relation_pairs.append(pairs)
+        # Convert to tensor format (n_pairs, 2)
+        pair_tensor = torch.tensor(pairs, dtype=torch.long)
+        pair_indices_list.append(pair_tensor)
+        n_clusters_list.append(3)  # 3 clusters per relation
         relation_names.append(f"relation_{rel_idx}")
 
-    return X_high, vocab, relation_pairs, relation_names
+    return X_high, vocab, pair_indices_list, n_clusters_list, relation_names
 
 
 def demonstrate_analogy_formatting(model, Z_low, vocab, relation_axes):
@@ -176,7 +180,7 @@ def demonstrate_analogy_formatting(model, Z_low, vocab, relation_axes):
     print(f"\n✓ Saved to: {output_dir / 'analogies.html'}")
 
 
-def demonstrate_training_report(loss_history, relation_pairs, relation_names):
+def demonstrate_training_report(loss_history, relation_names):
     """Demonstrate training report formatting."""
     print("\n" + "=" * 80)
     print("DEMONSTRATION 2: Training Report Formatting")
@@ -459,7 +463,7 @@ def main():
 
     # Create synthetic data
     print("\nSetting up demonstration data...")
-    X_high, vocab, relation_pairs, relation_names = create_synthetic_data(
+    X_high, vocab, pair_indices_list, n_clusters_list, relation_names = create_synthetic_data(
         n_samples=500,
         dim=300,
         n_relations=3
@@ -471,11 +475,12 @@ def main():
 
     model, Z_low, loss_history = train_relation_aware_umap(
         X_high=X_high,
-        relation_pairs=relation_pairs,
-        n_components=16,
+        pair_indices_list=pair_indices_list,
+        n_clusters_list=n_clusters_list,
+        d_low=16,
         n_neighbors=10,
         epochs=20,  # Reduced for demo
-        edge_bs=5000,
+        batch_size=5000,
         lr=1e-3,
         verbose=True
     )
@@ -487,15 +492,14 @@ def main():
     relation_axes = extract_relation_axes(
         model=model,
         X_high=X_high,
-        Z_low=Z_low,
-        relation_pairs=relation_pairs,
-        num_clusters=3
+        pair_indices_list=pair_indices_list,
+        n_clusters_list=n_clusters_list
     )
     print(f"✓ Extracted {len(relation_axes)} relation axes")
 
     # Run demonstrations
     demonstrate_analogy_formatting(model, Z_low, vocab, relation_axes)
-    demonstrate_training_report(loss_history, relation_pairs, relation_names)
+    demonstrate_training_report(loss_history, relation_names)
     demonstrate_axis_export(relation_axes, relation_names)
     demonstrate_data_processing()
     demonstrate_schema_validation()

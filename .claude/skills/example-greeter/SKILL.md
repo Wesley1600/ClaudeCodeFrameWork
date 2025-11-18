@@ -1,7 +1,7 @@
 ---
 name: Example Greeter
 description: A simple example skill that demonstrates version management
-version: "0.1.0"
+version: "1.0.0"
 author: Claude Code Framework
 tags:
   - example

@@ -11,6 +11,8 @@ This directory contains custom skills for Claude Code that use progressive discl
 │   └── skill.md
 ├── umap-optimization/                 # UMAP-specific optimization skill
 │   └── skill.md
+├── automated-ui-testing.md            # UI testing automation skill
+├── batch-processing.md                # Batch processing skill
 ├── error-handling.md                  # Error handling framework skill
 ├── scenario-simulation/               # Scenario modeling and decision analysis
 │   ├── SKILL.md
@@ -72,6 +74,8 @@ Manages the progressive disclosure of skill content based on task relevance.
 - Dynamic level upgrading
 - Skill dependency resolution
 
+---
+
 ### UMAP Optimization Skill (`umap-optimization/skill.md`)
 
 Provides optimization strategies for UMAP-based embedding systems.
@@ -87,6 +91,77 @@ Provides optimization strategies for UMAP-based embedding systems.
 - FAISS integration (100x+ for large N)
 - Mixed precision training (2x speedup)
 - Numerical stability enhancements
+
+---
+
+### Automated UI Testing Skill (`automated-ui-testing.md`)
+
+A comprehensive skill for automating web application testing using headless browsers (Playwright, Puppeteer, or Selenium).
+
+**Type:** Testing
+**Triggers:** UI testing, web testing, playwright, puppeteer, selenium, e2e testing, test automation, QA, quality assurance, regression testing
+
+**Use this skill when:**
+- Testing web application functionality (forms, authentication, navigation)
+- Performing quality assurance and regression testing
+- Setting up end-to-end test automation
+- Validating responsive design across devices
+- Testing accessibility compliance
+- Implementing visual regression testing
+- Creating CI/CD test pipelines
+
+**Key features:**
+- Complete testing infrastructure setup
+- Test script generation for common scenarios
+- Page Object Model implementation
+- API mocking and network interception
+- Screenshot and video capture on failures
+- Comprehensive test reporting
+- CI/CD integration templates
+- Support for multiple browsers and viewports
+
+**How to activate:**
+```
+"Set up automated UI testing for my React app"
+"Create tests for the login flow"
+"Test the shopping cart functionality"
+```
+
+---
+
+### Batch Processing Skill (`batch-processing.md`)
+
+A comprehensive skill for executing batch operations efficiently, reducing overhead and maintaining consistent processing across multiple similar tasks.
+
+**Type:** Data Processing
+**Triggers:** batch processing, bulk operations, process multiple files, batch execution, parallel processing, bulk refactoring, batch script execution
+
+**Use this skill when:**
+- Processing multiple files (PDFs, images, text files, code files)
+- Running multiple scripts or tests
+- Applying the same transformation across multiple files
+- Bulk data processing operations
+- Mass code refactoring or migrations
+- Executing similar tasks repeatedly
+
+**Key features:**
+- Intelligent parallel vs sequential processing strategies
+- Comprehensive error handling (continues on failure)
+- Progress tracking via todo lists
+- Detailed success/failure reporting with statistics
+- Resource-aware processing with safety checks
+- Support for various file types and operations
+- Hybrid batch processing for large datasets
+
+**How to activate:**
+```
+"Process all PDF files in the /docs folder and extract text"
+"Run all test files in the tests/ directory"
+"Apply eslint fixes to all JavaScript files in src/"
+"Convert all PNG images in /images to JPEG format"
+```
+
+---
 
 ### Error Handling Skill (`error-handling.md`)
 
@@ -105,6 +180,13 @@ A comprehensive framework for wrapping tool calls with robust error handling, re
 - Tool-specific fallback strategies
 - Structured error logging
 - Clear escalation paths for human intervention
+
+**How to activate:**
+```
+Use the error-handling skill to execute this git push with retry logic
+```
+
+---
 
 ### Scenario Simulation Skill (`scenario-simulation/SKILL.md`)
 
@@ -150,6 +232,8 @@ Condenses long documents, conversation logs, or transcripts into concise summari
 ```
 Use the summarization skill to summarize this document
 ```
+
+---
 
 ## Creating a New Skill
 
@@ -197,6 +281,16 @@ Use the template from `progressive-disclosure/skill.md` (Appendix A) to create n
 [Comprehensive guide]
 ```
 
+### Simple Format (Alternative)
+
+For simpler skills, create a markdown file directly in `.claude/skills/`:
+
+1. Create a markdown file in `.claude/skills/`
+2. Document the skill's purpose and usage
+3. Provide clear examples and patterns
+4. Include decision trees for when to use the skill
+5. Add an entry to this README
+
 ### Subdirectory Format (For Complex Skills)
 
 For skills with multiple files (templates, examples, docs):
@@ -208,15 +302,6 @@ For skills with multiple files (templates, examples, docs):
 5. Follow the progressive disclosure levels in `SKILL.md`
 
 See `scenario-simulation/` for a complete example.
-
-### Simple Format (Alternative)
-
-For simpler skills, create a markdown file directly in `.claude/skills/`:
-
-1. Create a markdown file in `.claude/skills/`
-2. Document the skill's purpose and usage
-3. Provide clear examples and patterns
-4. Include decision trees for when to use the skill
 
 ## Best Practices
 
@@ -268,10 +353,10 @@ Common skill categories:
 - **Debugging:** Finding and fixing bugs, error analysis
 - **Optimization:** Performance improvements, refactoring
 - **Analysis:** Understanding code, architectural review
-- **Testing:** Writing tests, validation
+- **Testing:** Writing tests, validation, QA
 - **Documentation:** Creating docs, comments
 - **Integration:** Connecting systems, APIs
-- **Data Processing:** ETL, transformations
+- **Data Processing:** ETL, transformations, batch processing
 - **Machine Learning:** Training, inference, evaluation
 - **Decision Support:** Scenario modeling, option evaluation
 - **Content Processing:** Summarization, extraction, transformation
@@ -287,7 +372,9 @@ Track progressive disclosure effectiveness:
 
 ## Version History
 
-- **v1.1.0** (2025-11-18): Added scenario simulation and summarization skills
+- **v1.3.0** (2025-11-18): Added Scenario Simulation and Summarization skills
+- **v1.2.0** (2025-11-18): Added Batch Processing Skill
+- **v1.1.0** (2025-11-18): Added Automated UI Testing Skill
 - **v1.0.0** (2025-11-18): Initial progressive disclosure implementation
 
 ## Integration
@@ -303,7 +390,13 @@ When adding new skills:
 3. Measure token counts (metadata ~500, instructions ~3K, resources ~15K)
 4. Verify triggers match actual use cases
 5. Document dependencies clearly
-6. Update this README to list the new skill
+6. Add entry to this README under "Available Skills"
+
+## Additional Resources
+
+- [QUICK_REFERENCE.md](QUICK_REFERENCE.md) - Quick reference guide (if available)
+- [USAGE_GUIDE.md](USAGE_GUIDE.md) - Detailed usage guide (if available)
+- Individual skill documentation files for detailed instructions
 
 ## License
 

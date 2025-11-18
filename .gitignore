@@ -48,3 +48,7 @@ env/
 # OS
 .DS_Store
 Thumbs.db
+
+# Memory tool directories
+.memory/
+.memory_test/

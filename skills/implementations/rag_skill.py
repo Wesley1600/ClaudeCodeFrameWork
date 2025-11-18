@@ -248,6 +248,11 @@ class RAGPipelineSkill(BaseSkill):
 
         # Add any new documents
         new_documents = kwargs.get("documents")
+
+        # If not in kwargs, check shared_state (for YAML chains using initial_data)
+        if not new_documents:
+            new_documents = context.shared_state.get("documents")
+
         if new_documents:
             self._load_documents(new_documents)
             self.index_built = False  # Rebuild index

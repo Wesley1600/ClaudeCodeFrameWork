@@ -201,6 +201,55 @@ def test_rag_pipeline():
         return False
 
 
+def test_rag_shared_state():
+    """Test RAG pipeline with documents in shared_state (YAML chain scenario)"""
+    print("\nTesting RAG pipeline with shared_state documents...")
+
+    from skills import get_global_registry, SkillContext
+
+    registry = get_global_registry()
+    registry.discover_skills("skills.implementations")
+
+    try:
+        # Create RAG skill WITHOUT documents in config
+        rag_skill = registry.create_skill("rag_pipeline", config={
+            "top_k": 2,
+            "similarity_threshold": 0.0
+        })
+
+        # Put documents in shared_state (simulating initial_data from YAML)
+        context = SkillContext()
+        context.shared_state["query"] = "What is machine learning?"
+        context.shared_state["documents"] = [
+            "Machine learning is a subset of artificial intelligence. "
+            "It enables computers to learn from data without explicit programming.",
+
+            "Deep learning uses neural networks with multiple layers. "
+            "It has achieved remarkable success in image and speech recognition.",
+
+            "Supervised learning trains models on labeled data. "
+            "Unsupervised learning finds patterns in unlabeled data."
+        ]
+
+        # Execute - should load documents from shared_state
+        result = rag_skill.run(context)
+
+        if result and "documents" in result and len(result["documents"]) > 0:
+            print(f"✓ RAG pipeline loaded documents from shared_state")
+            print(f"  Retrieved {len(result['documents'])} documents")
+            print(f"  Total indexed: {result['metadata']['total_indexed']}")
+            return True
+        else:
+            print("✗ RAG pipeline failed to load documents from shared_state")
+            return False
+
+    except Exception as e:
+        print(f"✗ RAG shared_state test failed: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+
 def main():
     """Run all tests"""
     print("=" * 70)
@@ -213,6 +262,7 @@ def main():
         ("Simple Chain", test_simple_chain),
         ("YAML Config", test_yaml_config),
         ("RAG Pipeline", test_rag_pipeline),
+        ("RAG Shared State", test_rag_shared_state),
     ]
 
     results = []

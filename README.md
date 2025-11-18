@@ -361,12 +361,99 @@ Contributions welcome! Please:
 3. Add tests for new functionality
 4. Submit a pull request
 
+## Version Management
+
+This project uses a specialized version management system that tracks changes, maintains a changelog, and integrates with Git.
+
+### Quick Start
+
+```bash
+# Show current version
+python version_manager.py current
+
+# Show version status and unreleased changes
+python version_manager.py status
+
+# Add a change to the unreleased section
+python version_manager.py add-change "Fixed bug in analogy finding" -c Fixed
+
+# Bump version (major.minor.patch)
+python version_manager.py bump patch    # 1.0.0 → 1.0.1
+python version_manager.py bump minor    # 1.0.0 → 1.1.0
+python version_manager.py bump major    # 1.0.0 → 2.0.0
+
+# Create a git tag for the current version
+python version_manager.py tag
+
+# Full release workflow with auto-commit and tag
+python version_manager.py bump minor --tag
+```
+
+### Version Management Features
+
+- **Semantic Versioning**: Follows [SemVer](https://semver.org/) (MAJOR.MINOR.PATCH)
+- **Changelog Maintenance**: Automatically updates `CHANGELOG.md` using [Keep a Changelog](https://keepachangelog.com/) format
+- **Git Integration**: Creates commits and tags for releases
+- **Multi-file Tracking**: Updates version in all tracked files
+- **Change Categories**: Supports Added, Changed, Fixed, Deprecated, Removed, Security, Performance
+
+### Workflow Example
+
+```bash
+# 1. Make code changes
+# ... edit files ...
+
+# 2. Record your changes
+python version_manager.py add-change "Added support for FAISS indexing" -c Added
+python version_manager.py add-change "Fixed numerical stability in clustering" -c Fixed
+python version_manager.py add-change "Improved training speed by 2x" -c Performance
+
+# 3. Check status
+python version_manager.py status
+
+# 4. Create a release
+python version_manager.py bump minor --tag
+
+# 5. Push to repository
+git push origin claude/version-management-changelog-012Fdwp6GtUpaaVwdDjpZqvc
+git push origin v1.1.0  # Push the tag
+```
+
+### Configuration
+
+Edit `.version_config.json` to customize version management:
+
+```json
+{
+  "auto_commit": true,              // Auto-commit version bumps
+  "auto_tag": false,                // Auto-create git tags
+  "commit_template": "chore: bump version to {version}",
+  "tag_prefix": "v",                // Tag prefix (e.g., v1.0.0)
+  "track_files": [                  // Files to update versions in
+    "umap_analogy_engine.py",
+    "version_manager.py"
+  ]
+}
+```
+
+### Change Categories
+
+Use these categories when adding changes:
+
+- **Added**: New features
+- **Changed**: Changes in existing functionality
+- **Deprecated**: Soon-to-be removed features
+- **Removed**: Removed features
+- **Fixed**: Bug fixes
+- **Security**: Security vulnerability fixes
+- **Performance**: Performance improvements
+
 ## Contact
 
 For questions or issues, please open a GitHub issue or contact [your email].
 
 ---
 
-**Status**: Production-ready V1.0
+**Current Version**: 1.0.0
 
-**Last updated**: 2025-11-13
+**Last Updated**: 2025-11-18

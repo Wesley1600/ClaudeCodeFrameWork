@@ -134,9 +134,63 @@ Authentication credential model.
 - `NONE` - No authentication
 - `API_KEY` - API key in X-API-Key header
 - `BEARER_TOKEN` - Bearer token authentication
-- `BASIC_AUTH` - HTTP Basic authentication
-- `OAUTH2` - OAuth2 authentication
+- `BASIC_AUTH` - HTTP Basic authentication (username/password)
+- `OAUTH2` - OAuth2 bearer token authentication
 - `CUSTOM` - Custom authentication headers
+
+### Authentication Examples
+
+```python
+from api import Credential, AuthType
+
+# API Key authentication
+api_key_cred = Credential(
+    auth_type=AuthType.API_KEY,
+    api_key="sk-your-api-key-here"
+)
+# Generates: {"X-API-Key": "sk-your-api-key-here"}
+
+# Bearer Token authentication
+bearer_cred = Credential(
+    auth_type=AuthType.BEARER_TOKEN,
+    bearer_token="your-bearer-token"
+)
+# Generates: {"Authorization": "Bearer your-bearer-token"}
+
+# HTTP Basic authentication
+basic_cred = Credential(
+    auth_type=AuthType.BASIC_AUTH,
+    username="admin",
+    password="secret123"
+)
+# Generates: {"Authorization": "Basic YWRtaW46c2VjcmV0MTIz"}
+
+# OAuth2 authentication
+oauth_cred = Credential(
+    auth_type=AuthType.OAUTH2,
+    bearer_token="oauth-access-token"
+)
+# Generates: {"Authorization": "Bearer oauth-access-token"}
+
+# Custom authentication
+custom_cred = Credential(
+    auth_type=AuthType.CUSTOM,
+    custom_headers={
+        "X-Custom-Auth": "custom-value",
+        "X-Client-ID": "client-123"
+    }
+)
+# Generates: {"X-Custom-Auth": "custom-value", "X-Client-ID": "client-123"}
+
+# No authentication
+no_auth_cred = Credential(auth_type=AuthType.NONE)
+# Generates: {}
+
+# Get headers for API requests
+headers = api_key_cred.to_headers()
+```
+
+**Note:** The `to_headers()` method validates that required fields are present. For example, `BASIC_AUTH` requires both `username` and `password`, or a `ValueError` will be raised.
 
 ## Advanced Usage
 

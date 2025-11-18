@@ -184,7 +184,7 @@ class TestEndpointManager(unittest.TestCase):
         self.assertEqual(ml_endpoints[0].name, "api1")
 
     def test_credential_to_headers(self):
-        """Test credential conversion to headers."""
+        """Test credential conversion to headers for all auth types."""
         # API key credential
         cred_api = Credential(
             auth_type=AuthType.API_KEY,
@@ -200,6 +200,42 @@ class TestEndpointManager(unittest.TestCase):
         )
         headers = cred_bearer.to_headers()
         self.assertEqual(headers.get('Authorization'), "Bearer test-token-456")
+
+        # Basic auth credential
+        cred_basic = Credential(
+            auth_type=AuthType.BASIC_AUTH,
+            username="testuser",
+            password="testpass"
+        )
+        headers = cred_basic.to_headers()
+        self.assertIn('Authorization', headers)
+        self.assertTrue(headers['Authorization'].startswith('Basic '))
+
+        # Verify base64 encoding
+        import base64
+        expected = base64.b64encode(b"testuser:testpass").decode()
+        self.assertEqual(headers['Authorization'], f'Basic {expected}')
+
+        # OAuth2 credential
+        cred_oauth = Credential(
+            auth_type=AuthType.OAUTH2,
+            bearer_token="oauth-token-789"
+        )
+        headers = cred_oauth.to_headers()
+        self.assertEqual(headers.get('Authorization'), "Bearer oauth-token-789")
+
+        # Custom credential
+        cred_custom = Credential(
+            auth_type=AuthType.CUSTOM,
+            custom_headers={"X-Custom-Auth": "custom-value"}
+        )
+        headers = cred_custom.to_headers()
+        self.assertEqual(headers.get('X-Custom-Auth'), "custom-value")
+
+        # None credential
+        cred_none = Credential(auth_type=AuthType.NONE)
+        headers = cred_none.to_headers()
+        self.assertEqual(headers, {})
 
     def test_credential_expiration(self):
         """Test credential expiration checking."""
@@ -669,6 +705,50 @@ class TestEndpointConfig(unittest.TestCase):
         headers = config.get_headers()
         self.assertEqual(headers.get("User-Agent"), "TestClient/1.0")
         self.assertEqual(headers.get("X-API-Key"), "test-key")
+
+    def test_credential_validation_errors(self):
+        """Test that missing required fields raise ValueError."""
+        # API key without key
+        cred_api = Credential(auth_type=AuthType.API_KEY)
+        with self.assertRaises(ValueError) as cm:
+            cred_api.to_headers()
+        self.assertIn("API key is required", str(cm.exception))
+
+        # Bearer token without token
+        cred_bearer = Credential(auth_type=AuthType.BEARER_TOKEN)
+        with self.assertRaises(ValueError) as cm:
+            cred_bearer.to_headers()
+        self.assertIn("Bearer token is required", str(cm.exception))
+
+        # Basic auth without username
+        cred_basic_no_user = Credential(
+            auth_type=AuthType.BASIC_AUTH,
+            password="testpass"
+        )
+        with self.assertRaises(ValueError) as cm:
+            cred_basic_no_user.to_headers()
+        self.assertIn("Username and password are required", str(cm.exception))
+
+        # Basic auth without password
+        cred_basic_no_pass = Credential(
+            auth_type=AuthType.BASIC_AUTH,
+            username="testuser"
+        )
+        with self.assertRaises(ValueError) as cm:
+            cred_basic_no_pass.to_headers()
+        self.assertIn("Username and password are required", str(cm.exception))
+
+        # OAuth2 without token
+        cred_oauth = Credential(auth_type=AuthType.OAUTH2)
+        with self.assertRaises(ValueError) as cm:
+            cred_oauth.to_headers()
+        self.assertIn("Bearer token is required", str(cm.exception))
+
+        # Custom without headers
+        cred_custom = Credential(auth_type=AuthType.CUSTOM)
+        with self.assertRaises(ValueError) as cm:
+            cred_custom.to_headers()
+        self.assertIn("Custom headers are required", str(cm.exception))
 
 
 if __name__ == '__main__':

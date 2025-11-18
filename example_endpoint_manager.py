@@ -68,8 +68,62 @@ def example_basic_usage():
     )
     print(f"✓ Registered endpoint: {endpoint3.name}")
 
+    # Register an endpoint with HTTP Basic authentication
+    basic_credential = Credential(
+        auth_type=AuthType.BASIC_AUTH,
+        username="admin",
+        password="secure-password-123"
+    )
+
+    endpoint4 = manager.register_endpoint(
+        name="legacy_api",
+        url="https://legacy.example.com/api",
+        description="Legacy API with basic auth",
+        credential=basic_credential,
+        tags=["legacy", "internal"]
+    )
+    print(f"✓ Registered endpoint: {endpoint4.name}")
+
+    # Register an endpoint with OAuth2
+    oauth_credential = Credential(
+        auth_type=AuthType.OAUTH2,
+        bearer_token="oauth2-access-token",
+        expires_at=datetime.utcnow() + timedelta(hours=1)
+    )
+
+    endpoint5 = manager.register_endpoint(
+        name="oauth_api",
+        url="https://oauth.example.com/api/v2",
+        description="OAuth2 protected API",
+        credential=oauth_credential,
+        tags=["oauth", "production"]
+    )
+    print(f"✓ Registered endpoint: {endpoint5.name}")
+
+    # Register an endpoint with custom authentication
+    custom_credential = Credential(
+        auth_type=AuthType.CUSTOM,
+        custom_headers={
+            "X-API-Key": "custom-api-key",
+            "X-Client-ID": "client-12345",
+            "X-Signature": "hmac-signature-here"
+        }
+    )
+
+    endpoint6 = manager.register_endpoint(
+        name="custom_auth_api",
+        url="https://custom.example.com/api",
+        description="API with custom authentication",
+        credential=custom_credential,
+        tags=["custom"]
+    )
+    print(f"✓ Registered endpoint: {endpoint6.name}")
+
     # List all endpoints
     print(f"\n📋 Total endpoints registered: {len(manager.list_endpoints())}")
+    print("\n🔐 Authentication types in use:")
+    for ep in manager.list_endpoints():
+        print(f"   {ep.name}: {ep.credential.auth_type.value}")
 
     return manager
 

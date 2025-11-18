@@ -7,13 +7,25 @@ checking, API key rotation, and credential management.
 """
 
 from .endpoint_manager import EndpointManager
-from .models import EndpointConfig, Credential, HealthStatus
+from .models import (
+    EndpointConfig,
+    Credential,
+    HealthStatus,
+    AuthType,
+    EndpointQueryRequest,
+    EndpointQueryResponse,
+    HealthCheckResult,
+)
 
 __all__ = [
     'EndpointManager',
     'EndpointConfig',
     'Credential',
     'HealthStatus',
+    'AuthType',
+    'EndpointQueryRequest',
+    'EndpointQueryResponse',
+    'HealthCheckResult',
 ]
 
 __version__ = '1.0.0'

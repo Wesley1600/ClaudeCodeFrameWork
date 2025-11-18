@@ -70,13 +70,51 @@ class Credential(BaseModel):
         return datetime.utcnow() > self.expires_at
 
     def to_headers(self) -> Dict[str, str]:
-        """Convert credential to HTTP headers."""
+        """
+        Convert credential to HTTP headers.
+
+        Returns:
+            Dictionary of HTTP headers for authentication
+
+        Raises:
+            ValueError: If required fields are missing for the auth type
+        """
         headers = dict(self.custom_headers)
 
-        if self.auth_type == AuthType.API_KEY and self.api_key:
-            headers['X-API-Key'] = self.api_key
-        elif self.auth_type == AuthType.BEARER_TOKEN and self.bearer_token:
-            headers['Authorization'] = f'Bearer {self.bearer_token}'
+        if self.auth_type == AuthType.API_KEY:
+            if self.api_key:
+                headers['X-API-Key'] = self.api_key
+            else:
+                raise ValueError("API key is required for API_KEY authentication")
+
+        elif self.auth_type == AuthType.BEARER_TOKEN:
+            if self.bearer_token:
+                headers['Authorization'] = f'Bearer {self.bearer_token}'
+            else:
+                raise ValueError("Bearer token is required for BEARER_TOKEN authentication")
+
+        elif self.auth_type == AuthType.BASIC_AUTH:
+            if self.username and self.password:
+                import base64
+                credentials = f"{self.username}:{self.password}"
+                encoded = base64.b64encode(credentials.encode()).decode()
+                headers['Authorization'] = f'Basic {encoded}'
+            else:
+                raise ValueError("Username and password are required for BASIC_AUTH authentication")
+
+        elif self.auth_type == AuthType.OAUTH2:
+            # OAuth2 typically uses bearer tokens
+            if self.bearer_token:
+                headers['Authorization'] = f'Bearer {self.bearer_token}'
+            else:
+                raise ValueError("Bearer token is required for OAUTH2 authentication")
+
+        elif self.auth_type == AuthType.CUSTOM:
+            # Custom auth relies entirely on custom_headers
+            if not self.custom_headers:
+                raise ValueError("Custom headers are required for CUSTOM authentication")
+
+        # AuthType.NONE requires no additional headers
 
         return headers
 

@@ -59,6 +59,34 @@ bundle = manager.load_trained_model("gender_analogy_v1")
 
 See **[MEMORY_TOOL_GUIDE.md](MEMORY_TOOL_GUIDE.md)** for complete documentation.
 
+## 🌅 NEW: Agent Pulse - Proactive AI Assistant
+
+This repository now includes **Agent Pulse**, a ChatGPT Pulse-inspired system that transforms reactive AI assistance into proactive support:
+
+- 📊 **Analyzes past conversations** to understand your interests and projects
+- 🔍 **Conducts overnight research** on relevant topics
+- 💡 **Identifies opportunities** for learning and optimization
+- 🔧 **Suggests solutions** to recurring problems
+- ✅ **Tracks action items** and commitments
+- 🎯 **Learns from feedback** to personalize updates
+
+### Quick Start with Agent Pulse
+
+```bash
+# Generate your first pulse update
+python -m agent_pulse.cli.pulse_cli generate
+
+# Configure your interests
+python -m agent_pulse.cli.pulse_cli config --add-interest "machine learning"
+
+# View system status
+python -m agent_pulse.cli.pulse_cli status
+```
+
+**[📖 Full Agent Pulse Documentation →](./AGENT_PULSE.md)**
+
+---
+
 ## Installation
 
 ```bash

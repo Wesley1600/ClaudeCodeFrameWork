@@ -1,0 +1,6 @@
+{
+  "name": "agent-observations",
+  "description": "Records agent observations, intermediate reasoning, and asks clarifying questions when input is ambiguous. Uses chain-of-thought injection to share reasoning transparently.",
+  "aliases": ["observe", "clarify", "reasoning"],
+  "location": "user"
+}

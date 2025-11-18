@@ -11,6 +11,7 @@ This directory contains custom skills for Claude Code that use progressive discl
 │   └── skill.md
 ├── umap-optimization/                 # UMAP-specific optimization skill
 │   └── skill.md
+├── automated-ui-testing.md            # UI testing automation skill
 ├── error-handling.md                  # Error handling framework skill
 └── [other-skills]/                    # Additional skills
     └── skill.md
@@ -64,6 +65,8 @@ Manages the progressive disclosure of skill content based on task relevance.
 - Dynamic level upgrading
 - Skill dependency resolution
 
+---
+
 ### UMAP Optimization Skill (`umap-optimization/skill.md`)
 
 Provides optimization strategies for UMAP-based embedding systems.
@@ -79,6 +82,52 @@ Provides optimization strategies for UMAP-based embedding systems.
 - FAISS integration (100x+ for large N)
 - Mixed precision training (2x speedup)
 - Numerical stability enhancements
+
+---
+
+### Automated UI Testing Skill (`automated-ui-testing.md`)
+
+A comprehensive skill for automating web application testing using headless browsers (Playwright, Puppeteer, or Selenium).
+
+**Type:** Testing
+**Triggers:** UI testing, web testing, playwright, puppeteer, selenium, e2e testing, test automation, QA, quality assurance, regression testing
+
+**Use this skill when:**
+- Testing web application functionality (forms, authentication, navigation)
+- Performing quality assurance and regression testing
+- Setting up end-to-end test automation
+- Validating responsive design across devices
+- Testing accessibility compliance
+- Implementing visual regression testing
+- Creating CI/CD test pipelines
+
+**Key features:**
+- Complete testing infrastructure setup
+- Test script generation for common scenarios
+- Page Object Model implementation
+- API mocking and network interception
+- Screenshot and video capture on failures
+- Comprehensive test reporting
+- CI/CD integration templates
+- Support for multiple browsers and viewports
+
+**How to activate:**
+Claude Code automatically uses skills when relevant. For explicit activation:
+```
+"Set up automated UI testing for my React app"
+"Create tests for the login flow"
+"Test the shopping cart functionality"
+```
+
+**Quick start:**
+```bash
+cd .claude/skills/examples
+./quick-start.sh
+```
+
+See [automated-ui-testing.md](automated-ui-testing.md) for complete documentation and `examples/` directory for working test suites.
+
+---
 
 ### Error Handling Skill (`error-handling.md`)
 
@@ -104,6 +153,8 @@ Claude Code automatically uses skills when relevant. For explicit activation:
 Use the error-handling skill to execute this git push with retry logic
 ```
 
+---
+
 ## Creating a New Skill
 
 ### Progressive Disclosure Format (Recommended)
@@ -117,7 +168,7 @@ Use the template from `progressive-disclosure/skill.md` (Appendix A) to create n
 ## Metadata
 
 **Skill Name:** [Name]
-**Type:** [implementation|debugging|optimization|etc.]
+**Type:** [implementation|debugging|optimization|testing|etc.]
 **Version:** [Semantic version]
 **Purpose:** [One-line description]
 **Triggers:** [Comma-separated keywords]
@@ -158,6 +209,7 @@ For simpler skills, create a markdown file directly in `.claude/skills/`:
 2. Document the skill's purpose and usage
 3. Provide clear examples and patterns
 4. Include decision trees for when to use the skill
+5. Add an entry to this README
 
 ## Best Practices
 
@@ -209,7 +261,7 @@ Common skill categories:
 - **Debugging:** Finding and fixing bugs, error analysis
 - **Optimization:** Performance improvements, refactoring
 - **Analysis:** Understanding code, architectural review
-- **Testing:** Writing tests, validation
+- **Testing:** Writing tests, validation, QA
 - **Documentation:** Creating docs, comments
 - **Integration:** Connecting systems, APIs
 - **Data Processing:** ETL, transformations
@@ -226,6 +278,7 @@ Track progressive disclosure effectiveness:
 
 ## Version History
 
+- **v1.1.0** (2025-11-18): Added Automated UI Testing Skill
 - **v1.0.0** (2025-11-18): Initial progressive disclosure implementation
 
 ## Integration
@@ -241,6 +294,13 @@ When adding new skills:
 3. Measure token counts (metadata ~500, instructions ~3K, resources ~15K)
 4. Verify triggers match actual use cases
 5. Document dependencies clearly
+6. Add entry to this README under "Available Skills"
+
+## Additional Resources
+
+- [QUICK_REFERENCE.md](QUICK_REFERENCE.md) - Quick reference guide (if available)
+- [USAGE_GUIDE.md](USAGE_GUIDE.md) - Detailed usage guide (if available)
+- Individual skill documentation files for detailed instructions
 
 ## License
 

@@ -1,0 +1,9 @@
+# Ignore generated files and sensitive data
+files_db.json
+storage/*
+*.pyc
+__pycache__/
+.env
+
+# Keep directory structure but ignore contents
+!storage/.gitkeep

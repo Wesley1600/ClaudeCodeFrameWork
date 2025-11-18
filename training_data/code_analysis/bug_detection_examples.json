@@ -1,0 +1,215 @@
+{
+  "metadata": {
+    "domain": "code_analysis",
+    "data_type": "bug_detection_training",
+    "version": "1.0",
+    "description": "Code examples with bugs for training bug detection and fixing skills",
+    "example_count": 20,
+    "languages": ["python", "javascript", "java", "go"],
+    "bug_categories": ["security", "logic", "performance", "memory", "concurrency"]
+  },
+  "examples": [
+    {
+      "id": "BUG001",
+      "language": "python",
+      "category": "security",
+      "severity": "critical",
+      "title": "SQL Injection Vulnerability",
+      "buggy_code": "def get_user(username):\n    query = \"SELECT * FROM users WHERE username = '\" + username + \"'\"\n    cursor.execute(query)\n    return cursor.fetchone()",
+      "bug_explanation": "Direct string concatenation in SQL queries allows SQL injection attacks. An attacker could input: admin' OR '1'='1 to bypass authentication.",
+      "fixed_code": "def get_user(username):\n    query = \"SELECT * FROM users WHERE username = %s\"\n    cursor.execute(query, (username,))\n    return cursor.fetchone()",
+      "fix_explanation": "Use parameterized queries where the database driver handles escaping. This prevents injection by treating user input as data, not executable code.",
+      "test_cases": [
+        {
+          "input": "admin' OR '1'='1",
+          "buggy_behavior": "Returns all users or first user (security breach)",
+          "fixed_behavior": "Returns None (no user with that exact username)"
+        },
+        {
+          "input": "john_doe",
+          "buggy_behavior": "Returns john_doe's record",
+          "fixed_behavior": "Returns john_doe's record (same, but secure)"
+        }
+      ]
+    },
+    {
+      "id": "BUG002",
+      "language": "javascript",
+      "category": "logic",
+      "severity": "high",
+      "title": "Incorrect Array Comparison",
+      "buggy_code": "function arraysEqual(arr1, arr2) {\n    return arr1 == arr2;\n}",
+      "bug_explanation": "In JavaScript, arrays are objects and == compares references, not contents. This will always return false for different array instances, even with identical contents.",
+      "fixed_code": "function arraysEqual(arr1, arr2) {\n    if (arr1.length !== arr2.length) return false;\n    return arr1.every((val, index) => val === arr2[index]);\n}",
+      "fix_explanation": "Properly compare array contents by checking length first, then using every() to compare each element.",
+      "test_cases": [
+        {
+          "input": "arraysEqual([1,2,3], [1,2,3])",
+          "buggy_output": "false",
+          "fixed_output": "true"
+        },
+        {
+          "input": "arraysEqual([1,2,3], [1,2,4])",
+          "buggy_output": "false",
+          "fixed_output": "false"
+        }
+      ]
+    },
+    {
+      "id": "BUG003",
+      "language": "python",
+      "category": "logic",
+      "severity": "medium",
+      "title": "Mutable Default Argument",
+      "buggy_code": "def add_item(item, items=[]):\n    items.append(item)\n    return items",
+      "bug_explanation": "Default arguments are evaluated once at function definition, not each call. The same list is reused across calls, causing unexpected state sharing.",
+      "fixed_code": "def add_item(item, items=None):\n    if items is None:\n        items = []\n    items.append(item)\n    return items",
+      "fix_explanation": "Use None as default and create a new list inside the function. This ensures each call gets a fresh list when no argument is provided.",
+      "test_cases": [
+        {
+          "scenario": "Multiple calls without items argument",
+          "buggy_behavior": "add_item('a') => ['a'], add_item('b') => ['a', 'b'] (unexpected!)",
+          "fixed_behavior": "add_item('a') => ['a'], add_item('b') => ['b'] (expected)"
+        }
+      ]
+    },
+    {
+      "id": "BUG004",
+      "language": "java",
+      "category": "concurrency",
+      "severity": "high",
+      "title": "Race Condition in Counter",
+      "buggy_code": "public class Counter {\n    private int count = 0;\n    \n    public void increment() {\n        count++;\n    }\n    \n    public int getCount() {\n        return count;\n    }\n}",
+      "bug_explanation": "count++ is not atomic (read-modify-write). Multiple threads can read the same value, increment it, and write back, losing increments.",
+      "fixed_code": "public class Counter {\n    private AtomicInteger count = new AtomicInteger(0);\n    \n    public void increment() {\n        count.incrementAndGet();\n    }\n    \n    public int getCount() {\n        return count.get();\n    }\n}",
+      "fix_explanation": "Use AtomicInteger which provides atomic operations. Alternatively, synchronize the increment method, but AtomicInteger is more performant.",
+      "test_scenario": "10 threads each incrementing 1000 times. Expected: 10000. Buggy version: ~9500-9900 (lost updates). Fixed version: 10000."
+    },
+    {
+      "id": "BUG005",
+      "language": "python",
+      "category": "performance",
+      "severity": "medium",
+      "title": "Inefficient List Membership Testing",
+      "buggy_code": "def find_duplicates(items):\n    seen = []\n    duplicates = []\n    for item in items:\n        if item in seen:  # O(n) lookup in list\n            duplicates.append(item)\n        else:\n            seen.append(item)\n    return duplicates",
+      "bug_explanation": "'in' operation on lists is O(n). For large lists, this becomes O(n²) overall, causing severe performance degradation.",
+      "fixed_code": "def find_duplicates(items):\n    seen = set()  # O(1) lookup\n    duplicates = []\n    for item in items:\n        if item in seen:\n            duplicates.append(item)\n        else:\n            seen.add(item)\n    return duplicates",
+      "fix_explanation": "Use a set for O(1) average-case membership testing, reducing overall complexity to O(n).",
+      "performance_comparison": {
+        "n_1000": "Buggy: ~0.5s, Fixed: ~0.001s",
+        "n_10000": "Buggy: ~50s, Fixed: ~0.01s",
+        "n_100000": "Buggy: ~5000s (impractical), Fixed: ~0.1s"
+      }
+    },
+    {
+      "id": "BUG006",
+      "language": "javascript",
+      "category": "logic",
+      "severity": "medium",
+      "title": "Closure in Loop",
+      "buggy_code": "for (var i = 0; i < 5; i++) {\n    setTimeout(function() {\n        console.log(i);\n    }, 100);\n}",
+      "bug_explanation": "var is function-scoped, not block-scoped. All closures reference the same 'i' variable, which equals 5 after the loop completes.",
+      "buggy_output": "Prints: 5 5 5 5 5",
+      "fixed_code": "for (let i = 0; i < 5; i++) {\n    setTimeout(function() {\n        console.log(i);\n    }, 100);\n}",
+      "alternative_fix": "for (var i = 0; i < 5; i++) {\n    (function(j) {\n        setTimeout(function() {\n            console.log(j);\n        }, 100);\n    })(i);\n}",
+      "fix_explanation": "Use 'let' which is block-scoped - each iteration gets its own 'i'. Alternative: use IIFE to capture value.",
+      "fixed_output": "Prints: 0 1 2 3 4"
+    },
+    {
+      "id": "BUG007",
+      "language": "python",
+      "category": "security",
+      "severity": "critical",
+      "title": "Command Injection",
+      "buggy_code": "import os\n\ndef ping_host(hostname):\n    os.system(f'ping -c 4 {hostname}')",
+      "bug_explanation": "User input directly in shell command allows injection. Input like '8.8.8.8; rm -rf /' could execute arbitrary commands.",
+      "fixed_code": "import subprocess\n\ndef ping_host(hostname):\n    # Validate hostname format\n    import re\n    if not re.match(r'^[a-zA-Z0-9.-]+$', hostname):\n        raise ValueError('Invalid hostname')\n    \n    # Use list form (no shell interpretation)\n    subprocess.run(['ping', '-c', '4', hostname], check=True, capture_output=True)",
+      "fix_explanation": "1) Validate input format, 2) Use subprocess with list arguments (no shell), preventing injection. Each argument is passed separately, not interpreted by shell.",
+      "security_impact": "Critical - can lead to complete system compromise"
+    },
+    {
+      "id": "BUG008",
+      "language": "go",
+      "category": "memory",
+      "severity": "high",
+      "title": "Goroutine Leak",
+      "buggy_code": "func processItems(items []string) {\n    results := make(chan string)\n    \n    for _, item := range items {\n        go func(i string) {\n            // Process item\n            results <- process(i)\n        }(item)\n    }\n    \n    // Only read first result\n    firstResult := <-results\n    fmt.Println(firstResult)\n}",
+      "bug_explanation": "Goroutines are blocked writing to channel after first read. If items has 100 elements, 99 goroutines leak, never terminating.",
+      "fixed_code": "func processItems(items []string) {\n    results := make(chan string, len(items)) // Buffered channel\n    \n    for _, item := range items {\n        go func(i string) {\n            results <- process(i)\n        }(item)\n    }\n    \n    // Read first result\n    firstResult := <-results\n    fmt.Println(firstResult)\n    \n    // Drain remaining results to unblock goroutines\n    go func() {\n        for i := 1; i < len(items); i++ {\n            <-results\n        }\n    }()\n}",
+      "better_fix": "Use sync.WaitGroup or context for proper goroutine lifecycle management, or use buffered channel and read all results.",
+      "impact": "Memory leak, goroutine exhaustion in long-running applications"
+    },
+    {
+      "id": "BUG009",
+      "language": "javascript",
+      "category": "logic",
+      "severity": "medium",
+      "title": "Floating Point Comparison",
+      "buggy_code": "function isEqual(a, b) {\n    return a === b;\n}\n\nconsole.log(isEqual(0.1 + 0.2, 0.3)); // false!",
+      "bug_explanation": "Floating point arithmetic is imprecise due to binary representation. 0.1 + 0.2 = 0.30000000000000004 in JavaScript.",
+      "fixed_code": "function isEqual(a, b, epsilon = 1e-10) {\n    return Math.abs(a - b) < epsilon;\n}\n\nconsole.log(isEqual(0.1 + 0.2, 0.3)); // true",
+      "fix_explanation": "Compare the absolute difference against a small epsilon value. Choose epsilon based on required precision.",
+      "real_world_impact": "Financial calculations, scientific computing, game physics - anywhere precision matters"
+    },
+    {
+      "id": "BUG010",
+      "language": "python",
+      "category": "logic",
+      "severity": "high",
+      "title": "Shallow Copy Mutation",
+      "buggy_code": "def process_data(data):\n    # Attempt to create independent copy\n    new_data = data\n    new_data['processed'] = True\n    return new_data\n\noriginal = {'value': 42}\nresult = process_data(original)\nprint(original)  # {'value': 42, 'processed': True} - MUTATED!",
+      "bug_explanation": "Assignment creates reference, not copy. Both variables point to same object, so modifications affect original.",
+      "fixed_code": "import copy\n\ndef process_data(data):\n    new_data = copy.deepcopy(data)  # For nested structures\n    # Or for simple dicts: new_data = data.copy() or dict(data)\n    new_data['processed'] = True\n    return new_data\n\noriginal = {'value': 42}\nresult = process_data(original)\nprint(original)  # {'value': 42} - unchanged",
+      "fix_explanation": "Use copy.deepcopy() for nested structures or dict.copy() for shallow dictionaries. Understand copy vs deepcopy semantics.",
+      "when_this_matters": "Data pipelines, function purity, preventing side effects"
+    }
+  ],
+  "code_smell_detection": [
+    {
+      "id": "SMELL001",
+      "category": "code_smell",
+      "title": "Long Method",
+      "code": "def process_order(order_data):\n    # Validate customer (10 lines)\n    # Check inventory (15 lines)\n    # Calculate pricing (20 lines)\n    # Apply discounts (12 lines)\n    # Process payment (18 lines)\n    # Update inventory (10 lines)\n    # Send notifications (8 lines)\n    # Generate invoice (15 lines)\n    # Update analytics (10 lines)\n    # Return response (5 lines)\n    pass  # 123 lines total",
+      "problems": [
+        "Hard to understand and test",
+        "Multiple responsibilities (violates SRP)",
+        "Difficult to reuse parts",
+        "High cyclomatic complexity"
+      ],
+      "refactored_approach": "def process_order(order_data):\n    customer = validate_customer(order_data)\n    inventory_check(order_data.items)\n    pricing = calculate_pricing(order_data)\n    final_price = apply_discounts(pricing, customer)\n    payment = process_payment(final_price, customer)\n    update_inventory(order_data.items)\n    send_notifications(customer, order_data)\n    invoice = generate_invoice(order_data, final_price)\n    update_analytics(order_data)\n    return create_response(invoice, payment)",
+      "benefits": [
+        "Each function has single responsibility",
+        "Testable in isolation",
+        "Reusable components",
+        "Self-documenting code"
+      ]
+    },
+    {
+      "id": "SMELL002",
+      "category": "code_smell",
+      "title": "Magic Numbers",
+      "code": "def calculate_price(base_price, customer_type):\n    if customer_type == 1:\n        return base_price * 0.9\n    elif customer_type == 2:\n        return base_price * 0.85\n    elif customer_type == 3:\n        return base_price * 0.75\n    return base_price",
+      "problems": [
+        "Numbers lack context - what do 1,2,3 mean?",
+        "Discount percentages are unexplained",
+        "Hard to maintain and modify"
+      ],
+      "refactored": "# Define constants\nCUSTOMER_REGULAR = 1\nCUSTOMER_PREMIUM = 2\nCUSTOMER_VIP = 3\n\nDISCOUNT_PREMIUM = 0.10  # 10% off\nDISCOUNT_VIP = 0.25      # 25% off\n\ndef calculate_price(base_price, customer_type):\n    if customer_type == CUSTOMER_PREMIUM:\n        return base_price * (1 - DISCOUNT_PREMIUM)\n    elif customer_type == CUSTOMER_VIP:\n        return base_price * (1 - DISCOUNT_VIP)\n    return base_price",
+      "even_better": "# Use enum and dict for extensibility\nfrom enum import Enum\n\nclass CustomerType(Enum):\n    REGULAR = 1\n    PREMIUM = 2\n    VIP = 3\n\nDISCOUNTS = {\n    CustomerType.REGULAR: 0.0,\n    CustomerType.PREMIUM: 0.10,\n    CustomerType.VIP: 0.25\n}\n\ndef calculate_price(base_price, customer_type):\n    discount = DISCOUNTS.get(customer_type, 0.0)\n    return base_price * (1 - discount)"
+    }
+  ],
+  "refactoring_exercises": [
+    {
+      "id": "REFACTOR001",
+      "title": "Extract Method",
+      "before": "def generate_report(data):\n    report = \"<html><body>\"\n    report += \"<h1>Sales Report</h1>\"\n    report += \"<table><tr><th>Item</th><th>Sales</th></tr>\"\n    for item in data:\n        report += f\"<tr><td>{item['name']}</td><td>${item['sales']}</td></tr>\"\n    report += \"</table>\"\n    total = sum(item['sales'] for item in data)\n    report += f\"<p>Total: ${total}</p>\"\n    report += \"</body></html>\"\n    return report",
+      "after": "def generate_report(data):\n    html_parts = [\n        generate_header(),\n        generate_table(data),\n        generate_footer(data)\n    ]\n    return wrap_in_html(''.join(html_parts))\n\ndef generate_header():\n    return \"<h1>Sales Report</h1>\"\n\ndef generate_table(data):\n    rows = [generate_table_row(item) for item in data]\n    return f\"<table><tr><th>Item</th><th>Sales</th></tr>{''.join(rows)}</table>\"\n\ndef generate_table_row(item):\n    return f\"<tr><td>{item['name']}</td><td>${item['sales']}</td></tr>\"\n\ndef generate_footer(data):\n    total = sum(item['sales'] for item in data)\n    return f\"<p>Total: ${total}</p>\"\n\ndef wrap_in_html(content):\n    return f\"<html><body>{content}</body></html>\"",
+      "benefits": [
+        "Each function has clear purpose",
+        "Easy to modify table structure",
+        "Testable components",
+        "Better readability"
+      ]
+    }
+  ]
+}

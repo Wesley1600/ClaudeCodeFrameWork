@@ -1,0 +1,24 @@
+# Bug Investigation Template
+# Required variables: bug_description, reproduction_steps
+# Optional variables: severity:medium, affected_component:unknown, user_impact:moderate
+
+## Bug Report
+**Description**: {bug_description}
+
+**Severity**: {severity:medium}
+**Affected Component**: {affected_component:to be determined}
+**User Impact**: {user_impact:moderate}
+
+## Reproduction Steps
+{reproduction_steps}
+
+## Investigation Tasks
+Please investigate and provide:
+1. Root cause analysis
+2. Affected code locations
+3. Potential fix approaches
+4. Risk assessment for each fix
+5. Recommended solution
+
+## Additional Context
+{additional_context:No additional context provided}

@@ -1,0 +1,68 @@
+{
+  "version": "1.0.0",
+  "progressive_disclosure": {
+    "enabled": true,
+    "thresholds": {
+      "skip": 0.2,
+      "metadata": 0.5,
+      "instructions": 0.8
+    },
+    "context_budget": {
+      "total_tokens": 200000,
+      "reserved_tokens": 60000,
+      "max_skills_high_relevance": 10,
+      "max_skills_medium_relevance": 20,
+      "max_skills_low_relevance": 30
+    },
+    "caching": {
+      "enabled": true,
+      "max_cache_size": 100,
+      "ttl_seconds": 3600
+    },
+    "dynamic_loading": {
+      "enabled": true,
+      "upgrade_threshold": 3,
+      "downgrade_idle_threshold": 10
+    }
+  },
+  "relevance_scoring": {
+    "keyword_weight": 0.3,
+    "topic_similarity_weight": 0.3,
+    "task_type_weight": 0.2,
+    "complexity_weight": 0.2
+  },
+  "skills": [
+    {
+      "name": "progressive-disclosure",
+      "enabled": true,
+      "type": "meta-skill",
+      "priority": 1,
+      "auto_load": false
+    },
+    {
+      "name": "umap-optimization",
+      "enabled": true,
+      "type": "optimization",
+      "priority": 10,
+      "auto_load": true,
+      "keywords": [
+        "umap",
+        "optimize",
+        "performance",
+        "scale",
+        "large dataset",
+        "embedding",
+        "slow",
+        "speed",
+        "faster",
+        "memory"
+      ]
+    }
+  ],
+  "metrics": {
+    "track_usage": true,
+    "track_relevance_accuracy": true,
+    "track_context_efficiency": true,
+    "report_interval_tasks": 10
+  }
+}

@@ -1,0 +1,78 @@
+# RAG Pipeline → Summarization → Reporting Chain
+# This chain demonstrates the full orchestration capability:
+# 1. Retrieve relevant context from documents
+# 2. Summarize the retrieved content
+# 3. Generate a formatted report
+
+name: rag_summarize_report
+description: |
+  Complete information retrieval and summarization pipeline.
+  Retrieves relevant documents, summarizes content, and generates a formatted report.
+
+# Initial data passed to the chain
+initial_data:
+  query: "What are the key features and capabilities?"
+  documents:
+    - |
+      The UMAP analogy engine is a powerful tool for semantic relationship learning.
+      It uses manifold learning to project high-dimensional data into a low-dimensional space
+      while preserving semantic relationships. The engine can perform analogies like
+      'king:queen :: man:woman' by learning direction-aware relationship vectors.
+      Key features include fuzzy simplicial set construction, multi-relation alignment,
+      and orthogonality constraints to keep different relations disentangled.
+    - |
+      The skill orchestration framework provides a flexible system for chaining AI tasks.
+      It includes a base skill interface, automatic skill registry and discovery,
+      and a powerful orchestration engine. Skills can be executed sequentially or in parallel,
+      with data flowing between them through a shared context. The framework supports
+      conditional execution, error handling, and timeout management.
+    - |
+      RAG (Retrieval-Augmented Generation) is a technique that combines retrieval and generation.
+      The pipeline first retrieves relevant documents using semantic search, then uses that
+      context to generate or summarize content. This approach improves accuracy by grounding
+      generation in retrieved facts. Common applications include question answering,
+      document summarization, and chatbots with knowledge bases.
+
+# Global configuration shared by all skills
+global_config:
+  verbose: true
+
+# Steps to execute
+steps:
+  # Step 1: Retrieve relevant context
+  - name: "Retrieve Context"
+    skills: rag_pipeline
+    config:
+      rag_pipeline:
+        top_k: 3
+        similarity_threshold: 0.0
+        chunk_size: 300
+    mode: sequential
+    continue_on_error: false
+
+  # Step 2: Summarize retrieved content
+  - name: "Summarize Content"
+    skills: summarization
+    config:
+      summarization:
+        strategy: extractive
+        num_sentences: 4
+        max_length: 250
+    mode: sequential
+    continue_on_error: false
+
+  # Step 3: Generate formatted report
+  - name: "Generate Report"
+    skills: reporting
+    config:
+      reporting:
+        format: markdown
+        include_metadata: true
+        include_sources: true
+        title: "Knowledge Retrieval Report"
+    mode: sequential
+    continue_on_error: false
+
+# Execution settings
+fail_fast: true
+timeout: 60.0

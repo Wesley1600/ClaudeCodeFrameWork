@@ -1,0 +1,369 @@
+"""
+RAG (Retrieval-Augmented Generation) Pipeline Skill
+
+This skill implements a complete RAG pipeline:
+1. Document loading and chunking
+2. Vector embedding
+3. Semantic search/retrieval
+4. Context assembly
+"""
+
+from typing import Any, Dict, List, Optional, Tuple
+from dataclasses import dataclass
+import logging
+import math
+import random
+
+from ..base_skill import BaseSkill, SkillContext, SkillMetadata
+
+
+logger = logging.getLogger(__name__)
+
+
+@dataclass
+class Document:
+    """A document with metadata"""
+    content: str
+    metadata: Dict[str, Any]
+    doc_id: Optional[str] = None
+    embedding: Optional[List[float]] = None
+
+
+@dataclass
+class RetrievalResult:
+    """Result from retrieval operation"""
+    documents: List[Document]
+    query: str
+    scores: List[float]
+    total_retrieved: int
+
+
+class RAGPipelineSkill(BaseSkill):
+    """
+    Retrieval-Augmented Generation Pipeline.
+
+    Performs semantic retrieval over a document collection to gather
+    relevant context for downstream tasks (e.g., summarization, Q&A).
+
+    Configuration:
+        documents: List of documents to index (or path to document store)
+        embedding_dim: Dimension of embeddings (default: 384)
+        chunk_size: Max tokens per chunk (default: 512)
+        chunk_overlap: Overlap between chunks (default: 50)
+        top_k: Number of documents to retrieve (default: 5)
+        similarity_threshold: Minimum similarity score (default: 0.5)
+    """
+
+    def _create_metadata(self) -> SkillMetadata:
+        return SkillMetadata(
+            name="rag_pipeline",
+            description="Retrieval-Augmented Generation pipeline for context gathering",
+            version="1.0.0",
+            author="Skill Framework",
+            input_schema={
+                "query": "str - Search query",
+                "documents": "Optional[List[str]] - Documents to search"
+            },
+            output_schema={
+                "documents": "List[Document] - Retrieved documents",
+                "context": "str - Assembled context text",
+                "scores": "List[float] - Relevance scores"
+            },
+            tags=["rag", "retrieval", "embedding", "search"]
+        )
+
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        super().__init__(config)
+
+        # Configuration
+        self.embedding_dim = self.config.get("embedding_dim", 384)
+        self.chunk_size = self.config.get("chunk_size", 512)
+        self.chunk_overlap = self.config.get("chunk_overlap", 50)
+        self.top_k = self.config.get("top_k", 5)
+        self.similarity_threshold = self.config.get("similarity_threshold", 0.5)
+
+        # Document store
+        self.documents: List[Document] = []
+        self.index_built = False
+
+        # Load initial documents if provided
+        initial_docs = self.config.get("documents", [])
+        if initial_docs:
+            self._load_documents(initial_docs)
+
+    def _load_documents(self, documents: List[str]) -> None:
+        """Load and chunk documents"""
+        logger.info(f"Loading {len(documents)} documents")
+
+        for idx, doc_text in enumerate(documents):
+            # Simple chunking (split by sentences/paragraphs)
+            chunks = self._chunk_text(doc_text)
+
+            for chunk_idx, chunk in enumerate(chunks):
+                doc = Document(
+                    content=chunk,
+                    metadata={
+                        "source_doc": idx,
+                        "chunk_id": chunk_idx,
+                        "total_chunks": len(chunks)
+                    },
+                    doc_id=f"doc_{idx}_chunk_{chunk_idx}"
+                )
+                self.documents.append(doc)
+
+        logger.info(f"Created {len(self.documents)} chunks")
+
+    def _chunk_text(self, text: str) -> List[str]:
+        """
+        Simple text chunking strategy.
+
+        In production, use more sophisticated methods:
+        - Sentence boundary detection
+        - Paragraph-aware chunking
+        - Sliding window with overlap
+        """
+        # Simple split by periods (naive approach)
+        sentences = text.split('. ')
+
+        chunks = []
+        current_chunk = []
+        current_length = 0
+
+        for sentence in sentences:
+            sentence_length = len(sentence.split())
+
+            if current_length + sentence_length > self.chunk_size and current_chunk:
+                chunks.append('. '.join(current_chunk) + '.')
+                # Keep overlap
+                overlap_sentences = current_chunk[-2:] if len(current_chunk) > 2 else current_chunk
+                current_chunk = overlap_sentences
+                current_length = sum(len(s.split()) for s in current_chunk)
+
+            current_chunk.append(sentence)
+            current_length += sentence_length
+
+        if current_chunk:
+            chunks.append('. '.join(current_chunk) + '.')
+
+        return chunks
+
+    def _build_index(self) -> None:
+        """Build embeddings for all documents"""
+        if self.index_built:
+            return
+
+        logger.info("Building document index...")
+
+        for doc in self.documents:
+            # Simple embedding: TF-IDF-like bag of words (mock)
+            # In production, use: sentence-transformers, OpenAI embeddings, etc.
+            doc.embedding = self._embed_text(doc.content)
+
+        self.index_built = True
+        logger.info("Index built successfully")
+
+    def _embed_text(self, text: str) -> List[float]:
+        """
+        Create embedding for text.
+
+        This is a MOCK implementation using random embeddings.
+        In production, replace with real embeddings:
+        - sentence-transformers (e.g., all-MiniLM-L6-v2)
+        - OpenAI embeddings
+        - Custom fine-tuned models
+        """
+        # Simple hash-based mock embedding (deterministic)
+        random.seed(hash(text) % (2**32))
+        embedding = [random.gauss(0, 1) for _ in range(self.embedding_dim)]
+
+        # Normalize
+        norm = math.sqrt(sum(x*x for x in embedding)) + 1e-8
+        embedding = [x / norm for x in embedding]
+
+        return embedding
+
+    def _retrieve(self, query: str) -> RetrievalResult:
+        """Retrieve relevant documents for query"""
+        # Ensure index is built
+        self._build_index()
+
+        # Embed query
+        query_embedding = self._embed_text(query)
+
+        # Compute similarities (dot product)
+        similarities = []
+        for doc in self.documents:
+            sim = sum(q * d for q, d in zip(query_embedding, doc.embedding))
+            similarities.append(sim)
+
+        # Get top-k indices
+        indexed_sims = list(enumerate(similarities))
+        indexed_sims.sort(key=lambda x: x[1], reverse=True)
+        top_indices = [idx for idx, _ in indexed_sims[:self.top_k]]
+
+        # Filter by threshold
+        retrieved_docs = []
+        scores = []
+
+        for idx in top_indices:
+            score = similarities[idx]
+            if score >= self.similarity_threshold:
+                retrieved_docs.append(self.documents[idx])
+                scores.append(float(score))
+
+        logger.info(f"Retrieved {len(retrieved_docs)} documents (threshold={self.similarity_threshold})")
+
+        return RetrievalResult(
+            documents=retrieved_docs,
+            query=query,
+            scores=scores,
+            total_retrieved=len(retrieved_docs)
+        )
+
+    def execute(self, context: SkillContext, **kwargs) -> Dict[str, Any]:
+        """
+        Execute RAG pipeline.
+
+        Args:
+            context: Skill context
+            **kwargs:
+                query: Search query (required)
+                documents: Optional list of documents to add
+
+        Returns:
+            Dict with:
+                - documents: List of retrieved documents
+                - context: Assembled context text
+                - scores: Relevance scores
+                - metadata: Retrieval metadata
+
+        Shared State Keys Read:
+            - query: Search query (fallback if not in kwargs)
+            - documents: List of documents to index (canonical key)
+            - initial_data: Alternative key for documents (YAML chains)
+            - input_documents: Alternative key for documents
+
+        Shared State Keys Written:
+            - retrieved_documents: List of retrieved document contents (extended, not replaced)
+            - retrieved_context: Assembled context text with scores
+        """
+        # Get query
+        query = kwargs.get("query")
+        if not query:
+            query = context.shared_state.get("query")
+
+        if not query:
+            raise ValueError("No query provided. Pass 'query' parameter or set in context.")
+
+        # Collect documents from kwargs and shared_state
+        docs_to_load: List[str] = []
+
+        # 1. Documents passed directly to the skill via kwargs
+        new_documents = kwargs.get("documents")
+        if new_documents:
+            if isinstance(new_documents, str):
+                docs_to_load.append(new_documents)
+            elif isinstance(new_documents, dict):
+                # Handle dict with 'content' key or similar
+                docs_to_load.append(str(new_documents.get("content", new_documents)))
+            elif isinstance(new_documents, list):
+                docs_to_load.extend(new_documents)
+            else:
+                logger.warning(f"kwargs['documents'] has unexpected type {type(new_documents)}, ignoring")
+
+        # 2. Documents from shared_state (check multiple common keys)
+        shared_docs = None
+        for key in ("documents", "initial_data", "input_documents"):
+            shared_docs = context.shared_state.get(key)
+            if shared_docs:
+                logger.debug(f"Found documents in shared_state['{key}']")
+                break
+
+        if shared_docs:
+            if isinstance(shared_docs, str):
+                docs_to_load.append(shared_docs)
+            elif isinstance(shared_docs, dict):
+                # Handle dict that might contain 'documents' key or be a document itself
+                if "documents" in shared_docs:
+                    nested_docs = shared_docs["documents"]
+                    if isinstance(nested_docs, list):
+                        docs_to_load.extend(nested_docs)
+                    else:
+                        docs_to_load.append(str(nested_docs))
+                else:
+                    docs_to_load.append(str(shared_docs.get("content", shared_docs)))
+            elif isinstance(shared_docs, list):
+                docs_to_load.extend(shared_docs)
+            else:
+                logger.warning(f"shared_state documents have unexpected type {type(shared_docs)}, ignoring")
+
+        # Normalize: filter out None/empty and ensure all are strings
+        docs_to_load = [str(d) for d in docs_to_load if d]
+
+        # Deduplicate based on content (simple approach)
+        seen_content = set()
+        unique_docs = []
+        for doc in docs_to_load:
+            # Use first 100 chars as signature for deduplication
+            signature = doc[:100] if len(doc) > 100 else doc
+            if signature not in seen_content:
+                seen_content.add(signature)
+                unique_docs.append(doc)
+
+        # Load unique documents and force index rebuild
+        if unique_docs:
+            logger.info(f"Loading {len(unique_docs)} unique documents (deduplicated from {len(docs_to_load)} total)")
+            self._load_documents(unique_docs)
+            self.index_built = False
+
+        # Perform retrieval
+        result = self._retrieve(query)
+
+        # Assemble context text
+        context_text = "\n\n---\n\n".join([
+            f"[Document {i+1}] (score: {result.scores[i]:.3f})\n{doc.content}"
+            for i, doc in enumerate(result.documents)
+        ])
+
+        # Persist results to shared_state for downstream skills (extend, don't replace)
+        context.shared_state.setdefault("retrieved_documents", [])
+        context.shared_state["retrieved_documents"].extend([doc.content for doc in result.documents])
+        context.shared_state["retrieved_context"] = context_text
+
+        # Also save richer metadata for advanced downstream skills
+        context.shared_state.setdefault("retrieved_documents_full", [])
+        context.shared_state["retrieved_documents_full"].extend([
+            {
+                "content": doc.content,
+                "metadata": doc.metadata,
+                "doc_id": doc.doc_id,
+                "score": result.scores[i] if i < len(result.scores) else 0.0
+            }
+            for i, doc in enumerate(result.documents)
+        ])
+
+        # Return structured result
+        return {
+            "documents": [
+                {
+                    "content": doc.content,
+                    "metadata": doc.metadata,
+                    "doc_id": doc.doc_id
+                }
+                for doc in result.documents
+            ],
+            "context": context_text,
+            "scores": result.scores,
+            "metadata": {
+                "query": query,
+                "total_retrieved": result.total_retrieved,
+                "total_indexed": len(self.documents),
+                "top_k": self.top_k,
+                "threshold": self.similarity_threshold
+            }
+        }
+
+    def validate_inputs(self, context: SkillContext, **kwargs) -> bool:
+        """Validate that we have a query"""
+        query = kwargs.get("query") or context.shared_state.get("query")
+        return query is not None

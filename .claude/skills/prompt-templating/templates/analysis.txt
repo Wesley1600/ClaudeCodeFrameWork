@@ -1,0 +1,20 @@
+# General Analysis Template
+# Required variables: subject, analysis_type
+# Optional variables: depth:detailed, format:markdown, include_examples:yes
+
+Perform a {analysis_type} analysis of: {subject}
+
+## Analysis Parameters
+- Depth: {depth:detailed}
+- Output Format: {format:markdown}
+- Include Examples: {include_examples:yes}
+
+## Analysis Requirements
+Please analyze:
+1. Current state and characteristics
+2. Strengths and advantages
+3. Weaknesses and limitations
+4. Opportunities for improvement
+5. Potential risks or concerns
+
+Provide actionable insights and recommendations.

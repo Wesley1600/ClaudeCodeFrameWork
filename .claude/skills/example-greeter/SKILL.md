@@ -36,6 +36,7 @@ When the user greets Claude or asks for a greeting, respond with a friendly, con
 - Contextual greetings based on time of day (if available)
 - Friendly, professional tone
 - Encourages user to share what they're working on
+- Supports multiple greeting styles
 
 ## Version History
 
